@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
+/* Design tokens aligned with VR NextGEN branding */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000; /* Black */
+  --foreground: #ffffff; /* White */
+  --accent-gold: #ffd700; /* Gold */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gold: #ffd700;
+
+  /* Fonts (kept generic; can be wired to Google Fonts later) */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
+
+  /* Breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
+/* Base document styles */
+html { height: 100%; }
 body {
+  min-height: 100%;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
+
+/* Smooth scroll for in-page anchor links - only when explicitly triggered */
+html { scroll-behavior: auto; }
+
+/* Utility helpers */
+.text-gold { color: var(--accent-gold); }
+.bg-gold { background-color: var(--accent-gold); }

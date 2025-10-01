@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Stylized V made of parallel strokes -->
+    <path d="M8 8 L20 52"/>
+    <path d="M12 8 L24 52"/>
+    <path d="M16 8 L28 52"/>
+
+    <!-- Stylized R constructed with a rounded bowl and leg -->
+    <path d="M40 10 H58 C64 10 70 16 70 22 C70 28 64 34 58 34 H44"/>
+    <path d="M40 10 V52"/>
+    <path d="M52 34 H44"/>
+    <path d="M52 52 L70 52"/>
+  </g>
+</svg>
+
+
