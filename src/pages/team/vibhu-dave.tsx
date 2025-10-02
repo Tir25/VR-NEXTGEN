@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function VibhuDaveProfile() {
   return (
     <Layout title="Vibhu Dave - Co-founder and Principal" description="Meet Vibhu Dave, Co-founder and Principal of VR NextGen Solutions">
-      <div className="luxury-gradient-mesh relative z-10 min-h-screen text-white">
+      <div className="min-h-screen bg-black text-white">
         {/* Hero Section */}
         <section className="relative py-16 md:py-24">
           <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8">

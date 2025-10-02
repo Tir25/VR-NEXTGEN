@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className="bg-black text-white border-b border-white/10 sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/80">
       <nav
-        className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4 flex items-center justify-between"
+        className="relative max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4 flex items-center justify-between"
         aria-label="Primary"
       >
         {/* Logo (left corner) */}

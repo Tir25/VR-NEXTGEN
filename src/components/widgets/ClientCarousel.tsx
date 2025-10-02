@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ScrollReveal } from "@/components/common";
 
 export type ClientItem = {
   src: string;
@@ -46,50 +45,47 @@ export default function ClientCarousel({ items, autoMs = 5000, onChange }: Props
   return (
     <section id="clients" className="py-16 md:py-24" aria-label="Client carousel">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-        <ScrollReveal preset="fast">
-          <header className="mb-10 flex items-center justify-between">
-            <h2 className="text-3xl md:text-4xl font-bold text-gold">Our Clients</h2>
-            <div className="flex gap-3">
-              <button
-                aria-label="Previous"
-                className="btn-enhanced btn-outline h-10 w-10 rounded-full border border-gold text-gold hover:bg-gold hover:text-black"
-                onClick={() => setAngle((a) => a - 15)}
-              >
-                ‹
-              </button>
-              <button
-                aria-label="Next"
-                className="btn-enhanced btn-outline h-10 w-10 rounded-full border border-gold text-gold hover:bg-gold hover:text-black"
-                onClick={() => setAngle((a) => a + 15)}
-              >
-                ›
-              </button>
-            </div>
-          </header>
-        </ScrollReveal>
-        <ScrollReveal preset="slow">
-          <div
-            className="relative mx-auto h-[280px] w-full max-w-[520px] select-none"
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Client logos"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowRight") setCurrent((c) => (c + 1) % items.length);
-              if (e.key === "ArrowLeft") setCurrent((c) => (c - 1 + items.length) % items.length);
-            }}
-            onMouseEnter={stopAuto}
-            onMouseLeave={startAuto}
-            onTouchStart={(e) => (touchStart.current = e.changedTouches[0]?.clientX ?? 0)}
-            onTouchEnd={(e) => {
-              const endX = e.changedTouches[0]?.clientX ?? 0;
-              const dx = endX - touchStart.current;
-              if (Math.abs(dx) > 30) {
-                if (dx < 0) setCurrent((c) => (c + 1) % items.length);
-                else setCurrent((c) => (c - 1 + items.length) % items.length);
-              }
-            }}
-          >
+        <header className="mb-10 flex items-center justify-between">
+          <h2 className="text-3xl md:text-4xl font-bold text-gold">Our Clients</h2>
+          <div className="flex gap-3">
+            <button
+              aria-label="Previous"
+              className="btn-enhanced btn-outline h-10 w-10 rounded-full border border-gold text-gold hover:bg-gold hover:text-black"
+              onClick={() => setAngle((a) => a - 15)}
+            >
+              ‹
+            </button>
+            <button
+              aria-label="Next"
+              className="btn-enhanced btn-outline h-10 w-10 rounded-full border border-gold text-gold hover:bg-gold hover:text-black"
+              onClick={() => setAngle((a) => a + 15)}
+            >
+              ›
+            </button>
+          </div>
+        </header>
+        <div
+          className="relative mx-auto h-[280px] w-full max-w-[520px] select-none"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Client logos"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") setCurrent((c) => (c + 1) % items.length);
+            if (e.key === "ArrowLeft") setCurrent((c) => (c - 1 + items.length) % items.length);
+          }}
+          onMouseEnter={stopAuto}
+          onMouseLeave={startAuto}
+          onTouchStart={(e) => (touchStart.current = e.changedTouches[0]?.clientX ?? 0)}
+          onTouchEnd={(e) => {
+            const endX = e.changedTouches[0]?.clientX ?? 0;
+            const dx = endX - touchStart.current;
+            if (Math.abs(dx) > 30) {
+              if (dx < 0) setCurrent((c) => (c + 1) % items.length);
+              else setCurrent((c) => (c - 1 + items.length) % items.length);
+            }
+          }}
+        >
           <div className="absolute inset-0 transition-transform duration-500 ease-out" style={{ transform: `rotate(${angle}deg)` }}>
             {items.map((item, i) => {
               const theta = (i / items.length) * 360;
@@ -108,8 +104,7 @@ export default function ClientCarousel({ items, autoMs = 5000, onChange }: Props
               );
             })}
           </div>
-          </div>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );

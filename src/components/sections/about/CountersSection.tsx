@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import { ScrollReveal, StaggeredReveal, staggerChildrenVariants } from "@/components/common";
-import { motion } from "framer-motion";
 
 function useCountTo(target: number, enabled: boolean, durationMs: number = 1200) {
   const [value, setValue] = useState(0);
@@ -36,15 +34,13 @@ export default function CountersSection() {
     <section className="py-16 md:py-24" aria-label="Company metrics">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         <div ref={ref}>
-          <ScrollReveal preset="standard">
-            <StaggeredReveal className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-              {metrics.map((m) => (
-                <motion.div key={m.label} variants={staggerChildrenVariants}>
-                  <Metric label={m.label} value={m.value} enabled={inView} />
-                </motion.div>
-              ))}
-            </StaggeredReveal>
-          </ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+            {metrics.map((m) => (
+              <div key={m.label}>
+                <Metric label={m.label} value={m.value} enabled={inView} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 /**
  * Widget Components Export
- * Centralized export for all widget components following VR NextGEN design system
+ * Interactive components like carousels, counters, and specialized UI elements
  */
 
 export { default as ClientCarousel } from './ClientCarousel';
