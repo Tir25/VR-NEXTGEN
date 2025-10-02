@@ -43,6 +43,7 @@
   background-repeat: repeat;
   background-size: 200px 100px;
   animation: float 20s ease-in-out infinite;
+  z-index: -1;
   opacity: 0.6;
 }
 

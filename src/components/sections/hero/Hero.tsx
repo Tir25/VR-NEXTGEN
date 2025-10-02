@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useParallax } from "@/hooks/useParallax";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import Button from "@/components/common/Button";
 import { ScrollReveal } from "@/components/common";
 
 export default function Hero() {
@@ -45,12 +44,18 @@ export default function Hero() {
         
         <ScrollReveal preset="slow">
           <div className="mt-10">
-            <Button
-              onClick={() => {
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                console.log('Get Started button clicked!'); // Debug log
+                
                 // Enhanced scroll behavior with error handling
                 try {
                   const servicesSection = document.getElementById('services');
+                  console.log('Services section found:', !!servicesSection); // Debug log
+                  
                   if (servicesSection) {
+                    console.log('Scrolling to services section...'); // Debug log
                     // Add a small delay to ensure DOM is ready
                     setTimeout(() => {
                       servicesSection.scrollIntoView({ 
@@ -58,6 +63,7 @@ export default function Hero() {
                         block: 'start',
                         inline: 'nearest'
                       });
+                      console.log('Scroll completed'); // Debug log
                     }, 100);
                   } else {
                     // Fallback: scroll to top of page if services section not found
@@ -70,12 +76,12 @@ export default function Hero() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
-              variant="primary"
-              size="md"
+              className="btn btn--primary btn--medium bg-gold text-black hover:bg-gold/90 hover:scale-[1.02] px-6 py-3 rounded font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold disabled:opacity-60 disabled:cursor-not-allowed relative z-20"
               aria-label="Explore our services"
+              style={{ position: 'relative', zIndex: 20 }}
             >
               Get Started
-            </Button>
+            </button>
           </div>
         </ScrollReveal>
       </div>
