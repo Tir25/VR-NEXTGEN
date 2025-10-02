@@ -142,7 +142,7 @@ function TeamCard({ member }: TeamCardProps) {
 export default function TeamSection() {
   return (
     <section id="team" className="py-16 md:py-24" aria-label="Our team">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal preset="fast">
           <header className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">
