@@ -41,7 +41,7 @@ export default function Header() {
 
         {/* Mobile menu toggle (right) */}
         <button
-          className="md:hidden p-2 rounded bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gold"
+          className="btn-enhanced md:hidden p-2 rounded bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gold"
           aria-label="Toggle navigation menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}

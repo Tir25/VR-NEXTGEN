@@ -1,11 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import dynamic from "next/dynamic";
-const Hero = dynamic(() => import("@/components/sections/Hero"), { ssr: true });
-import Services from "@/components/sections/Services";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import { Hero, Services, WhyChooseUs, CTABanner } from "@/components/sections";
 const ClientCarousel = dynamic(() => import("@/components/widgets/ClientCarousel"), { ssr: false });
 import type { ClientItem } from "@/components/widgets/ClientCarousel";
-import CTABanner from "@/components/sections/CTABanner";
 
 export default function Home() {
   const homeLogos: ClientItem[] = [
@@ -15,6 +12,7 @@ export default function Home() {
     { src: "/window.svg", title: "Window Corp." },
     { src: "/file.svg", title: "FileWorks" },
   ];
+  
   return (
     <Layout title="Home" description="VR NextGEN Solutions – Data-driven consultancy">
       <Hero />

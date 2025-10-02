@@ -14,7 +14,8 @@ const items: ClientItem[] = [
 export default function ClientsPage() {
   return (
     <Layout title="Our Clients" description="Client successes and partnerships">
-      <section className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-12">
+      <section className="geometric-pattern relative z-10 min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-12">
         <header className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gold">Our Clients</h1>
         </header>
@@ -29,6 +30,7 @@ export default function ClientsPage() {
               <p className="text-white/70 text-sm mt-1">{it.caseStudy}</p>
             </article>
           ))}
+        </div>
         </div>
       </section>
     </Layout>

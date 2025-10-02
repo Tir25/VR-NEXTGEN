@@ -14,7 +14,9 @@ export default function Layout({ title, description, children }: LayoutProps) {
   const pageDesc = description || "Professional portfolio website for VR NextGEN Solutions, a data-driven consultancy.";
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
+    <div className="flex min-h-screen flex-col text-white relative">
+      {/* Global Background Pattern - Only for pages without specific backgrounds */}
+      <div className="fixed inset-0 -z-20 luxury-gradient-mesh opacity-20" aria-hidden="true" />
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />

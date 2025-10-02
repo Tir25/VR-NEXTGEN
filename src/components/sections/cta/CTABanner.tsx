@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/common/Button";
 
 export default function CTABanner() {
   return (
@@ -7,12 +8,10 @@ export default function CTABanner() {
         <h2 className="text-2xl md:text-3xl font-bold text-white">
           Transform your business with VR Next Gen Solutions.
         </h2>
-        <Link
-          href="/contact"
-          aria-label="Contact us"
-          className="inline-block bg-gold text-black font-semibold px-6 py-3 rounded shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform"
-        >
-          Get Started
+        <Link href="/contact" aria-label="Contact us">
+          <Button variant="primary" size="md">
+            Get Started
+          </Button>
         </Link>
       </div>
     </section>

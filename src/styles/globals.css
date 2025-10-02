@@ -1,10 +1,42 @@
 @import "tailwindcss";
+@import "./background-patterns.css";
 
-/* Design tokens aligned with VR NextGEN branding */
+/* VR NextGEN Design System - Design Tokens (BEM Methodology) */
 :root {
-  --background: #000000; /* Black */
-  --foreground: #ffffff; /* White */
-  --accent-gold: #ffd700; /* Gold */
+  /* Core Brand Colors - Base Layer */
+  --color-black: #000000;
+  --color-deep-charcoal: #231F20;
+  --color-white: #ffffff;
+  --color-gold: #ffd700;
+  --color-gold-dark: #ad974f;
+  --color-gold-darker: #8e793e;
+  --color-light-grey: #eaeaea;
+  
+  /* Semantic Color Mappings - Theme Layer */
+  --background: var(--color-black);
+  --foreground: var(--color-white);
+  --accent-gold: var(--color-gold);
+  --text-secondary: var(--color-deep-charcoal);
+  --border-light: var(--color-light-grey);
+  
+  /* Responsive Breakpoints - Layout Layer */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  
+  /* Typography Scale - Module Layer */
+  --font-size-h1: 3rem;
+  --font-size-h2: 2.25rem;
+  --font-size-h3: 1.75rem;
+  --font-size-body: 1rem;
+  
+  /* Animation Durations - State Layer */
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.6s;
+  --animation-very-slow: 1.2s;
 }
 
 @theme inline {
@@ -35,13 +67,48 @@
   }
 }
 
-/* Base document styles */
-html { height: 100%; }
+/* Base document styles - Mobile First Approach */
+html { 
+  height: 100%; 
+  background: #000000;
+  font-size: 16px; /* Base font size for mobile */
+}
+
 body {
   min-height: 100%;
-  background: var(--background);
+  background: #000000;
   color: var(--foreground);
   font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure full viewport coverage */
+#__next {
+  min-height: 100vh;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive Typography Scale */
+@media (min-width: 640px) {
+  html { font-size: 17px; }
+}
+
+@media (min-width: 768px) {
+  html { font-size: 18px; }
+}
+
+@media (min-width: 1024px) {
+  html { font-size: 19px; }
+}
+
+@media (min-width: 1280px) {
+  html { font-size: 20px; }
 }
 
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
@@ -50,3 +117,435 @@ html { scroll-behavior: auto; }
 /* Utility helpers */
 .text-gold { color: var(--accent-gold); }
 .bg-gold { background-color: var(--accent-gold); }
+
+/* Enhanced Button Micro-interactions - BEM Methodology */
+/* Block: Button */
+.btn {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  transition: all var(--animation-normal) ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+}
+
+/* Element: Button content */
+.btn__content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Element: Button ripple effect */
+.btn__ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 215, 0, 0.4);
+  transform: scale(0);
+  animation: btn-ripple var(--animation-very-slow) linear;
+  pointer-events: none;
+}
+
+/* Modifier: Button size - Small */
+.btn--small {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Modifier: Button size - Medium */
+.btn--medium {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* Modifier: Button size - Large */
+.btn--large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* Modifier: Button variant - Primary */
+.btn--primary {
+  background-color: var(--accent-gold);
+  color: var(--color-black);
+}
+
+.btn--primary:hover {
+  background-color: rgba(255, 215, 0, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Modifier: Button variant - Secondary */
+.btn--secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn--secondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Modifier: Button variant - Outline */
+.btn--outline {
+  background-color: transparent;
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+}
+
+.btn--outline:hover {
+  background-color: var(--accent-gold);
+  color: var(--color-black);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+/* State: Button disabled */
+.btn--disabled,
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* State: Button loading */
+.btn--loading {
+  pointer-events: none;
+}
+
+/* Animation: Button ripple effect */
+@keyframes btn-ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Legacy support for existing ripple classes */
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 215, 0, 0.4);
+  transform: scale(0);
+  animation: btn-ripple var(--animation-very-slow) linear;
+  pointer-events: none;
+}
+
+/* Responsive Button Design - Mobile First */
+/* Mobile (320px - 640px) */
+@media (max-width: 640px) {
+  .btn--small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .btn--medium {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .btn--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Disable hover effects on mobile */
+  .btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Active state for touch */
+  .btn:active {
+    transform: scale(0.98);
+    transition: transform var(--animation-fast) ease;
+  }
+}
+
+/* Tablet (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1024px) {
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Reduce glow intensity on tablet */
+  .btn--primary:hover {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  }
+  
+  .btn--secondary:hover {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  }
+  
+  .btn--outline:hover {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Full glow effects on desktop */
+  .btn--primary:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+  
+  .btn--secondary:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  
+  .btn--outline:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .btn:active {
+    transform: scale(0.95);
+    transition: transform var(--animation-fast) ease;
+  }
+}
+
+/* Ensure button effects work even when wrapped in Link components */
+a .btn-enhanced {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Additional specificity for Link-wrapped buttons */
+a .btn-primary:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+a .btn-secondary:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+a .btn-outline:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Card Components - BEM Methodology */
+/* Block: Card */
+.card {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+/* Element: Card content */
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Element: Card header */
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Element: Card title */
+.card__title {
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin: 0;
+}
+
+/* Element: Card subtitle */
+.card__subtitle {
+  font-size: var(--font-size-body);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Element: Card body */
+.card__body {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Element: Card footer */
+.card__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Modifier: Card with 3D tilt effect */
+.card--3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Modifier: Card with enhanced shadow */
+.card--shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modifier: Card hover effects */
+.card--hoverable:hover {
+  transform: translateZ(10px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+/* Legacy support for existing card classes */
+.card-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.card-3d:hover {
+  transform: translateZ(10px);
+}
+
+.card-shadow {
+  transition: box-shadow var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-shadow:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+/* Responsive Card Design - Mobile First */
+/* Mobile (320px - 640px) */
+@media (max-width: 640px) {
+  .card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .card__title {
+    font-size: 1.125rem;
+  }
+  
+  /* Disable 3D effects on mobile */
+  .card--3d,
+  .card-3d {
+    transform: none !important;
+    perspective: none !important;
+  }
+  
+  .card--3d:hover,
+  .card-3d:hover {
+    transform: none !important;
+  }
+  
+  /* Simplified hover effects on mobile */
+  .card--hoverable:hover {
+    transform: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+}
+
+/* Tablet (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1024px) {
+  .card {
+    padding: 1.25rem;
+  }
+  
+  /* Reduced 3D effects on tablet */
+  .card--hoverable:hover {
+    transform: translateZ(5px);
+    box-shadow: 
+      0 10px 20px rgba(0, 0, 0, 0.2),
+      0 0 10px rgba(255, 215, 0, 0.05);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  /* Full 3D effects on desktop */
+  .card--hoverable:hover {
+    transform: translateZ(10px);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.1);
+  }
+}
+
+/* Legacy responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .card-3d {
+    transform: none !important;
+  }
+  
+  .card-3d:hover {
+    transform: none !important;
+  }
+}
+
+/* Accessibility: Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Disable button animations */
+  .btn,
+  .btn--primary,
+  .btn--secondary,
+  .btn--outline {
+    transition: none !important;
+  }
+  
+  /* Disable card animations */
+  .card,
+  .card--3d,
+  .card--hoverable,
+  .card-3d,
+  .card-shadow {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Disable scroll animations */
+  [data-scroll-animation] {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Disable ripple effects */
+  .btn__ripple,
+  .ripple-effect {
+    display: none !important;
+  }
+}
