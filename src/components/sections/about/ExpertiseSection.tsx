@@ -131,7 +131,7 @@ export default function ExpertiseSection() {
         </ScrollReveal>
 
         <ScrollReveal preset="slow">
-          <StaggeredReveal className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggeredReveal className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {expertiseAreas.map((area) => (
               <motion.div key={area.id} variants={staggerChildrenVariants}>
                 <ExpertiseCard point={area} />

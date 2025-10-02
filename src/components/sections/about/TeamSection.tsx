@@ -156,7 +156,7 @@ export default function TeamSection() {
         </ScrollReveal>
 
         <ScrollReveal preset="slow">
-          <StaggeredReveal className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <StaggeredReveal className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {teamMembers.map((member) => (
               <motion.div key={member.id} variants={staggerChildrenVariants}>
                 <TeamCard member={member} />

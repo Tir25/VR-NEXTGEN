@@ -111,7 +111,7 @@ export default function Services() {
         </ScrollReveal>
 
         <ScrollReveal preset="slow">
-          <StaggeredReveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggeredReveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {services.map((service) => (
               <motion.div key={service.id} variants={staggerChildrenVariants}>
                 <ServiceCard service={service} />
