@@ -30,7 +30,7 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-20">
         <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gold whitespace-nowrap">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gold whitespace-normal md:whitespace-nowrap leading-tight break-words">
             {headline && headline.length > 0 ? headline : fullText}
             {!isComplete && headline && headline.length > 0 && <span className="animate-pulse">|</span>}
           </h1>
