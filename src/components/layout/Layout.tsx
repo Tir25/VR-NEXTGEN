@@ -11,28 +11,46 @@ function AnimatedBackground() {
     const el = rootRef.current;
     if (!el) return;
 
-    function update(e: any) {
+    // Safe event handler that supports mouse, pointer and touch events without relying on instanceof checks
+    function update(e: Event) {
       let x = 0.5;
       let y = 0.5;
-      if (e && typeof e === "object" && "touches" in e && e.touches && e.touches[0]) {
-        const t = e.touches[0];
+      type TouchPoint = { clientX: number; clientY: number };
+      type TouchLike = { touches: ReadonlyArray<TouchPoint> | TouchPoint[] };
+      type MouseLike = { clientX: number; clientY: number };
+
+      const ev = e as unknown;
+      const maybeTouch = ev as Partial<TouchLike>;
+      if (
+        typeof maybeTouch === "object" &&
+        maybeTouch !== null &&
+        Array.isArray(maybeTouch.touches) &&
+        maybeTouch.touches[0]
+      ) {
+        const t = maybeTouch.touches[0];
         x = t.clientX / window.innerWidth;
         y = t.clientY / window.innerHeight;
-      } else if (e && typeof e.clientX === "number" && typeof e.clientY === "number") {
-        x = e.clientX / window.innerWidth;
-        y = e.clientY / window.innerHeight;
+      } else {
+        const maybeMouse = ev as Partial<MouseLike>;
+        if (
+          typeof maybeMouse?.clientX === "number" &&
+          typeof maybeMouse?.clientY === "number"
+        ) {
+          x = maybeMouse.clientX / window.innerWidth;
+          y = maybeMouse.clientY / window.innerHeight;
+        }
       }
       el.style.setProperty("--cursor-x", `${x}`);
       el.style.setProperty("--cursor-y", `${y}`);
     }
 
-    window.addEventListener("pointermove", update, { passive: true });
-    window.addEventListener("pointerdown", update, { passive: true });
+    window.addEventListener("pointermove", update as EventListener, { passive: true });
+    window.addEventListener("pointerdown", update as EventListener, { passive: true });
     update(new MouseEvent("mousemove", { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }));
 
     return () => {
-      window.removeEventListener("pointermove", update as any);
-      window.removeEventListener("pointerdown", update as any);
+      window.removeEventListener("pointermove", update as EventListener);
+      window.removeEventListener("pointerdown", update as EventListener);
     };
   }, []);
 
