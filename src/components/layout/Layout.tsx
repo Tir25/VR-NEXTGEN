@@ -8,8 +8,7 @@ function AnimatedBackground() {
   const rootRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
+    if (!rootRef.current) return;
 
     // Safe event handler that supports mouse, pointer and touch events without relying on instanceof checks
     function update(e: Event) {
@@ -40,8 +39,10 @@ function AnimatedBackground() {
           y = maybeMouse.clientY / window.innerHeight;
         }
       }
-      el.style.setProperty("--cursor-x", `${x}`);
-      el.style.setProperty("--cursor-y", `${y}`);
+      const target = rootRef.current;
+      if (!target) return;
+      target.style.setProperty("--cursor-x", `${x}`);
+      target.style.setProperty("--cursor-y", `${y}`);
     }
 
     window.addEventListener("pointermove", update as EventListener, { passive: true });
