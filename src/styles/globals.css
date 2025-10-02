@@ -112,7 +112,7 @@ body {
 }
 
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
-html { scroll-behavior: auto; }
+html { scroll-behavior: smooth; }
 
 /* Utility helpers */
 .text-gold { color: var(--accent-gold); }

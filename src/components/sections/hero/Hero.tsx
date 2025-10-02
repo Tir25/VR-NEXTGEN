@@ -47,9 +47,27 @@ export default function Hero() {
           <div className="mt-10">
             <Button
               onClick={() => {
-                const servicesSection = document.getElementById('services');
-                if (servicesSection) {
-                  servicesSection.scrollIntoView({ behavior: 'smooth' });
+                // Enhanced scroll behavior with error handling
+                try {
+                  const servicesSection = document.getElementById('services');
+                  if (servicesSection) {
+                    // Add a small delay to ensure DOM is ready
+                    setTimeout(() => {
+                      servicesSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                      });
+                    }, 100);
+                  } else {
+                    // Fallback: scroll to top of page if services section not found
+                    console.warn('Services section not found, scrolling to top');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                } catch (error) {
+                  console.error('Error scrolling to services section:', error);
+                  // Fallback scroll behavior
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
               variant="primary"
