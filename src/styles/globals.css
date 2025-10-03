@@ -239,3 +239,146 @@ a .btn-enhanced {
     transition: none !important;
   }
 }
+
+/* ===== Enhanced Visual Elements ===== */
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced glow effects */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.glow-gold:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+/* Animated background patterns */
+.animated-bg {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+  animation: bgShift 20s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  33% { 
+    background-position: 100% 0%, 0% 100%, 75% 25%;
+  }
+  66% { 
+    background-position: 0% 100%, 100% 0%, 25% 75%;
+  }
+}
+
+/* Enhanced section dividers */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Interactive hover states for better UX */
+.interactive-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-hover:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Enhanced focus states for accessibility */
+.focus-ring:focus {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.5);
+}
+
+/* Enhanced loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Text selection styling */
+::selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: white;
+}
+
+/* Enhanced mobile optimizations */
+@media (max-width: 768px) {
+  .animate-float {
+    animation-duration: 4s;
+  }
+  
+  .glow-gold {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+  }
+  
+  .glow-gold:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+}
