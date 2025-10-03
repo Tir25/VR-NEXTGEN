@@ -49,7 +49,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             <div className="text-6xl mb-4">⚠️</div>
             <h2 className="text-2xl font-bold text-white mb-4">Something went wrong</h2>
             <p className="text-white/70 mb-6 max-w-md">
-              We're sorry, but something unexpected happened. Please try refreshing the page.
+              We&apos;re sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}

@@ -13,7 +13,7 @@ const ContactSchema = z.object({
   csrfToken: z.string().optional(),
 });
 
-type ContactFormData = z.infer<typeof ContactSchema>;
+// type ContactFormData = z.infer<typeof ContactSchema>; // Unused for now
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Set security headers
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!validationResult.success) {
       return res.status(400).json({ 
         error: 'Invalid form data',
-        details: validationResult.error.errors 
+        details: validationResult.error.issues 
       });
     }
 

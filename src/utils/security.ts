@@ -11,10 +11,10 @@ export function sanitizeHtml(html: string): string {
   if (typeof window === 'undefined') {
     // Server-side: basic sanitization
     return html
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-      .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
-      .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '')
+      .replace(/<object[^>]*>[\s\S]*?<\/object>/gi, '')
+      .replace(/<embed[^>]*>/gi, '')
       .replace(/on\w+\s*=/gi, '')
       .replace(/javascript:/gi, '');
   }
@@ -25,11 +25,11 @@ export function sanitizeHtml(html: string): string {
   try {
     // For now, return basic sanitization
     return html
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '')
       .replace(/on\w+\s*=/gi, '')
       .replace(/javascript:/gi, '');
-  } catch (error) {
+  } catch {
     // Fallback to basic sanitization
     return html.replace(/<[^>]*>/g, '');
   }
