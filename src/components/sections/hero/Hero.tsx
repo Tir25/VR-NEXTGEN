@@ -1,25 +1,24 @@
-import { useEffect } from "react";
 import { useParallax } from "@/hooks/useParallax";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 import Button from "@/components/common/Button";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 export default function Hero() {
   const parallax = useParallax(0.25);
   const fullText = "Your Partner in Data-Driven Business Growth";
   const { display: headline, isComplete } = useTypewriter(fullText, 80);
 
-  // Prevent automatic scrolling on page load
-  useEffect(() => {
-    // Scroll to top on component mount
-    window.scrollTo(0, 0);
-  }, []);
+  // Scroll to top on component mount
+  useScrollToTop();
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
-      aria-label="Hero"
-    >
+    <ErrorBoundary>
+      <section
+        id="hero"
+        className="relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
+        aria-label="Hero"
+      >
       <div
         className="absolute inset-0 -z-10 bg-[url('/next.svg')] bg-no-repeat bg-center opacity-[0.05]"
         aria-hidden
@@ -58,7 +57,8 @@ export default function Hero() {
           </Button>
         </div>
       </div>
-    </section>
+      </section>
+    </ErrorBoundary>
   );
 }
 

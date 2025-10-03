@@ -1,0 +1,12 @@
+Contact: mailto:security@vrnextgensolutions.com
+Contact: https://vrnextgensolutions.com/contact
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://vrnextgensolutions.com/pgp-key.txt
+Acknowledgments: https://vrnextgensolutions.com/security-acknowledgments
+Preferred-Languages: en
+Canonical: https://vrnextgensolutions.com/.well-known/security.txt
+Policy: https://vrnextgensolutions.com/security-policy
+
+# Security Policy
+# If you discover a security vulnerability, please report it responsibly.
+# We appreciate your efforts to help keep our users safe.

@@ -1,13 +1,7 @@
-import { useEffect, useState } from "react";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function AboutHero() {
-  const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setOffset(window.scrollY * 0.25);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const offset = useParallax(0.25);
 
   return (
     <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center overflow-hidden" aria-label="About hero">

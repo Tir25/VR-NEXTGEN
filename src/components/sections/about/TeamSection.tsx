@@ -24,12 +24,7 @@ function TeamCard({ member }: TeamCardProps) {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
-    console.log(`❌ Image failed to load for ${member.name}: ${member.photo}`);
     setImageError(true);
-  };
-
-  const handleImageLoad = () => {
-    console.log(`✅ Image loaded successfully for ${member.name}: ${member.photo}`);
   };
 
   const initials = member.name.split(" ").map((n) => n[0]).join("");
@@ -52,7 +47,6 @@ function TeamCard({ member }: TeamCardProps) {
             priority
             unoptimized={false}
             onError={handleImageError}
-            onLoad={handleImageLoad}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-gold/20 to-gold/10 flex items-center justify-center text-gold text-2xl font-bold border-2 border-gold/30">

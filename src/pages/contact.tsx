@@ -5,11 +5,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SocialIcon from "@/components/common/SocialIcons";
 import Button from "@/components/common/Button";
 import { COMPANY_INFO } from "@/utils/constants";
+import { sanitizeInput } from "@/utils/security";
 
 const ContactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name is too long")
+    .refine((val) => sanitizeInput(val).length > 0, "Invalid characters in name"),
+  email: z.string()
+    .email("Valid email required")
+    .max(254, "Email is too long"),
+  message: z.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(1000, "Message is too long")
+    .refine((val) => sanitizeInput(val).length > 0, "Invalid characters in message"),
 });
 
 type ContactFormData = z.infer<typeof ContactSchema>;
@@ -23,13 +32,36 @@ export default function ContactPage() {
   } = useForm<ContactFormData>({ resolver: zodResolver(ContactSchema) });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Formspree example; replace with your endpoint/action URL
-    await fetch("https://formspree.io/f/your_form_id", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    reset();
+    try {
+      // Sanitize data before sending
+      const sanitizedData = {
+        name: sanitizeInput(data.name),
+        email: data.email, // Email validation handled by Zod
+        message: sanitizeInput(data.message),
+      };
+
+      // Submit to secure API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sanitizedData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      // Reset form on success
+      reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      // Error handling is managed by the form state
+      throw error; // Re-throw to show error in UI
+    }
   };
 
   return (

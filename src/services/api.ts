@@ -12,14 +12,27 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
-// Contact form submission
+// Contact form submission - DEPRECATED: Use /api/contact endpoint instead
 export async function submitContactForm(formData: ContactFormData): Promise<ApiResponse<void>> {
   try {
-    // This would typically call your backend API
-    // For now, we'll simulate a successful submission
-    console.log("Submitting contact form:", formData);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    // Redirect to secure API endpoint
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: result.error || 'Failed to send message'
+      };
+    }
+
     return {
       success: true,
       data: undefined

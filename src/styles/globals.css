@@ -63,11 +63,11 @@ html { scroll-behavior: auto; }
 .text-gold { color: var(--accent-gold); }
 .bg-gold { background-color: var(--accent-gold); }
 
-/* Enhanced Button Micro-interactions */
+/* ===== Enhanced Button Micro-interactions ===== */
 .btn-enhanced {
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-enhanced:hover {
@@ -80,19 +80,11 @@ html { scroll-behavior: auto; }
 }
 
 /* Golden glow effects for different button variants */
-.btn-primary:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
+.btn-primary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+.btn-secondary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+.btn-outline:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
 
-.btn-secondary:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-}
-
-.btn-outline:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-}
-
-/* Ripple effect */
+/* Ripple effect animation */
 .ripple-effect {
   position: absolute;
   border-radius: 50%;
@@ -109,52 +101,24 @@ html { scroll-behavior: auto; }
   }
 }
 
-/* Responsive adjustments */
+/* Mobile and touch device optimizations */
 @media (max-width: 768px) {
-  .btn-enhanced:hover {
-    transform: none;
-  }
-  
-  .btn-enhanced:active {
-    transform: scale(0.98);
-  }
-  
-  /* Reduce glow intensity on mobile */
+  .btn-enhanced:hover { transform: none; }
+  .btn-enhanced:active { transform: scale(0.98); }
   .btn-primary:hover,
   .btn-secondary:hover,
-  .btn-outline:hover {
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-  }
+  .btn-outline:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
 }
 
-/* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  .btn-enhanced:hover {
-    transform: none;
-  }
-  
-  .btn-enhanced:active {
-    transform: scale(0.95);
-  }
+  .btn-enhanced:hover { transform: none; }
+  .btn-enhanced:active { transform: scale(0.95); }
 }
 
-/* Ensure button effects work even when wrapped in Link components */
+/* Link-wrapped button support */
 a .btn-enhanced {
   display: inline-block;
   text-decoration: none;
-}
-
-/* Additional specificity for Link-wrapped buttons */
-a .btn-primary:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-a .btn-secondary:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-}
-
-a .btn-outline:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 /* ===== Site-wide animated premium background ===== */
@@ -241,7 +205,7 @@ a .btn-outline:hover {
     ); }
 }
 
-/* 3D Card Tilt Effects */
+/* ===== 3D Card Tilt Effects ===== */
 .card-3d {
   perspective: 1000px;
   transform-style: preserve-3d;
@@ -249,9 +213,7 @@ a .btn-outline:hover {
   will-change: transform;
 }
 
-.card-3d:hover {
-  transform: translateZ(10px);
-}
+.card-3d:hover { transform: translateZ(10px); }
 
 /* Enhanced shadow effects for cards */
 .card-shadow {
@@ -264,25 +226,16 @@ a .btn-outline:hover {
     0 0 20px rgba(255, 215, 0, 0.1);
 }
 
-/* Responsive adjustments for mobile */
+/* Responsive and accessibility adjustments */
 @media (max-width: 768px) {
-  .card-3d {
-    transform: none !important;
-  }
-  
-  .card-3d:hover {
-    transform: none !important;
-  }
+  .card-3d,
+  .card-3d:hover { transform: none !important; }
 }
 
-/* Accessibility: Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .card-3d {
+  .card-3d,
+  .card-shadow { 
     transform: none !important;
-    transition: none !important;
-  }
-  
-  .card-shadow {
     transition: none !important;
   }
 }
