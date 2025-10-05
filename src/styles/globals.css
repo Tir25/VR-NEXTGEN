@@ -27,13 +27,13 @@
   --section-bg-hero: var(--color-black);
   --section-bg-services: var(--glory-white);
   --section-bg-why-choose: var(--gray-night-black);
-  --section-bg-clients: var(--glory-white);
+  --section-bg-cta: var(--color-black);
   
   /* Section Text Colors */
   --text-hero: var(--color-white);
   --text-services: var(--color-black);
   --text-why-choose: var(--color-white);
-  --text-clients: var(--color-black);
+  --text-cta: var(--color-white);
 }
 
 @theme inline {
@@ -163,9 +163,9 @@ section {
   color: var(--text-why-choose);
 }
 
-.section-clients {
+.section-cta {
   background-color: transparent; /* Let animated background show through */
-  color: var(--text-clients);
+  color: var(--text-cta);
 }
 
 /* ===== Site-wide animated premium background ===== */
@@ -317,31 +317,9 @@ section {
     radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.10), transparent 65%);
 }
 
-/* Clients section - white background */
-.site-bg.section-clients {
-  background-color: var(--section-bg-clients);
-}
-
-.site-bg.section-clients .site-bg__grid {
-  background-image:
-    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
-}
-
-.site-bg.section-clients .site-bg__aurora {
-  background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
-}
-
-.site-bg.section-clients .site-bg__shine {
-  background: radial-gradient(
-    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
-    rgba(255, 187, 1, 0.15),
-    transparent 60%
-  );
-  mix-blend-mode: multiply;
+/* CTA section - dark background */
+.site-bg.section-cta {
+  background-color: var(--section-bg-cta);
 }
 
 /* Smaller grid and subtler glow on mobile to avoid distraction */
@@ -354,8 +332,7 @@ section {
     ); }
   
   /* Mobile adjustments for white sections */
-  .site-bg.section-services .site-bg__shine,
-  .site-bg.section-clients .site-bg__shine { 
+  .site-bg.section-services .site-bg__shine { 
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       rgba(255, 187, 1, 0.12),

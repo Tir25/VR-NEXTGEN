@@ -196,19 +196,6 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      const clientsSection = document.getElementById('clients');
-                      if (clientsSection) {
-                        clientsSection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
-                    }}
-                    className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Our Clients</span>
-                  </button>
-                  <button
-                    onClick={() => {
                       const ctaSection = document.getElementById('cta');
                       if (ctaSection) {
                         ctaSection.scrollIntoView({ behavior: 'smooth' });
@@ -426,19 +413,6 @@ export default function Header() {
                 >
                   <div className="w-2 h-2 bg-gold rounded-full"></div>
                   <span>Why Choose Us</span>
-                </button>
-                <button
-                  onClick={() => {
-                    const clientsSection = document.getElementById('clients');
-                    if (clientsSection) {
-                      clientsSection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
-                  }}
-                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                >
-                  <div className="w-2 h-2 bg-gold rounded-full"></div>
-                  <span>Our Clients</span>
                 </button>
                 <button
                   onClick={() => {
