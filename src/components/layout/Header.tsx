@@ -11,8 +11,22 @@ export default function Header() {
   const [whatWeDoTimeout, setWhatWeDoTimeout] = useState<NodeJS.Timeout | null>(null);
   const [whoWeAreTimeout, setWhoWeAreTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  // Helper functions for delayed hover behavior
-  const handleMouseEnter = () => {
+  // Helper function to scroll to section on current page or navigate to page
+  const scrollToSection = (sectionId: string, pagePath?: string) => {
+    if (pagePath && window.location.pathname !== pagePath) {
+      // Navigate to different page first, then scroll
+      window.location.href = `${pagePath}#${sectionId}`;
+    } else {
+      // Scroll to section on current page
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  // Home dropdown handlers
+  const handleHomeMouseEnter = () => {
     if (hoverTimeout) {
       clearTimeout(hoverTimeout);
       setHoverTimeout(null);
@@ -20,14 +34,14 @@ export default function Header() {
     setHomeDropdownOpen(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleHomeMouseLeave = () => {
     const timeout = setTimeout(() => {
       setHomeDropdownOpen(false);
-    }, 800); // 800ms delay before closing - more time to navigate
+    }, 500); // 500ms delay before closing
     setHoverTimeout(timeout);
   };
 
-  const handleDropdownMouseEnter = () => {
+  const handleHomeDropdownMouseEnter = () => {
     if (hoverTimeout) {
       clearTimeout(hoverTimeout);
       setHoverTimeout(null);
@@ -35,10 +49,10 @@ export default function Header() {
     setHomeDropdownOpen(true);
   };
 
-  const handleDropdownMouseLeave = () => {
+  const handleHomeDropdownMouseLeave = () => {
     const timeout = setTimeout(() => {
       setHomeDropdownOpen(false);
-    }, 800); // 800ms delay before closing - more time to navigate
+    }, 500); // 500ms delay before closing
     setHoverTimeout(timeout);
   };
 
@@ -54,7 +68,7 @@ export default function Header() {
   const handleWhatWeDoMouseLeave = () => {
     const timeout = setTimeout(() => {
       setWhatWeDoDropdownOpen(false);
-    }, 800); // 800ms delay before closing
+    }, 500); // 500ms delay before closing
     setWhatWeDoTimeout(timeout);
   };
 
@@ -69,7 +83,7 @@ export default function Header() {
   const handleWhatWeDoDropdownMouseLeave = () => {
     const timeout = setTimeout(() => {
       setWhatWeDoDropdownOpen(false);
-    }, 800); // 800ms delay before closing
+    }, 500); // 500ms delay before closing
     setWhatWeDoTimeout(timeout);
   };
 
@@ -85,7 +99,7 @@ export default function Header() {
   const handleWhoWeAreMouseLeave = () => {
     const timeout = setTimeout(() => {
       setWhoWeAreDropdownOpen(false);
-    }, 800); // 800ms delay before closing
+    }, 500); // 500ms delay before closing
     setWhoWeAreTimeout(timeout);
   };
 
@@ -100,24 +114,9 @@ export default function Header() {
   const handleWhoWeAreDropdownMouseLeave = () => {
     const timeout = setTimeout(() => {
       setWhoWeAreDropdownOpen(false);
-    }, 800); // 800ms delay before closing
+    }, 500); // 500ms delay before closing
     setWhoWeAreTimeout(timeout);
   };
-
-  // Handle clicking outside dropdowns to close them
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (!target.closest('.dropdown-container')) {
-        setHomeDropdownOpen(false);
-        setWhatWeDoDropdownOpen(false);
-        setWhoWeAreDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -127,6 +126,7 @@ export default function Header() {
       if (whoWeAreTimeout) clearTimeout(whoWeAreTimeout);
     };
   }, [hoverTimeout, whatWeDoTimeout, whoWeAreTimeout]);
+
   return (
     <header className="bg-black text-white border-b border-white/10 sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/80">
       <nav
@@ -140,31 +140,32 @@ export default function Header() {
 
         {/* Centered navigation (desktop) */}
         <ul className="hidden md:flex items-center gap-6">
-              <li className="relative dropdown-container">
-                <Link
-                  href="/"
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                  className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
-                  aria-label="Home page"
-                >
-                  Home
-                  <svg 
-                    className={`w-4 h-4 transition-transform duration-200 ${homeDropdownOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </Link>
+          {/* Home Dropdown */}
+          <li className="relative">
+            <Link
+              href="/"
+              onMouseEnter={handleHomeMouseEnter}
+              onMouseLeave={handleHomeMouseLeave}
+              className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
+              aria-label="Home page"
+            >
+              Home
+              <svg 
+                className={`w-4 h-4 transition-transform duration-200 ${homeDropdownOpen ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
             
             {/* Home Dropdown Menu */}
             {homeDropdownOpen && (
               <div 
-                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
-                onMouseEnter={handleDropdownMouseEnter}
-                onMouseLeave={handleDropdownMouseLeave}
+                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                onMouseEnter={handleHomeDropdownMouseEnter}
+                onMouseLeave={handleHomeDropdownMouseLeave}
               >
                 <div className="py-2">
                   <div className="px-4 py-2 text-xs font-semibold text-gold/80 uppercase tracking-wider border-b border-white/10">
@@ -172,11 +173,8 @@ export default function Header() {
                   </div>
                   <button
                     onClick={() => {
-                      const heroSection = document.getElementById('hero');
-                      if (heroSection) {
-                        heroSection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
+                      scrollToSection('hero', '/');
+                      setHomeDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                   >
@@ -185,11 +183,8 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      const servicesSection = document.getElementById('services');
-                      if (servicesSection) {
-                        servicesSection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
+                      scrollToSection('services', '/');
+                      setHomeDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                   >
@@ -198,11 +193,8 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      const whySection = document.getElementById('why');
-                      if (whySection) {
-                        whySection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
+                      scrollToSection('why', '/');
+                      setHomeDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                   >
@@ -211,25 +203,8 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      // Since there's no clients section on homepage, scroll to CTA instead
-                      const ctaSection = document.getElementById('cta');
-                      if (ctaSection) {
-                        ctaSection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
-                    }}
-                    className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Our Clients</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      const ctaSection = document.getElementById('cta');
-                      if (ctaSection) {
-                        ctaSection.scrollIntoView({ behavior: 'smooth' });
-                        setHomeDropdownOpen(false);
-                      }
+                      scrollToSection('cta', '/');
+                      setHomeDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                   >
@@ -241,30 +216,30 @@ export default function Header() {
             )}
           </li>
           
-              {/* What We Do Dropdown */}
-              <li className="relative dropdown-container">
-                <Link
-                  href="/what-we-do"
-                  onMouseEnter={handleWhatWeDoMouseEnter}
-                  onMouseLeave={handleWhatWeDoMouseLeave}
-                  className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
-                  aria-label="What we do page"
-                >
-                  What We Do
-                  <svg 
-                    className={`w-4 h-4 transition-transform duration-200 ${whatWeDoDropdownOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </Link>
+          {/* What We Do Dropdown */}
+          <li className="relative">
+            <Link
+              href="/what-we-do"
+              onMouseEnter={handleWhatWeDoMouseEnter}
+              onMouseLeave={handleWhatWeDoMouseLeave}
+              className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
+              aria-label="What we do page"
+            >
+              What We Do
+              <svg 
+                className={`w-4 h-4 transition-transform duration-200 ${whatWeDoDropdownOpen ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
             
             {/* What We Do Dropdown Menu */}
             {whatWeDoDropdownOpen && (
               <div 
-                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
                 onMouseEnter={handleWhatWeDoDropdownMouseEnter}
                 onMouseLeave={handleWhatWeDoDropdownMouseLeave}
               >
@@ -274,7 +249,7 @@ export default function Header() {
                   </div>
                   <button
                     onClick={() => {
-                      window.location.href = '/what-we-do#services';
+                      scrollToSection('services', '/what-we-do');
                       setWhatWeDoDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
@@ -284,7 +259,7 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      window.location.href = '/what-we-do#industries';
+                      scrollToSection('industries', '/what-we-do');
                       setWhatWeDoDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
@@ -297,30 +272,30 @@ export default function Header() {
             )}
           </li>
 
-              {/* Who We Are Dropdown */}
-              <li className="relative dropdown-container">
-                <Link
-                  href="/who-we-are"
-                  onMouseEnter={handleWhoWeAreMouseEnter}
-                  onMouseLeave={handleWhoWeAreMouseLeave}
-                  className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
-                  aria-label="Who we are page"
-                >
-                  Who We Are
-                  <svg 
-                    className={`w-4 h-4 transition-transform duration-200 ${whoWeAreDropdownOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </Link>
+          {/* Who We Are Dropdown */}
+          <li className="relative">
+            <Link
+              href="/who-we-are"
+              onMouseEnter={handleWhoWeAreMouseEnter}
+              onMouseLeave={handleWhoWeAreMouseLeave}
+              className="px-2 py-1 rounded hover:text-gold hover:underline underline-offset-4 transition flex items-center gap-1"
+              aria-label="Who we are page"
+            >
+              Who We Are
+              <svg 
+                className={`w-4 h-4 transition-transform duration-200 ${whoWeAreDropdownOpen ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
             
             {/* Who We Are Dropdown Menu */}
             {whoWeAreDropdownOpen && (
               <div 
-                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
                 onMouseEnter={handleWhoWeAreDropdownMouseEnter}
                 onMouseLeave={handleWhoWeAreDropdownMouseLeave}
               >
@@ -330,7 +305,7 @@ export default function Header() {
                   </div>
                   <button
                     onClick={() => {
-                      window.location.href = '/who-we-are#customer-story';
+                      scrollToSection('customer-story', '/who-we-are');
                       setWhoWeAreDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
@@ -340,7 +315,7 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      window.location.href = '/who-we-are#case-study';
+                      scrollToSection('case-study', '/who-we-are');
                       setWhoWeAreDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
@@ -350,7 +325,7 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
-                      window.location.href = '/who-we-are#events';
+                      scrollToSection('events', '/who-we-are');
                       setWhoWeAreDropdownOpen(false);
                     }}
                     className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
@@ -406,11 +381,8 @@ export default function Header() {
                 </div>
                 <button
                   onClick={() => {
-                    const heroSection = document.getElementById('hero');
-                    if (heroSection) {
-                      heroSection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
+                    scrollToSection('hero', '/');
+                    setOpen(false);
                   }}
                   className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                 >
@@ -419,11 +391,8 @@ export default function Header() {
                 </button>
                 <button
                   onClick={() => {
-                    const servicesSection = document.getElementById('services');
-                    if (servicesSection) {
-                      servicesSection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
+                    scrollToSection('services', '/');
+                    setOpen(false);
                   }}
                   className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                 >
@@ -432,11 +401,8 @@ export default function Header() {
                 </button>
                 <button
                   onClick={() => {
-                    const whySection = document.getElementById('why');
-                    if (whySection) {
-                      whySection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
+                    scrollToSection('why', '/');
+                    setOpen(false);
                   }}
                   className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                 >
@@ -445,25 +411,8 @@ export default function Header() {
                 </button>
                 <button
                   onClick={() => {
-                    // Since there's no clients section on homepage, scroll to CTA instead
-                    const ctaSection = document.getElementById('cta');
-                    if (ctaSection) {
-                      ctaSection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
-                  }}
-                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                >
-                  <div className="w-2 h-2 bg-gold rounded-full"></div>
-                  <span>Our Clients</span>
-                </button>
-                <button
-                  onClick={() => {
-                    const ctaSection = document.getElementById('cta');
-                    if (ctaSection) {
-                      ctaSection.scrollIntoView({ behavior: 'smooth' });
-                      setOpen(false);
-                    }
+                    scrollToSection('cta', '/');
+                    setOpen(false);
                   }}
                   className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
                 >
@@ -471,82 +420,82 @@ export default function Header() {
                   <span>Get Started</span>
                 </button>
               </li>
-                <li className="border-t border-white/10 mt-2 pt-2">
-                  <Link
-                    href="/what-we-do"
-                    className="w-full text-left px-4 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                    onClick={() => setOpen(false)}
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>What We Do</span>
-                  </Link>
-                  <div className="px-4 py-2 text-xs font-semibold text-gold/80 uppercase tracking-wider">
-                    What We Do Sections
-                  </div>
-                  <button
-                    onClick={() => {
-                      window.location.href = '/what-we-do#services';
-                      setOpen(false);
-                    }}
-                    className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Services</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      window.location.href = '/what-we-do#industries';
-                      setOpen(false);
-                    }}
-                    className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Industries</span>
-                  </button>
-                </li>
-                
-                <li className="border-t border-white/10 mt-2 pt-2">
-                  <Link
-                    href="/who-we-are"
-                    className="w-full text-left px-4 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                    onClick={() => setOpen(false)}
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Who We Are</span>
-                  </Link>
-                  <div className="px-4 py-2 text-xs font-semibold text-gold/80 uppercase tracking-wider">
-                    Who We Are Sections
-                  </div>
-                  <button
-                    onClick={() => {
-                      window.location.href = '/who-we-are#customer-story';
-                      setOpen(false);
-                    }}
-                    className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Customer Story</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      window.location.href = '/who-we-are#case-study';
-                      setOpen(false);
-                    }}
-                    className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Case Study</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      window.location.href = '/who-we-are#events';
-                      setOpen(false);
-                    }}
-                    className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
-                  >
-                    <div className="w-2 h-2 bg-gold rounded-full"></div>
-                    <span>Events</span>
-                  </button>
+              <li className="border-t border-white/10 mt-2 pt-2">
+                <Link
+                  href="/what-we-do"
+                  className="w-full text-left px-4 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                  onClick={() => setOpen(false)}
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>What We Do</span>
+                </Link>
+                <div className="px-4 py-2 text-xs font-semibold text-gold/80 uppercase tracking-wider">
+                  What We Do Sections
+                </div>
+                <button
+                  onClick={() => {
+                    scrollToSection('services', '/what-we-do');
+                    setOpen(false);
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Services</span>
+                </button>
+                <button
+                  onClick={() => {
+                    scrollToSection('industries', '/what-we-do');
+                    setOpen(false);
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Industries</span>
+                </button>
+              </li>
+              
+              <li className="border-t border-white/10 mt-2 pt-2">
+                <Link
+                  href="/who-we-are"
+                  className="w-full text-left px-4 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                  onClick={() => setOpen(false)}
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Who We Are</span>
+                </Link>
+                <div className="px-4 py-2 text-xs font-semibold text-gold/80 uppercase tracking-wider">
+                  Who We Are Sections
+                </div>
+                <button
+                  onClick={() => {
+                    scrollToSection('customer-story', '/who-we-are');
+                    setOpen(false);
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Customer Story</span>
+                </button>
+                <button
+                  onClick={() => {
+                    scrollToSection('case-study', '/who-we-are');
+                    setOpen(false);
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Case Study</span>
+                </button>
+                <button
+                  onClick={() => {
+                    scrollToSection('events', '/who-we-are');
+                    setOpen(false);
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Events</span>
+                </button>
               </li>
               <li>
                 <Link
@@ -573,5 +522,3 @@ export default function Header() {
     </header>
   );
 }
-
-
