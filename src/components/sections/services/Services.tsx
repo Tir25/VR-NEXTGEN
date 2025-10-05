@@ -50,37 +50,84 @@ function ServiceCard({ service }: ServiceCardProps) {
     enabled: true
   });
 
+  const isInventoryManagement = service.title === "Inventory Management";
+  const isProductionOperations = service.title === "Production & Operations Coaching";
+  const isDataAnalysis = service.title === "Data Analysis & Insights";
+  const isBusinessStrategy = service.title === "Business Strategy Development";
+  const isPerformanceMonitoring = service.title === "Performance Monitoring";
+  const hasBackgroundImage = isInventoryManagement || isProductionOperations || isDataAnalysis || isBusinessStrategy || isPerformanceMonitoring;
+
+  const getBackgroundImage = () => {
+    if (isInventoryManagement) return "url('/images/Inventory.png')";
+    if (isProductionOperations) return "url('/images/Production and operations.png')";
+    if (isDataAnalysis) return "url('/images/Data Analysis & Insights.png')";
+    if (isBusinessStrategy) return "url('/images/Business Strategy Development.png')";
+    if (isPerformanceMonitoring) return "url('/images/Performance Monitoring.png')";
+    return null;
+  };
+
   return (
     <article
       ref={cardRef}
-      className="group card-3d card-shadow border border-gray-200 rounded-xl p-6 bg-gradient-to-br from-white/90 to-gray-50 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100 transition-all duration-500 relative overflow-hidden"
+      className={`group card-3d card-shadow border border-gray-200 rounded-xl p-6 transition-all duration-500 relative overflow-hidden ${
+        hasBackgroundImage 
+          ? 'hover:border-sand-yellow/50' 
+          : 'bg-gradient-to-br from-white/90 to-gray-50 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100'
+      }`}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
-      {/* Background glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sand-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+      {/* Background image for cards with images */}
+      {hasBackgroundImage && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-xl"
+          style={{
+            backgroundImage: getBackgroundImage(),
+          }}
+        />
+      )}
+      
+      {/* Dark overlay for cards with background images to ensure text readability */}
+      {hasBackgroundImage && (
+        <div className="absolute inset-0 bg-black/60 rounded-xl group-hover:bg-black/50 transition-all duration-500" />
+      )}
+      
+      {/* Background glow effect for cards without background images */}
+      {!hasBackgroundImage && (
+        <div className="absolute inset-0 bg-gradient-to-br from-sand-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+      )}
       
       {/* Icon */}
       <div className="relative z-10 mb-4">
-        <div className="w-16 h-16 bg-sand-yellow/10 rounded-xl flex items-center justify-center text-3xl group-hover:bg-sand-yellow/20 group-hover:scale-110 transition-all duration-300">
+        <div className={`w-16 h-16 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-all duration-300 ${
+          hasBackgroundImage 
+            ? 'bg-white/20 backdrop-blur-sm group-hover:bg-white/30' 
+            : 'bg-sand-yellow/10 group-hover:bg-sand-yellow/20'
+        }`}>
           {service.icon}
         </div>
       </div>
 
       {/* Content */}
       <div className="relative z-10">
-        <h3 className="text-xl font-semibold text-black mb-3 group-hover:text-sand-yellow transition-colors duration-300">
+        <h3 className={`text-xl font-semibold mb-3 group-hover:text-sand-yellow transition-colors duration-300 ${
+          hasBackgroundImage ? 'text-white' : 'text-black'
+        }`}>
           {service.title}
         </h3>
         
-        <p className="text-sm text-black/70 mb-4 leading-relaxed">
+        <p className={`text-sm mb-4 leading-relaxed ${
+          hasBackgroundImage ? 'text-white/90' : 'text-black/70'
+        }`}>
           {service.description}
         </p>
 
         {/* Features list */}
         <div className="space-y-2">
           {service.features.map((feature, index) => (
-            <div key={index} className="flex items-center gap-2 text-xs text-black/60">
+            <div key={index} className={`flex items-center gap-2 text-xs ${
+              hasBackgroundImage ? 'text-white/80' : 'text-black/60'
+            }`}>
               <div className="w-1.5 h-1.5 bg-sand-yellow rounded-full" />
               <span>{feature}</span>
             </div>
@@ -88,7 +135,9 @@ function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Learn more link */}
-        <div className="mt-4 pt-4 border-t border-gray-200">
+        <div className={`mt-4 pt-4 ${
+          hasBackgroundImage ? 'border-t border-white/20' : 'border-t border-gray-200'
+        }`}>
           <span className="text-sand-yellow text-sm font-medium group-hover:underline cursor-pointer">
             Learn More →
           </span>
