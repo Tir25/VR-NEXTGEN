@@ -67,7 +67,7 @@ function AnimatedBackground() {
       if (now - lastSectionUpdateTime < sectionThrottleDelay) return;
       lastSectionUpdateTime = now;
       
-      const sections = ['hero', 'services', 'why', 'cta'];
+      const sections = ['hero', 'services', 'why', 'clients', 'cta', 'customer-story', 'case-study', 'events'];
       const windowHeight = window.innerHeight;
       
       // Find the section that's most visible in the viewport

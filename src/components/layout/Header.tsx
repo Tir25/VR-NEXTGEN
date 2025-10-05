@@ -104,6 +104,21 @@ export default function Header() {
     setWhoWeAreTimeout(timeout);
   };
 
+  // Handle clicking outside dropdowns to close them
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (!target.closest('.dropdown-container')) {
+        setHomeDropdownOpen(false);
+        setWhatWeDoDropdownOpen(false);
+        setWhoWeAreDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
@@ -125,7 +140,7 @@ export default function Header() {
 
         {/* Centered navigation (desktop) */}
         <ul className="hidden md:flex items-center gap-6">
-              <li className="relative">
+              <li className="relative dropdown-container">
                 <Link
                   href="/"
                   onMouseEnter={handleMouseEnter}
@@ -147,7 +162,7 @@ export default function Header() {
             {/* Home Dropdown Menu */}
             {homeDropdownOpen && (
               <div 
-                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
                 onMouseEnter={handleDropdownMouseEnter}
                 onMouseLeave={handleDropdownMouseLeave}
               >
@@ -196,6 +211,20 @@ export default function Header() {
                   </button>
                   <button
                     onClick={() => {
+                      // Since there's no clients section on homepage, scroll to CTA instead
+                      const ctaSection = document.getElementById('cta');
+                      if (ctaSection) {
+                        ctaSection.scrollIntoView({ behavior: 'smooth' });
+                        setHomeDropdownOpen(false);
+                      }
+                    }}
+                    className="w-full text-left px-4 py-3 hover:bg-gold/10 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                  >
+                    <div className="w-2 h-2 bg-gold rounded-full"></div>
+                    <span>Our Clients</span>
+                  </button>
+                  <button
+                    onClick={() => {
                       const ctaSection = document.getElementById('cta');
                       if (ctaSection) {
                         ctaSection.scrollIntoView({ behavior: 'smooth' });
@@ -213,7 +242,7 @@ export default function Header() {
           </li>
           
               {/* What We Do Dropdown */}
-              <li className="relative">
+              <li className="relative dropdown-container">
                 <Link
                   href="/what-we-do"
                   onMouseEnter={handleWhatWeDoMouseEnter}
@@ -235,7 +264,7 @@ export default function Header() {
             {/* What We Do Dropdown Menu */}
             {whatWeDoDropdownOpen && (
               <div 
-                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
                 onMouseEnter={handleWhatWeDoDropdownMouseEnter}
                 onMouseLeave={handleWhatWeDoDropdownMouseLeave}
               >
@@ -269,7 +298,7 @@ export default function Header() {
           </li>
 
               {/* Who We Are Dropdown */}
-              <li className="relative">
+              <li className="relative dropdown-container">
                 <Link
                   href="/who-we-are"
                   onMouseEnter={handleWhoWeAreMouseEnter}
@@ -291,7 +320,7 @@ export default function Header() {
             {/* Who We Are Dropdown Menu */}
             {whoWeAreDropdownOpen && (
               <div 
-                className="absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
+                className="dropdown-container absolute top-full left-0 mt-2 w-64 bg-black/95 border border-white/10 rounded-lg shadow-xl backdrop-blur-sm z-50"
                 onMouseEnter={handleWhoWeAreDropdownMouseEnter}
                 onMouseLeave={handleWhoWeAreDropdownMouseLeave}
               >
@@ -413,6 +442,20 @@ export default function Header() {
                 >
                   <div className="w-2 h-2 bg-gold rounded-full"></div>
                   <span>Why Choose Us</span>
+                </button>
+                <button
+                  onClick={() => {
+                    // Since there's no clients section on homepage, scroll to CTA instead
+                    const ctaSection = document.getElementById('cta');
+                    if (ctaSection) {
+                      ctaSection.scrollIntoView({ behavior: 'smooth' });
+                      setOpen(false);
+                    }
+                  }}
+                  className="w-full text-left px-6 py-3 hover:bg-white/5 hover:text-gold transition-colors duration-200 flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-gold rounded-full"></div>
+                  <span>Our Clients</span>
                 </button>
                 <button
                   onClick={() => {
