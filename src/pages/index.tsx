@@ -25,7 +25,7 @@ const Services = dynamic(() => import("@/components/sections/services/Services")
 });
 
 const WhyChooseUs = dynamic(() => import("@/components/sections/why-choose-us/WhyChooseUs"), {
-  ssr: false,
+  ssr: true, // Changed to true to ensure it's always available for navigation
   loading: () => (
     <div className="py-16 md:py-24">
       <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">

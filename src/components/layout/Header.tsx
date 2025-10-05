@@ -17,10 +17,27 @@ export default function Header() {
       // Navigate to different page first, then scroll
       window.location.href = `${pagePath}#${sectionId}`;
     } else {
-      // Scroll to section on current page
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      // Scroll to section on current page with retry for lazy-loaded components
+      const scrollToElement = () => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          return true;
+        }
+        return false;
+      };
+
+      // Try immediately first
+      if (!scrollToElement()) {
+        // If element not found, wait a bit and try again (for lazy-loaded components)
+        setTimeout(() => {
+          if (!scrollToElement()) {
+            // If still not found after 1 second, try one more time after 2 seconds
+            setTimeout(() => {
+              scrollToElement();
+            }, 2000);
+          }
+        }, 1000);
       }
     }
   };
