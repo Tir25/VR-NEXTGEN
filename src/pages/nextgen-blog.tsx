@@ -101,7 +101,7 @@ const blogPosts = [
   }
 ];
 
-function InstagramPost({ post, index }: { post: typeof blogPosts[0], index: number }) {
+function InstagramPost({ post }: { post: typeof blogPosts[0], index: number }) {
   return (
     <div className="bg-black border border-gray-800 rounded-lg overflow-hidden">
       {/* Post Header */}

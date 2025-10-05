@@ -62,7 +62,7 @@ function Dropdown({ page, isActive, onClose }: DropdownProps) {
             {page.label} Sections
           </span>
         </div>
-        {page.sections.map((section, index) => (
+        {page.sections.map((section) => (
           <button
             key={section.id}
             onClick={() => handleSectionClick(section.id)}
@@ -83,7 +83,7 @@ function Dropdown({ page, isActive, onClose }: DropdownProps) {
 }
 
 // Desktop Navigation Item Component
-function DesktopNavItem({ pageKey, page }: NavItemProps) {
+function DesktopNavItem({ page }: NavItemProps) {
   const { isCurrentPage } = useNavigation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -100,7 +100,7 @@ function DesktopNavItem({ pageKey, page }: NavItemProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleMainLinkClick = (e: React.MouseEvent) => {
+  const handleMainLinkClick = () => {
     // Navigate to the main page
     // This will be handled by the Link component
     setIsDropdownOpen(false); // Close dropdown when navigating
@@ -169,8 +169,8 @@ function DesktopNavItem({ pageKey, page }: NavItemProps) {
 }
 
 // Mobile Navigation Item Component
-function MobileNavItem({ pageKey, page, isExpanded, onToggle }: NavItemProps) {
-  const { navigateToSection, currentPath, currentSection } = useEnhancedNavigation();
+function MobileNavItem({ page, isExpanded, onToggle }: NavItemProps) {
+  const { navigateToSection } = useEnhancedNavigation();
 
   const handleMainLinkClick = () => {
     // Navigate to the main page
@@ -253,7 +253,7 @@ function MobileNavItem({ pageKey, page, isExpanded, onToggle }: NavItemProps) {
 
 export default function Header() {
   const router = useRouter();
-  const { currentPath, currentSection, navigateToSection, isCurrentPage } = useEnhancedNavigation();
+  const { isCurrentPage } = useEnhancedNavigation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileDropdowns, setExpandedMobileDropdowns] = useState<Set<string>>(new Set());
   const mobileMenuRef = useRef<HTMLDivElement>(null);

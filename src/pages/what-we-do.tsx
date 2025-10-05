@@ -30,7 +30,6 @@ const IndustriesSection = dynamic(() => import("@/components/sections/what-we-do
 
 export default function WhatWeDoPage() {
   const parallax = useParallax(0.25);
-  const { cardRef, onMouseMove, onMouseLeave } = use3DTilt();
 
   return (
     <Layout title="What We Do" description="Comprehensive business solutions and industry expertise">

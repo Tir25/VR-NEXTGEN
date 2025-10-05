@@ -82,7 +82,7 @@ function ServiceCard({ service }: ServiceCardProps) {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-xl"
           style={{
-            backgroundImage: getBackgroundImage(),
+            backgroundImage: getBackgroundImage() || undefined,
           }}
         />
       )}
