@@ -8,6 +8,50 @@ module.exports = {
     "./src/utils/**/*.{js,ts,jsx,tsx}",
     "./src/services/**/*.{js,ts,jsx,tsx}"
   ],
+  // Enable purging for production builds
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      "./src/pages/**/*.{js,ts,jsx,tsx}",
+      "./src/components/**/*.{js,ts,jsx,tsx}",
+      "./src/hooks/**/*.{js,ts,jsx,tsx}",
+      "./src/contexts/**/*.{js,ts,jsx,tsx}",
+      "./src/utils/**/*.{js,ts,jsx,tsx}",
+      "./src/services/**/*.{js,ts,jsx,tsx}"
+    ],
+    options: {
+      safelist: [
+        // Keep dynamic classes that might be missed
+        /^animate-/,
+        /^transition-/,
+        /^duration-/,
+        /^ease-/,
+        /^transform/,
+        /^hover:/,
+        /^focus:/,
+        /^active:/,
+        /^group-hover:/,
+        /^md:/,
+        /^lg:/,
+        /^xl:/,
+        /^sm:/,
+        /^xs:/,
+        // Keep custom classes
+        'btn-enhanced',
+        'card-3d',
+        'card-shadow',
+        'section-hero',
+        'section-services',
+        'section-why-choose',
+        'section-clients',
+        'site-bg',
+        'site-bg__grid',
+        'site-bg__aurora',
+        'site-bg__shine',
+        'site-bg__vignette'
+      ]
+    }
+  },
   theme: {
     extend: {
       colors: {
@@ -17,7 +61,10 @@ module.exports = {
         'gold-dark': "#AD974F",
         'gold-darker': "#8E793E",
         white: "#FFFFFF",
-        'light-grey': "#EAEAEA"
+        'light-grey': "#EAEAEA",
+        'glory-white': "#E6E6E6",
+        'sand-yellow': "#FFBB01",
+        'gray-night-black': "#1A1A1A"
       },
       screens: {
         xs: "320px",

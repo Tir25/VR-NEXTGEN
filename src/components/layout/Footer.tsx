@@ -14,8 +14,9 @@ export default function Footer() {
         <nav aria-label="Footer navigation">
           <ul className="flex gap-4 justify-start md:justify-center">
             <li><Link href="/" className="hover:text-gold">Home</Link></li>
-            <li><Link href="/about" className="hover:text-gold">About</Link></li>
-            <li><Link href="/clients" className="hover:text-gold">Clients</Link></li>
+            <li><Link href="/what-we-do" className="hover:text-gold">What We Do</Link></li>
+            <li><Link href="/who-we-are" className="hover:text-gold">Who We Are</Link></li>
+            <li><Link href="/nextgen-blog" className="hover:text-gold">Blog</Link></li>
             <li><Link href="/contact" className="hover:text-gold">Contact</Link></li>
           </ul>
         </nav>

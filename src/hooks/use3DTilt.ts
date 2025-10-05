@@ -36,7 +36,7 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
     const rotateX = ((y - centerY) / centerY) * maxTilt;
     const rotateY = ((centerX - x) / centerX) * maxTilt;
     
-    // Apply 3D transform with perspective
+    // Apply 3D transform with perspective - Hardware accelerated
     card.style.transform = `
       perspective(1000px) 
       rotateX(${rotateX}deg) 
@@ -44,13 +44,16 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
       translateZ(10px)
     `;
     
-    // Add dynamic shadow based on tilt
+    // Add dynamic shadow based on tilt - Optimized calculation
     const shadowX = Math.round((rotateY / maxTilt) * 20);
     const shadowY = Math.round((rotateX / maxTilt) * 20);
     card.style.boxShadow = `
       ${shadowX}px ${shadowY}px 40px rgba(0, 0, 0, 0.3),
       0 0 20px rgba(255, 215, 0, 0.1)
     `;
+    
+    // Force hardware acceleration
+    card.style.willChange = 'transform, box-shadow';
   }, [enabled, maxTilt]);
 
   const handleMouseLeave = useCallback(() => {
@@ -58,9 +61,12 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
 
     const card = cardRef.current;
     
-    // Reset transform and shadow
+    // Reset transform and shadow - Hardware accelerated
     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
     card.style.boxShadow = '';
+    
+    // Reset will-change for performance
+    card.style.willChange = 'auto';
   }, [enabled]);
 
   return {

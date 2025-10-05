@@ -1,27 +1,64 @@
 import Layout from "@/components/layout/Layout";
 import dynamic from "next/dynamic";
-const Hero = dynamic(() => import("@/components/sections/hero/Hero"), { ssr: true });
-import Services from "@/components/sections/services/Services";
-import WhyChooseUs from "@/components/sections/why-choose-us/WhyChooseUs";
-const ClientCarousel = dynamic(() => import("@/components/widgets/ClientCarousel"), { ssr: false });
-import type { ClientItem } from "@/components/widgets/ClientCarousel";
-import CTABanner from "@/components/sections/cta/CTABanner";
+import LazyWrapper from "@/components/common/LazyWrapper";
+
+// Critical above-the-fold content - load immediately
+const Hero = dynamic(() => import("@/components/sections/hero/Hero"), { 
+  ssr: true,
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-pulse text-gold text-xl">Loading...</div>
+    </div>
+  )
+});
+
+// Non-critical content - lazy load when in viewport
+const Services = dynamic(() => import("@/components/sections/services/Services"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-24">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Services...</div>
+      </div>
+    </div>
+  )
+});
+
+const WhyChooseUs = dynamic(() => import("@/components/sections/why-choose-us/WhyChooseUs"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-24">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Why Choose Us...</div>
+      </div>
+    </div>
+  )
+});
+
+const CTABanner = dynamic(() => import("@/components/sections/cta/CTABanner"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-12 md:py-16">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-32 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading CTA...</div>
+      </div>
+    </div>
+  )
+});
 
 export default function Home() {
-  const homeLogos: ClientItem[] = [
-    { src: "/vercel.svg", title: "Vercel" },
-    { src: "/next.svg", title: "Next.js" },
-    { src: "/globe.svg", title: "Global Co." },
-    { src: "/window.svg", title: "Window Corp." },
-    { src: "/file.svg", title: "FileWorks" },
-  ];
   return (
     <Layout title="Home" description="VR NextGEN Solutions – Data-driven consultancy">
       <Hero />
-      <Services />
-      <WhyChooseUs />
-      <ClientCarousel items={homeLogos} />
-      <CTABanner />
+      <LazyWrapper rootMargin="200px">
+        <Services />
+      </LazyWrapper>
+      <LazyWrapper rootMargin="200px">
+        <WhyChooseUs />
+      </LazyWrapper>
+      <LazyWrapper rootMargin="200px">
+        <CTABanner />
+      </LazyWrapper>
     </Layout>
   );
 }

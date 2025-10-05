@@ -11,12 +11,29 @@
   --color-gold-darker: #8e793e;
   --color-light-grey: #eaeaea;
   
+  /* New Section-Specific Colors */
+  --glory-white: #E6E6E6;
+  --sand-yellow: #FFBB01;
+  --gray-night-black: #1A1A1A;
+  
   /* Semantic Color Mappings */
   --background: var(--color-black);
   --foreground: var(--color-white);
   --accent-gold: var(--color-gold);
   --text-secondary: var(--color-deep-charcoal);
   --border-light: var(--color-light-grey);
+  
+  /* Section Background Variables */
+  --section-bg-hero: var(--color-black);
+  --section-bg-services: var(--glory-white);
+  --section-bg-why-choose: var(--gray-night-black);
+  --section-bg-clients: var(--glory-white);
+  
+  /* Section Text Colors */
+  --text-hero: var(--color-white);
+  --text-services: var(--color-black);
+  --text-why-choose: var(--color-white);
+  --text-clients: var(--color-black);
 }
 
 @theme inline {
@@ -121,6 +138,36 @@ a .btn-enhanced {
   text-decoration: none;
 }
 
+/* ===== Section-Specific Background System ===== */
+/* Base section styling with smooth transitions */
+section {
+  transition: background-color 1.5s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Ensure sections are above background */
+}
+
+/* Section-specific background classes - transparent to show animated background */
+.section-hero {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-hero);
+}
+
+.section-services {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-services);
+}
+
+.section-why-choose {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-why-choose);
+}
+
+.section-clients {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-clients);
+}
+
 /* ===== Site-wide animated premium background ===== */
 /* Layered background that does not affect layout (pointer-events: none) */
 .site-bg {
@@ -131,18 +178,25 @@ a .btn-enhanced {
   --cursor-x: 0.5;
   --cursor-y: 0.5;
   --gold: var(--accent-gold);
+  transition: all 1.5s ease-in-out;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
+  will-change: background-color; /* Optimize for background transitions */
 }
 
-/* Subtle moving grid lines */
+/* Subtle moving grid lines - Hardware accelerated */
 .site-bg__grid {
   position: absolute;
   inset: -2px; /* avoid seams */
   background-image:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size: 40px 40px, 40px 40px;
   filter: blur(0.3px);
-  animation: bg-pan 60s linear infinite;
+  animation: bg-pan 20s linear infinite;
+  will-change: background-position;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
 }
 
 @keyframes bg-pan {
@@ -150,7 +204,7 @@ a .btn-enhanced {
   100% { background-position: 400px 400px, 400px 400px; }
 }
 
-/* Aurora blobs with slow parallax drift */
+/* Aurora blobs with slow parallax drift - Hardware accelerated */
 .site-bg__aurora {
   position: absolute;
   inset: 0;
@@ -160,6 +214,9 @@ a .btn-enhanced {
     radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.08), transparent 65%);
   transform: translateZ(0);
   animation: aurora-drift 50s ease-in-out infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden; /* Optimize rendering */
+  perspective: 1000px; /* Enable 3D acceleration */
 }
 
 @keyframes aurora-drift {
@@ -167,7 +224,7 @@ a .btn-enhanced {
   100% { transform: translate3d(0,-20px,0); }
 }
 
-/* Cursor reactive shine (subtle) */
+/* Cursor reactive shine (subtle) - Hardware accelerated */
 .site-bg__shine {
   position: absolute;
   inset: 0;
@@ -178,21 +235,113 @@ a .btn-enhanced {
   );
   mix-blend-mode: screen;
   transition: background-position 120ms ease-out;
+  will-change: background-position;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
 }
 
-/* Soft vignette for depth */
+/* Soft vignette for depth - Hardware accelerated */
 .site-bg__vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(1200px 600px at 50% 120%, rgba(0,0,0,0.6), transparent 60%),
               radial-gradient(1200px 600px at 50% -20%, rgba(0,0,0,0.5), transparent 60%),
               linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4));
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
 }
 
 /* Respect user preference to reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .site-bg__grid { animation: none; }
-  .site-bg__aurora { animation: none; }
+  .site-bg__grid { 
+    animation: none !important; 
+  }
+  .site-bg__aurora { 
+    animation: none !important; 
+  }
+  .site-bg__shine {
+    transition: none !important;
+  }
+}
+
+/* Section-specific background layer adaptations */
+/* Apply background colors to the animated background layers instead of sections */
+
+/* Hero section - default dark background */
+.site-bg.section-hero {
+  background-color: var(--section-bg-hero);
+}
+
+/* Services section - white background */
+.site-bg.section-services {
+  background-color: var(--section-bg-services);
+}
+
+.site-bg.section-services .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+}
+
+.site-bg.section-services .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+}
+
+.site-bg.section-services .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(255, 187, 1, 0.15),
+    transparent 60%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Why Choose Us section - dark background */
+.site-bg.section-why-choose {
+  background-color: var(--section-bg-why-choose);
+}
+
+.site-bg.section-why-choose .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+}
+
+.site-bg.section-why-choose .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.15), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.12), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.10), transparent 65%);
+}
+
+/* Clients section - white background */
+.site-bg.section-clients {
+  background-color: var(--section-bg-clients);
+}
+
+.site-bg.section-clients .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+}
+
+.site-bg.section-clients .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+}
+
+.site-bg.section-clients .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(255, 187, 1, 0.15),
+    transparent 60%
+  );
+  mix-blend-mode: multiply;
 }
 
 /* Smaller grid and subtler glow on mobile to avoid distraction */
@@ -203,6 +352,16 @@ a .btn-enhanced {
       color-mix(in oklab, var(--gold) 10%, transparent),
       transparent 60%
     ); }
+  
+  /* Mobile adjustments for white sections */
+  .site-bg.section-services .site-bg__shine,
+  .site-bg.section-clients .site-bg__shine { 
+    background: radial-gradient(
+      400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+      rgba(255, 187, 1, 0.12),
+      transparent 60%
+    ); 
+  }
 }
 
 /* ===== 3D Card Tilt Effects ===== */
@@ -248,35 +407,7 @@ a .btn-enhanced {
   50% { transform: translateY(-10px); }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Gradient text effect */
-.gradient-text {
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Enhanced glow effects */
-.glow-gold {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-}
-
-.glow-gold:hover {
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-}
-
-/* Animated background patterns */
-.animated-bg {
-  background-image: 
-    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-  animation: bgShift 20s ease-in-out infinite;
-}
+/* Removed unused CSS classes for optimization */
 
 @keyframes bgShift {
   0%, 100% { 
@@ -345,17 +476,7 @@ a .btn-enhanced {
   background: rgba(255, 215, 0, 0.5);
 }
 
-/* Enhanced loading states */
-.loading-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
+/* Removed unused loading-shimmer class for optimization */
 
 /* Text selection styling */
 ::selection {
@@ -368,17 +489,4 @@ a .btn-enhanced {
   color: white;
 }
 
-/* Enhanced mobile optimizations */
-@media (max-width: 768px) {
-  .animate-float {
-    animation-duration: 4s;
-  }
-  
-  .glow-gold {
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-  }
-  
-  .glow-gold:hover {
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-  }
-}
+/* Removed mobile optimizations for unused classes */

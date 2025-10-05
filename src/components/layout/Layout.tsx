@@ -1,17 +1,26 @@
 import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer";
-import { ReactNode } from "react";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
+import { ReactNode, useState } from "react";
 import React from "react";
 
 function AnimatedBackground() {
   const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const [currentSection, setCurrentSection] = useState('hero');
 
   React.useEffect(() => {
     if (!rootRef.current) return;
 
-    // Safe event handler that supports mouse, pointer and touch events without relying on instanceof checks
+    // Optimized event handler with throttling for better performance
+    let lastUpdateTime = 0;
+    const throttleDelay = 16; // ~60fps
+    
     function update(e: Event) {
+      const now = Date.now();
+      if (now - lastUpdateTime < throttleDelay) return;
+      lastUpdateTime = now;
+      
       let x = 0.5;
       let y = 0.5;
       type TouchPoint = { clientX: number; clientY: number };
@@ -41,22 +50,77 @@ function AnimatedBackground() {
       }
       const target = rootRef.current;
       if (!target) return;
-      target.style.setProperty("--cursor-x", `${x}`);
-      target.style.setProperty("--cursor-y", `${y}`);
+      
+      // Use requestAnimationFrame for smooth updates
+      requestAnimationFrame(() => {
+        target.style.setProperty("--cursor-x", `${x}`);
+        target.style.setProperty("--cursor-y", `${y}`);
+      });
+    }
+
+    // Optimized section detection with throttling
+    let lastSectionUpdateTime = 0;
+    const sectionThrottleDelay = 100; // Update section every 100ms max
+    
+    function updateCurrentSection() {
+      const now = Date.now();
+      if (now - lastSectionUpdateTime < sectionThrottleDelay) return;
+      lastSectionUpdateTime = now;
+      
+      const sections = ['hero', 'services', 'why', 'clients'];
+      const windowHeight = window.innerHeight;
+      
+      // Find the section that's most visible in the viewport
+      let mostVisibleSection = 'hero';
+      let maxVisibility = 0;
+      
+      for (let i = 0; i < sections.length; i++) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          const sectionTop = rect.top;
+          const sectionBottom = rect.bottom;
+          
+          // Calculate how much of the section is visible
+          const visibleTop = Math.max(0, sectionTop);
+          const visibleBottom = Math.min(windowHeight, sectionBottom);
+          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+          const visibilityRatio = visibleHeight / windowHeight;
+          
+          if (visibilityRatio > maxVisibility) {
+            maxVisibility = visibilityRatio;
+            mostVisibleSection = sections[i];
+          }
+        }
+      }
+      
+      setCurrentSection(mostVisibleSection);
     }
 
     window.addEventListener("pointermove", update as EventListener, { passive: true });
     window.addEventListener("pointerdown", update as EventListener, { passive: true });
+    window.addEventListener("scroll", updateCurrentSection, { passive: true });
     update(new MouseEvent("mousemove", { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }));
+    updateCurrentSection();
 
     return () => {
       window.removeEventListener("pointermove", update as EventListener);
       window.removeEventListener("pointerdown", update as EventListener);
+      window.removeEventListener("scroll", updateCurrentSection);
     };
   }, []);
 
   return (
-    <div ref={rootRef} aria-hidden className="site-bg pointer-events-none">
+    <div 
+      ref={rootRef} 
+      aria-hidden 
+      className={`site-bg pointer-events-none section-${currentSection}`}
+      style={{
+        '--cursor-x': '0.5',
+        '--cursor-y': '0.5',
+        '--gold': 'var(--accent-gold)'
+      } as React.CSSProperties}
+    >
       <div className="site-bg__grid" />
       <div className="site-bg__aurora" />
       <div className="site-bg__shine" />
@@ -76,25 +140,29 @@ export default function Layout({ title, description, children }: LayoutProps) {
   const pageDesc = description || "Professional portfolio website for VR NextGEN Solutions, a data-driven consultancy.";
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDesc} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDesc} />
-        <meta property="og:type" content="website" />
-      </Head>
-      <AnimatedBackground />
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-gold text-black px-3 py-1 rounded">
-        Skip to content
-      </a>
-      <Header />
-      <main id="main" className="flex-1">
-        {children}
-      </main>
-      <Footer />
-    </div>
+    <ErrorBoundary>
+      <div className="flex min-h-screen flex-col bg-black text-white">
+        <Head>
+          <title>{pageTitle}</title>
+          <meta name="description" content={pageDesc} />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDesc} />
+          <meta property="og:type" content="website" />
+        </Head>
+        <AnimatedBackground />
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-gold text-black px-3 py-1 rounded">
+          Skip to content
+        </a>
+        <Header />
+        <main id="main" className="flex-1">
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
+        </main>
+        <Footer />
+      </div>
+    </ErrorBoundary>
   );
 }
 
