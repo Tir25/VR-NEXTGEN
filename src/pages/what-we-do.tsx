@@ -2,7 +2,6 @@ import Layout from "@/components/layout/Layout";
 import dynamic from "next/dynamic";
 import LazyWrapper from "@/components/common/LazyWrapper";
 import { useParallax } from "@/hooks/useParallax";
-import { use3DTilt } from "@/hooks/use3DTilt";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 // Lazy load sections for better performance

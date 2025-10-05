@@ -170,7 +170,7 @@ function DesktopNavItem({ page }: NavItemProps) {
 
 // Mobile Navigation Item Component
 function MobileNavItem({ page, isExpanded, onToggle }: NavItemProps) {
-  const { navigateToSection } = useEnhancedNavigation();
+  const { navigateToSection, currentPath, currentSection } = useEnhancedNavigation();
 
   const handleMainLinkClick = () => {
     // Navigate to the main page
