@@ -53,10 +53,10 @@ export default function Home() {
       <LazyWrapper rootMargin="200px">
         <Services />
       </LazyWrapper>
-      <LazyWrapper rootMargin="200px">
+      <LazyWrapper rootMargin="400px">
         <WhyChooseUs />
       </LazyWrapper>
-      <LazyWrapper rootMargin="200px">
+      <LazyWrapper rootMargin="400px">
         <CTABanner />
       </LazyWrapper>
     </Layout>

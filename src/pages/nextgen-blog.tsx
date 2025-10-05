@@ -195,7 +195,7 @@ export default function NextGenBlogPage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Instagram-style Header */}
-      <div className="bg-black border-b border-gray-800 sticky top-0 z-50">
+      <div id="blog-header" className="bg-black border-b border-gray-800 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-3 md:px-4 py-3 md:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3">
@@ -230,13 +230,13 @@ export default function NextGenBlogPage() {
       </div>
 
       {/* Instagram Timeline Feed */}
-      <div className="max-w-2xl mx-auto py-4 px-4 md:py-8">
+      <section id="blog-feed" className="max-w-2xl mx-auto py-4 px-4 md:py-8">
         <div className="space-y-4 md:space-y-8">
           {blogPosts.map((post, index) => (
             <InstagramPost key={post.title} post={post} index={index} />
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

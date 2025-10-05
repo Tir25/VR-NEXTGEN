@@ -37,7 +37,7 @@ export default function WhatWeDoPage() {
       <ErrorBoundary>
         {/* Hero Section */}
         <section
-          id="hero"
+          id="what-we-do-hero"
           className="section-hero relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
           aria-label="What We Do Hero"
         >
@@ -113,7 +113,7 @@ export default function WhatWeDoPage() {
         </LazyWrapper>
 
         {/* Industries Section */}
-        <LazyWrapper rootMargin="200px">
+        <LazyWrapper rootMargin="400px">
           <IndustriesSection />
         </LazyWrapper>
       </ErrorBoundary>

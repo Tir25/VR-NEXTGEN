@@ -1,112 +1,41 @@
 import Layout from "@/components/layout/Layout";
 import dynamic from "next/dynamic";
+import LazyWrapper from "@/components/common/LazyWrapper";
 import { useParallax } from "@/hooks/useParallax";
 
-// Simple customer story section component
-function CustomerStorySection() {
-  return (
-    <section id="services" className="section-services relative py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-        <header className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-sand-yellow mb-6">
-            Customer Stories
-          </h2>
-          <p className="text-lg text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Real transformations, real results. Discover how we've helped businesses achieve their goals.
-          </p>
-        </header>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="bg-white/90 border border-gray-200 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-black mb-4">Digital Transformation Success</h3>
-            <p className="text-black/70 mb-4">Complete digital transformation for TechCorp Solutions.</p>
-            <div className="text-sm text-black/60">TechCorp Solutions • Technology</div>
-          </div>
-          <div className="bg-white/90 border border-gray-200 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-black mb-4">Data-Driven Growth</h3>
-            <p className="text-black/70 mb-4">Advanced analytics implementation for RetailMax Inc.</p>
-            <div className="text-sm text-black/60">RetailMax Inc • Retail</div>
-          </div>
-          <div className="bg-white/90 border border-gray-200 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-black mb-4">Operational Excellence</h3>
-            <p className="text-black/70 mb-4">Lean manufacturing implementation for ManufacturingPro.</p>
-            <div className="text-sm text-black/60">ManufacturingPro • Manufacturing</div>
-          </div>
-        </div>
+// Lazy load section components for better performance
+const CustomerStorySection = dynamic(() => import("@/components/sections/who-we-are/CustomerStorySection"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-24">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Customer Stories...</div>
       </div>
-    </section>
-  );
-}
+    </div>
+  )
+});
 
-// Simple case study section component
-function CaseStudySection() {
-  return (
-    <section id="why" className="section-why-choose relative py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-        <header className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gold mb-6">
-            Case Studies
-          </h2>
-          <p className="text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
-            In-depth analysis of our most successful projects and transformative results.
-          </p>
-        </header>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="bg-white/10 border border-white/20 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-gold mb-4">Enterprise Cloud Migration</h3>
-            <p className="text-white/80 mb-4">Complete migration of legacy systems to cloud infrastructure.</p>
-            <div className="text-sm text-white/60">Duration: 6 months • Team: 8 specialists</div>
-          </div>
-          <div className="bg-white/10 border border-white/20 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-gold mb-4">AI-Powered Analytics</h3>
-            <p className="text-white/80 mb-4">Machine learning platform for predictive business analytics.</p>
-            <div className="text-sm text-white/60">Duration: 4 months • Team: 6 specialists</div>
-          </div>
-          <div className="bg-white/10 border border-white/20 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-gold mb-4">Supply Chain Optimization</h3>
-            <p className="text-white/80 mb-4">End-to-end supply chain optimization with real-time tracking.</p>
-            <div className="text-sm text-white/60">Duration: 5 months • Team: 10 specialists</div>
-          </div>
-        </div>
+const CaseStudySection = dynamic(() => import("@/components/sections/who-we-are/CaseStudySection"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-24">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Case Studies...</div>
       </div>
-    </section>
-  );
-}
+    </div>
+  )
+});
 
-// Simple events section component
-function EventsSection() {
-  return (
-    <section id="clients" className="section-clients relative py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-        <header className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-sand-yellow mb-6">
-            Events & Workshops
-          </h2>
-          <p className="text-lg text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Join us for insightful conferences, hands-on workshops, and networking opportunities.
-          </p>
-        </header>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white/90 border border-gray-200 rounded-2xl p-8">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold text-black">Digital Transformation Summit 2024</h3>
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Upcoming</span>
-            </div>
-            <p className="text-black/70 mb-4">Join industry leaders for insights on digital transformation trends.</p>
-            <div className="text-sm text-black/60">March 15-17, 2024 • San Francisco, CA</div>
-          </div>
-          <div className="bg-white/90 border border-gray-200 rounded-2xl p-8">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold text-black">Business Analytics Workshop</h3>
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Upcoming</span>
-            </div>
-            <p className="text-black/70 mb-4">Hands-on workshop covering advanced analytics techniques.</p>
-            <div className="text-sm text-black/60">February 28, 2024 • Virtual Event</div>
-          </div>
-        </div>
+const EventsSection = dynamic(() => import("@/components/sections/who-we-are/EventsSection"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-24">
+      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Events...</div>
       </div>
-    </section>
-  );
-}
+    </div>
+  )
+});
 
 
 export default function WhoWeArePage() {
@@ -116,7 +45,7 @@ export default function WhoWeArePage() {
     <Layout title="Who We Are" description="Insights, stories, and expertise from VR NextGEN Solutions">
       {/* Hero Section */}
       <section
-        id="hero"
+        id="who-we-are-hero"
         className="section-hero relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
       >
         <div
@@ -174,13 +103,19 @@ export default function WhoWeArePage() {
       </section>
 
       {/* Customer Story Section */}
-      <CustomerStorySection />
+      <LazyWrapper rootMargin="400px">
+        <CustomerStorySection />
+      </LazyWrapper>
 
       {/* Case Study Section */}
-      <CaseStudySection />
+      <LazyWrapper rootMargin="400px">
+        <CaseStudySection />
+      </LazyWrapper>
 
       {/* Events Section */}
-      <EventsSection />
+      <LazyWrapper rootMargin="400px">
+        <EventsSection />
+      </LazyWrapper>
     </Layout>
   );
 }

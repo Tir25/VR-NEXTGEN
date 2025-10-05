@@ -1,5 +1,6 @@
-import { ReactNode, Suspense } from 'react';
+import { ReactNode, Suspense, memo } from 'react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { performanceConfig } from '@/config/app-config';
 
 interface LazyWrapperProps {
   children: ReactNode;
@@ -8,13 +9,15 @@ interface LazyWrapperProps {
   rootMargin?: string;
   className?: string;
   triggerOnce?: boolean;
+  placeholder?: ReactNode;
+  enablePerformanceMonitoring?: boolean;
 }
 
 /**
  * Lazy loading wrapper component that loads content when it enters viewport
  * Provides smooth loading experience with customizable fallbacks
  */
-export default function LazyWrapper({
+function LazyWrapper({
   children,
   fallback = (
     <div className="animate-pulse bg-gray-200/10 rounded-lg h-64 flex items-center justify-center">
@@ -22,15 +25,24 @@ export default function LazyWrapper({
     </div>
   ),
   threshold = 0.1,
-  rootMargin = '100px',
+  rootMargin = performanceConfig.lazyLoadRootMargin,
   className = '',
-  triggerOnce = true
+  triggerOnce = true,
+  placeholder,
+  enablePerformanceMonitoring = false
 }: LazyWrapperProps) {
   const { elementRef, hasIntersected } = useIntersectionObserver({
     threshold,
     rootMargin,
     triggerOnce
   });
+
+  // Performance monitoring
+  if (enablePerformanceMonitoring && hasIntersected) {
+    console.log('LazyWrapper: Component loaded', { threshold, rootMargin });
+  }
+
+  const displayFallback = placeholder || fallback;
 
   return (
     <div ref={elementRef} className={className}>
@@ -39,8 +51,10 @@ export default function LazyWrapper({
           {children}
         </Suspense>
       ) : (
-        fallback
+        displayFallback
       )}
     </div>
   );
 }
+
+export default memo(LazyWrapper);

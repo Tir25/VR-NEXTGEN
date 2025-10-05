@@ -102,7 +102,7 @@ function StoryCard({ story }: { story: typeof customerStories[0] }) {
 export default function CustomerStorySection() {
   return (
     <ErrorBoundary>
-      <section id="customer-story" className="section-services relative py-16 md:py-24" aria-label="Customer Stories">
+      <section id="customer-stories" className="section-services relative py-16 md:py-24" aria-label="Customer Stories">
         {/* Background decoration */}
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-sand-yellow/5 rounded-full blur-3xl" />

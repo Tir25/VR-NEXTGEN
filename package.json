@@ -18,7 +18,8 @@
     "optimize:css": "node scripts/optimize-css.js",
     "analyze:css": "node scripts/analyze-unused-css.js",
     "optimize:all": "npm run optimize:images && npm run optimize:logos && npm run optimize:css",
-    "build:optimized": "npm run optimize:all && npm run build"
+    "optimize:bundle": "node scripts/optimize-bundle.js",
+    "build:optimized": "npm run optimize:all && npm run build && npm run optimize:bundle"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

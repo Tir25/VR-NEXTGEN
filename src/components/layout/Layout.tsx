@@ -9,6 +9,28 @@ function AnimatedBackground() {
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [currentSection, setCurrentSection] = useState('hero');
 
+  // Function to map section IDs to CSS classes
+  function getSectionClass(sectionId: string): string {
+    const sectionMapping: Record<string, string> = {
+      'hero': 'hero',
+      'services': 'services',
+      'why': 'why-choose',
+      'cta': 'hero',
+      'what-we-do-hero': 'hero',
+      'who-we-are-hero': 'hero',
+      'customer-stories': 'services',
+      'case-studies': 'why-choose',
+      'events': 'clients',
+      'industries': 'services',
+      'contact-hero': 'hero',
+      'contact-form': 'hero',
+      'blog-header': 'hero',
+      'blog-feed': 'hero'
+    };
+    
+    return sectionMapping[sectionId] || 'hero';
+  }
+
   React.useEffect(() => {
     if (!rootRef.current) return;
 
@@ -67,7 +89,7 @@ function AnimatedBackground() {
       if (now - lastSectionUpdateTime < sectionThrottleDelay) return;
       lastSectionUpdateTime = now;
       
-      const sections = ['hero', 'services', 'why', 'clients'];
+      const sections = ['hero', 'services', 'why', 'cta', 'what-we-do-hero', 'who-we-are-hero', 'customer-stories', 'case-studies', 'events', 'industries', 'contact-hero', 'contact-form', 'blog-header', 'blog-feed'];
       const windowHeight = window.innerHeight;
       
       // Find the section that's most visible in the viewport
@@ -114,7 +136,7 @@ function AnimatedBackground() {
     <div 
       ref={rootRef} 
       aria-hidden 
-      className={`site-bg pointer-events-none section-${currentSection}`}
+      className={`site-bg pointer-events-none section-${getSectionClass(currentSection)}`}
       style={{
         '--cursor-x': '0.5',
         '--cursor-y': '0.5',

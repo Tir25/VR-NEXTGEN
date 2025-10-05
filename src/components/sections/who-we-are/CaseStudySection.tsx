@@ -165,7 +165,7 @@ function CaseStudyCard({ study }: { study: typeof caseStudies[0] }) {
 export default function CaseStudySection() {
   return (
     <ErrorBoundary>
-      <section id="case-study" className="section-why-choose relative py-16 md:py-24" aria-label="Case Studies">
+      <section id="case-studies" className="section-why-choose relative py-16 md:py-24" aria-label="Case Studies">
         {/* Background decoration */}
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gold/5 rounded-full blur-3xl" />

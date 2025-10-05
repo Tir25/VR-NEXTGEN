@@ -17,7 +17,7 @@ const ContactForm = dynamic(() => import("@/components/contact/ContactForm"), {
 export default function ContactPage() {
   return (
     <Layout title="Contact" description="Get in touch with VR NextGEN Solutions">
-      <section className="section-hero relative min-h-screen py-16">
+      <section id="contact-hero" className="section-hero relative min-h-screen py-16">
         {/* Background decoration */}
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div className="absolute top-1/4 left-1/6 w-64 h-64 bg-gold/5 rounded-full blur-3xl animate-pulse" />

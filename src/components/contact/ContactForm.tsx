@@ -63,7 +63,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="relative">
+    <section id="contact-form" className="relative">
       <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent rounded-2xl" />
       <div className="relative bg-black/40 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
         <div className="mb-8">
@@ -125,6 +125,6 @@ export default function ContactForm() {
           </Button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
