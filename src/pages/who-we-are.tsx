@@ -5,7 +5,7 @@ import { useParallax } from "@/hooks/useParallax";
 // Simple customer story section component
 function CustomerStorySection() {
   return (
-    <section id="customer-story" className="section-services relative py-16 md:py-24">
+    <section id="services" className="section-services relative py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         <header className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-sand-yellow mb-6">
@@ -40,7 +40,7 @@ function CustomerStorySection() {
 // Simple case study section component
 function CaseStudySection() {
   return (
-    <section id="case-study" className="section-why-choose relative py-16 md:py-24">
+    <section id="why" className="section-why-choose relative py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         <header className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gold mb-6">
@@ -75,7 +75,7 @@ function CaseStudySection() {
 // Simple events section component
 function EventsSection() {
   return (
-    <section id="events" className="section-clients relative py-16 md:py-24">
+    <section id="clients" className="section-clients relative py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         <header className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-sand-yellow mb-6">
