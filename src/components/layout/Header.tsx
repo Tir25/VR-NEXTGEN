@@ -324,11 +324,11 @@ export default function Header() {
     >
       <nav className="relative max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - positioned closer to top-left corner */}
                 <Link
                   href="/"
             aria-label="VR NextGEN Solutions Home" 
-            className="flex items-center gap-2 z-50 transition-transform duration-200 hover:scale-105"
+            className="flex items-center gap-2 z-50 transition-transform duration-200 hover:scale-105 -ml-2 md:-ml-3 lg:-ml-4"
                 >
             <Logo className="h-8 w-auto md:h-10" size="md" />
                 </Link>

@@ -10,5 +10,5 @@ export { useIntersectionObserver } from './useIntersectionObserver';
 export { useNavigation } from './useNavigation';
 export { useEnhancedNavigation } from './useEnhancedNavigation';
 export { useParallax } from './useParallax';
+export { useScrollFade } from './useScrollFade';
 export { useScrollToTop } from './useScrollToTop';
-export { useTypewriter } from './useTypewriter';
