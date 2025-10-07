@@ -101,7 +101,7 @@ export default function ContactPage() {
                 <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
                 <div className="flex gap-4">
                   <SocialIcon type="gmail" href={`mailto:${COMPANY_INFO.email}`} size="lg" />
-                  <SocialIcon type="instagram" href={COMPANY_INFO.instagram} size="lg" />
+                  <SocialIcon type="instagram" href={COMPANY_INFO.socialMedia.instagram} size="lg" />
                 </div>
               </div>
 

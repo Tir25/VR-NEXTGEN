@@ -19,7 +19,7 @@ export const navigationData: Record<string, NavigationPage> = {
     sections: [
       { id: "hero", label: "Hero" },
       { id: "services", label: "Services" },
-      { id: "why", label: "Why Choose Us" },
+      { id: "industries", label: "Industries" },
       { id: "cta", label: "CTA Banner" }
     ]
   },
@@ -137,7 +137,7 @@ export function useNavigation() {
             case 'services':
               approximateScrollPosition = window.innerHeight;
               break;
-            case 'why':
+            case 'industries':
               approximateScrollPosition = window.innerHeight * 2;
               break;
             case 'cta':

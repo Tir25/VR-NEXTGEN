@@ -5,7 +5,6 @@
 
 export * from './animations';
 export * from './constants';
-export * from './errorHandler';
 export * from './security';
 export * from './errorHandling';
 export * from './performance';

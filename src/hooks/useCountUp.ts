@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { ANIMATION_CONSTANTS } from '@/config';
 
-export function useCountUp(end: number, duration: number = 2000, start: number = 0) {
+export function useCountUp(end: number, duration: number = ANIMATION_CONSTANTS.COUNT_UP_DURATION, start: number = 0) {
   const [count, setCount] = useState(start);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -8,7 +9,7 @@ export function useCountUp(end: number, duration: number = 2000, start: number =
     if (count === end) return;
     
     setIsAnimating(true);
-    const increment = (end - start) / (duration / 16); // 60fps
+    const increment = (end - start) / (duration / ANIMATION_CONSTANTS.COUNT_UP_INTERVAL);
     let current = start;
     
     const timer = setInterval(() => {
@@ -20,7 +21,7 @@ export function useCountUp(end: number, duration: number = 2000, start: number =
       } else {
         setCount(Math.floor(current));
       }
-    }, 16);
+    }, ANIMATION_CONSTANTS.COUNT_UP_INTERVAL);
     
     return () => clearInterval(timer);
   }, [end, duration, start, count]);

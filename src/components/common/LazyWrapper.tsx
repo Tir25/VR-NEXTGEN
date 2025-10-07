@@ -39,7 +39,7 @@ function LazyWrapper({
 
   // Performance monitoring
   if (enablePerformanceMonitoring && hasIntersected) {
-    console.log('LazyWrapper: Component loaded', { threshold, rootMargin });
+    // LazyWrapper: Component loaded
   }
 
   const displayFallback = placeholder || fallback;

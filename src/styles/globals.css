@@ -57,9 +57,9 @@
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-duration: 0.001ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -74,7 +74,7 @@ body {
 }
 
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
-html { scroll-behavior: auto; }
+html { scroll-behavior: smooth; }
 
 /* Utility helpers */
 .text-gold { color: var(--accent-gold); }
@@ -161,6 +161,11 @@ section {
 .section-why-choose {
   background-color: transparent; /* Let animated background show through */
   color: var(--text-why-choose);
+}
+
+.section-industries {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-hero);
 }
 
 .section-clients {
@@ -270,11 +275,13 @@ section {
 /* Hero section - default dark background */
 .site-bg.section-hero {
   background-color: var(--section-bg-hero);
+  transition: background-color 0.8s ease-in-out;
 }
 
 /* Services section - white background */
 .site-bg.section-services {
   background-color: var(--section-bg-services);
+  transition: background-color 0.8s ease-in-out;
 }
 
 .site-bg.section-services .site-bg__grid {
@@ -297,6 +304,74 @@ section {
     transparent 60%
   );
   mix-blend-mode: multiply;
+}
+
+/* Industries section - dark cosmic background */
+.site-bg.section-industries {
+  background-color: var(--section-bg-hero);
+  transition: background-color 0.8s ease-in-out;
+}
+
+.site-bg.section-industries .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+}
+
+.site-bg.section-industries .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+}
+
+.site-bg.section-industries .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(157, 0, 255, 0.15),
+    transparent 60%
+  );
+}
+
+/* Modular Starfield Layer */
+.site-bg__starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 25% 25%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(2px 2px at 75% 75%, white, transparent),
+    radial-gradient(2px 2px at 100% 100%, white, transparent);
+  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.3;
+  animation: twinkle 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Industries section - Animated Starfield (legacy support) */
+.site-bg.section-industries::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 25% 25%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(2px 2px at 75% 75%, white, transparent),
+    radial-gradient(2px 2px at 100% 100%, white, transparent);
+  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.3;
+  animation: twinkle 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Why Choose Us section - dark background */
@@ -362,17 +437,26 @@ section {
       transparent 60%
     ); 
   }
+  
+  /* Mobile adjustments for Industries section */
+  .site-bg.section-industries .site-bg__shine { 
+    background: radial-gradient(
+      400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+      rgba(157, 0, 255, 0.12),
+      transparent 60%
+    ); 
+  }
 }
 
 /* ===== 3D Card Tilt Effects ===== */
 .card-3d {
   perspective: 1000px;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  /* Removed conflicting transition - handled by JavaScript */
+  will-change: transform, box-shadow;
+  backface-visibility: hidden; /* Optimize rendering */
+  -webkit-backface-visibility: hidden; /* Safari support */
 }
-
-.card-3d:hover { transform: translateZ(10px); }
 
 /* Enhanced shadow effects for cards */
 .card-shadow {
@@ -397,26 +481,170 @@ section {
   }
 }
 
+/* Twinkle animation for Industries starfield */
+@keyframes twinkle {
+  0% { 
+    background-position: 0 0, 0 0, 0 0, 0 0; 
+  }
+  100% { 
+    background-position: 200px 200px, 300px 300px, 400px 400px, 600px 600px; 
+  }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out forwards;
   opacity: 0;
 }
 
-/* Responsive and accessibility adjustments */
-@media (max-width: 768px) {
-  .card-3d,
-  .card-3d:hover { transform: none !important; }
+/* Performance optimizations - consolidated above */
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card-3d,
-  .card-shadow,
-  .animate-fade-in-up { 
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
+/* 3D Industries Carousel Styles */
+.carousel-container {
+  touch-action: none;
+  user-select: none;
+  isolation: isolate;
+}
+
+.memory-card {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+
+.memory-card:hover .card-glow {
+  opacity: 1 !important;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at 50% 50%, var(--tw-gradient-stops));
+}
+
+.control-btn {
+  will-change: transform;
+  z-index: 30;
+}
+
+/* Responsive adjustments for carousel - reduced sizes */
+@media (max-width: 1024px) {
+  .memory-card {
+    width: clamp(160px, 16vw, 220px) !important;
+    height: clamp(240px, 26vh, 300px) !important;
   }
 }
+
+@media (max-width: 768px) {
+  .memory-card {
+    width: clamp(150px, 15vw, 200px) !important;
+    height: clamp(220px, 24vh, 280px) !important;
+  }
+  
+  .control-btn {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .memory-card {
+    width: clamp(140px, 14vw, 180px) !important;
+    height: clamp(200px, 22vh, 260px) !important;
+  }
+  
+  .control-btn {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .memory-card {
+    width: clamp(120px, 12vw, 160px) !important;
+    height: clamp(180px, 20vh, 240px) !important;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .memory-card:hover {
+    transform: none !important;
+  }
+  
+  .memory-card:hover .card-glow {
+    opacity: 0 !important;
+  }
+  
+  .control-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* Reduced motion support - Enhanced accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  /* Disable all animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .card-3d,
+  .card-shadow,
+  .animate-fade-in-up,
+  .memory-card,
+  .carousel-container,
+  .control-btn {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .memory-card {
+    scale: 1 !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure all elements are visible and accessible */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+  
+  .translate-y-8,
+  .translate-x-8,
+  .-translate-y-8,
+  .-translate-x-8 {
+    transform: none !important;
+  }
+}
+
+/* Responsive and accessibility adjustments - Allow 3D effects on all devices */
+@media (max-width: 768px) {
+  .card-3d {
+    /* Keep 3D effects enabled on mobile for better UX */
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+  }
+}
+
+/* Removed duplicate reduced motion rule - consolidated above */
 
 /* ===== Enhanced Visual Elements ===== */
 
@@ -427,18 +655,6 @@ section {
 }
 
 /* Removed unused CSS classes for optimization */
-
-@keyframes bgShift {
-  0%, 100% { 
-    background-position: 0% 0%, 100% 100%, 50% 50%;
-  }
-  33% { 
-    background-position: 100% 0%, 0% 100%, 75% 25%;
-  }
-  66% { 
-    background-position: 0% 100%, 100% 0%, 25% 75%;
-  }
-}
 
 /* Enhanced section dividers */
 .section-divider {
@@ -495,7 +711,7 @@ section {
   background: rgba(255, 215, 0, 0.5);
 }
 
-/* Removed unused loading-shimmer class for optimization */
+/* Performance optimizations - removed unused classes */
 
 /* Text selection styling */
 ::selection {
@@ -578,22 +794,7 @@ section {
   width: 100%;
 }
 
-/* Smooth scrolling for all browsers */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* Smooth scrolling for all browsers - consolidated with main reduced motion rules */
 
 /* Focus styles for accessibility */
 .nav-focus:focus {
@@ -602,28 +803,7 @@ html {
   border-radius: 4px;
 }
 
-/* Mobile menu animations */
-.mobile-menu-enter {
-  max-height: 0;
-  opacity: 0;
-}
-
-.mobile-menu-enter-active {
-  max-height: 500px;
-  opacity: 1;
-  transition: max-height 300ms ease-out, opacity 300ms ease-out;
-}
-
-.mobile-menu-exit {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.mobile-menu-exit-active {
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 300ms ease-in, opacity 300ms ease-in;
-}
+/* Mobile menu animations - consolidated */
 
 /* Enhanced dropdown animations */
 .dropdown-enter {
@@ -744,25 +924,4 @@ html {
   }
 }
 
-/* Mobile menu animations */
-.mobile-menu-enter {
-  max-height: 0;
-  opacity: 0;
-}
-
-.mobile-menu-enter-active {
-  max-height: 500px;
-  opacity: 1;
-  transition: max-height 300ms ease-out, opacity 300ms ease-out;
-}
-
-.mobile-menu-exit {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.mobile-menu-exit-active {
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 300ms ease-in, opacity 300ms ease-in;
-}
+/* Mobile menu animations - consolidated */

@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode, useRef } from "react";
+import { ANIMATION_CONSTANTS } from '@/config';
 
 /**
  * Button component interface following VR NextGEN design system
@@ -85,12 +86,12 @@ export default function Button({
         
         button.appendChild(ripple);
         
-        // Clean up ripple after animation completes (600ms)
+        // Clean up ripple after animation completes
         setTimeout(() => {
           if (ripple.parentNode) {
             ripple.parentNode.removeChild(ripple);
           }
-        }, 600);
+        }, ANIMATION_CONSTANTS.RIPPLE_DURATION);
       }
     }
     

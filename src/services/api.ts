@@ -38,9 +38,10 @@ export async function submitContactForm(formData: ContactFormData): Promise<ApiR
       data: undefined
     };
   } catch (error) {
+    // Ensure API errors stay isolated with a stable shape
     return {
       success: false,
-      error: error instanceof Error ? error.message : "An error occurred"
+      error: error instanceof Error ? error.message : 'An error occurred',
     };
   }
 }

@@ -1,4 +1,5 @@
 import { use3DTilt } from "@/hooks/use3DTilt";
+import { useRouter } from "next/router";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 const services = [
@@ -65,14 +66,30 @@ const services = [
 ];
 
 function ServiceCard({ service }: { service: typeof services[0] }) {
+  const router = useRouter();
   const { cardRef, onMouseMove, onMouseLeave } = use3DTilt();
+
+  const handleLearnMore = () => {
+    // Map what-we-do services to actual service IDs
+    const serviceIdMap: Record<string, string> = {
+      "Strategic Consulting": "business-consulting",
+      "Data Analytics": "data-analytics", 
+      "Process Optimization": "process-optimization",
+      "Digital Transformation": "digital-transformation",
+      "Financial Advisory": "financial-advisory",
+      "Change Management": "change-management"
+    };
+    
+    const serviceId = serviceIdMap[service.title] || "business-consulting";
+    router.push(`/services/${serviceId}`);
+  };
 
   return (
     <div
       ref={cardRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 rounded-2xl p-8 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100 transition-all duration-500 card-3d"
+      className="group bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 rounded-2xl p-8 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100 transition-all duration-500 card-3d hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,215,0,0.25)] active:scale-[1.02] active:shadow-[0_0_20px_rgba(255,215,0,0.25)] relative overflow-hidden"
     >
       <div className="space-y-6">
         {/* Icon */}
@@ -107,7 +124,10 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
 
         {/* CTA */}
         <div className="pt-4 border-t border-gray-200">
-          <button className="text-sand-yellow font-semibold hover:text-sand-yellow/80 transition-colors duration-300 flex items-center gap-2 group">
+          <button 
+            onClick={handleLearnMore}
+            className="text-sand-yellow font-semibold hover:text-sand-yellow/80 transition-colors duration-300 flex items-center gap-2 group"
+          >
             Learn More
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -115,6 +135,9 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
           </button>
         </div>
       </div>
+      
+      {/* Brightness overlay for consistent hover effect */}
+      <div className="absolute inset-0 rounded-2xl pointer-events-none bg-black opacity-0 group-hover:opacity-10 active:opacity-10 transition-opacity duration-300" />
     </div>
   );
 }

@@ -42,7 +42,7 @@ function StoryCard({ story }: { story: typeof customerStories[0] }) {
       ref={cardRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 rounded-2xl p-8 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100 transition-all duration-500 card-3d"
+      className="group bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 rounded-2xl p-8 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100 transition-all duration-500 card-3d hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,215,0,0.25)] active:scale-[1.02] active:shadow-[0_0_20px_rgba(255,215,0,0.25)] relative overflow-hidden"
     >
       <div className="space-y-6">
         {/* Header */}
@@ -90,11 +90,14 @@ function StoryCard({ story }: { story: typeof customerStories[0] }) {
         {/* Testimonial */}
         <div className="pt-4 border-t border-gray-200">
           <blockquote className="text-black/80 italic text-sm leading-relaxed mb-3">
-            "{story.testimonial}"
+            &ldquo;{story.testimonial}&rdquo;
           </blockquote>
           <cite className="text-xs text-black/60 font-medium">— {story.author}</cite>
         </div>
       </div>
+      
+      {/* Brightness overlay for consistent hover effect */}
+      <div className="absolute inset-0 rounded-2xl pointer-events-none bg-black opacity-0 group-hover:opacity-10 active:opacity-10 transition-opacity duration-300" />
     </div>
   );
 }
@@ -119,7 +122,7 @@ export default function CustomerStorySection() {
               Customer Stories
             </h2>
             <p className="text-lg text-black/70 max-w-3xl mx-auto leading-relaxed">
-              Real transformations, real results. Discover how we've helped businesses across industries achieve their goals and drive sustainable growth.
+              Real transformations, real results. Discover how we&apos;ve helped businesses across industries achieve their goals and drive sustainable growth.
             </p>
           </header>
 

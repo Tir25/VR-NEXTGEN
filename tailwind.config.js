@@ -42,13 +42,18 @@ module.exports = {
         'card-shadow',
         'section-hero',
         'section-services',
+        'section-industries',
         'section-why-choose',
         'section-clients',
+        'section-cta',
         'site-bg',
         'site-bg__grid',
         'site-bg__aurora',
         'site-bg__shine',
-        'site-bg__vignette'
+        'site-bg__vignette',
+        'memory-card',
+        'control-btn',
+        'carousel-container'
       ]
     }
   },
@@ -85,7 +90,10 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [
+    // Safely enable typography if installed; no-op otherwise
+    (() => { try { return require('@tailwindcss/typography'); } catch (_) { return () => {}; } })()
+  ]
 };
 
 

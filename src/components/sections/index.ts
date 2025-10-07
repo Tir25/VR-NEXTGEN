@@ -1,12 +1,13 @@
 /**
  * Section Components Export
  * All page sections and content blocks
+ * Updated to use modular structure with centralized exports
  */
 
 // Hero section
-export { default as Hero } from './hero/Hero';
+export { Hero } from './hero';
 
 // Services and CTA
-export { default as Services } from './services/Services';
-export { default as WhyChooseUs } from './why-choose-us/WhyChooseUs';
+export { Services } from './services';
+export { Industries } from './industries';
 export { default as CTABanner } from './cta/CTABanner';

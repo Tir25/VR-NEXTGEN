@@ -1,4 +1,5 @@
 import { use3DTilt } from "@/hooks/use3DTilt";
+import { useRouter } from "next/router";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 const industries = [
@@ -65,7 +66,23 @@ const industries = [
 ];
 
 function IndustryCard({ industry }: { industry: typeof industries[0] }) {
+  const router = useRouter();
   const { cardRef, onMouseMove, onMouseLeave } = use3DTilt();
+
+  const handleExploreSolutions = () => {
+    // Map what-we-do industries to actual industry IDs
+    const industryIdMap: Record<string, string> = {
+      "Technology & Software": "it-professional-services",
+      "Healthcare & Life Sciences": "pharmaceutical-life-sciences",
+      "Financial Services": "financial-services-insurance",
+      "Manufacturing & Industrial": "manufacturing-engineering",
+      "Retail & E-commerce": "retail-fmcg",
+      "Energy & Utilities": "industrial-infrastructure"
+    };
+    
+    const industryId = industryIdMap[industry.title] || "other-industries";
+    router.push(`/industries/${industryId}`);
+  };
 
   return (
     <div
@@ -107,7 +124,10 @@ function IndustryCard({ industry }: { industry: typeof industries[0] }) {
 
         {/* CTA */}
         <div className="pt-4 border-t border-gray-200">
-          <button className="text-sand-yellow font-semibold hover:text-sand-yellow/80 transition-colors duration-300 flex items-center gap-2 group">
+          <button 
+            onClick={handleExploreSolutions}
+            className="text-sand-yellow font-semibold hover:text-sand-yellow/80 transition-colors duration-300 flex items-center gap-2 group"
+          >
             Explore Solutions
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

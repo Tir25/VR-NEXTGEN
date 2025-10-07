@@ -253,7 +253,6 @@ function MobileNavItem({ page, isExpanded, onToggle }: NavItemProps) {
 
 export default function Header() {
   const router = useRouter();
-  const { isCurrentPage } = useEnhancedNavigation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileDropdowns, setExpandedMobileDropdowns] = useState<Set<string>>(new Set());
   const mobileMenuRef = useRef<HTMLDivElement>(null);
