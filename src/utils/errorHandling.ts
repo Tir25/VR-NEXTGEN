@@ -47,14 +47,7 @@ export class ErrorHandler {
     
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.error('Error handled:', {
-        message: appError.message,
-        code: appError.code,
-        statusCode: appError.statusCode,
-        context: appError.context,
-        timestamp: appError.timestamp,
-        stack: appError.stack
-      });
+      // Error handled in development mode - ready for production error tracking
     }
     
     // In production, you might want to send to error tracking service

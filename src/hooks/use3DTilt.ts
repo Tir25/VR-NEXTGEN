@@ -93,7 +93,7 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
       // Disable CSS transitions during 3D tilt for optimal performance
       card.style.transition = 'none';
     } catch (error) {
-      console.error('3D Tilt Error:', error);
+      // Error handled gracefully - 3D tilt disabled
       setHasError(true);
     }
   }, [enabled, maxTilt, hasError]);
@@ -116,7 +116,7 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
         }
       }, 300);
     } catch (error) {
-      console.error('3D Tilt Leave Error:', error);
+      // Error handled gracefully - 3D tilt disabled
       setHasError(true);
     }
   }, [enabled, hasError]);
@@ -127,7 +127,7 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
     setIsSupported(supported);
     
     if (!supported && checkSupport) {
-      console.warn('3D transforms not supported, 3D tilt effect disabled');
+      // 3D transforms not supported - fallback gracefully
     } else {
         // 3D tilt effect enabled
     }

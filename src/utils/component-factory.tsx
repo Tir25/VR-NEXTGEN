@@ -251,7 +251,7 @@ export class ComponentRegistry {
   ): React.ReactElement | null {
     const factory = this.get<T>(name);
     if (!factory) {
-      console.warn(`Component factory "${name}" not found`);
+      // Component factory not found - return null gracefully
       return null;
     }
     return factory(config, children);

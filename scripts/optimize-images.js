@@ -1,93 +1,148 @@
+/**
+ * Image Optimization Script
+ * Compresses and converts images to modern formats
+ */
+
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-// Configuration
-const INPUT_DIR = 'public/images';
-const OUTPUT_DIR = 'public/images/optimized';
-const QUALITY = 85; // WebP quality (0-100)
-const MAX_WIDTH = 1920; // Maximum width for responsive images
+const INPUT_DIR = path.join(__dirname, '../public/images');
+const OUTPUT_DIR = path.join(__dirname, '../public/images-optimized');
 
-// Ensure output directory exists
+// Create output directory if it doesn't exist
 if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// Supported image formats
-const SUPPORTED_FORMATS = ['.jpg', '.jpeg', '.png', '.webp'];
+// Quality settings for different image types
+const QUALITY_SETTINGS = {
+  webp: 85,
+  avif: 80,
+  jpeg: 85,
+  png: 90,
+};
 
-async function optimizeImage(inputPath, outputPath) {
+// Sizes for responsive images
+const RESPONSIVE_SIZES = [
+  { width: 640, suffix: '-sm' },
+  { width: 768, suffix: '-md' },
+  { width: 1024, suffix: '-lg' },
+  { width: 1280, suffix: '-xl' },
+  { width: 1920, suffix: '-2xl' },
+];
+
+async function optimizeImage(inputPath, outputDir, filename) {
+  const basename = path.parse(filename).name;
+  const ext = path.parse(filename).ext.toLowerCase();
+  
+  console.log(`Optimizing ${filename}...`);
+  
   try {
-    const metadata = await sharp(inputPath).metadata();
-    console.log(`Processing: ${inputPath}`);
-    console.log(`Original: ${metadata.width}x${metadata.height}, ${metadata.format}, ${Math.round(metadata.size / 1024)}KB`);
-
-    // Create multiple sizes for responsive loading
-    const sizes = [
-      { width: 400, suffix: '-sm' },
-      { width: 800, suffix: '-md' },
-      { width: 1200, suffix: '-lg' },
-      { width: 1920, suffix: '-xl' }
-    ];
-
-    for (const size of sizes) {
-      const outputFile = outputPath.replace('.webp', `${size.suffix}.webp`);
+    const image = sharp(inputPath);
+    const metadata = await image.metadata();
+    
+    // Skip if already optimized or if it's an SVG
+    if (filename.includes('-optimized') || ext === '.svg') {
+      console.log(`Skipping ${filename} (already optimized or SVG)`);
+      return;
+    }
+    
+    // Create responsive versions
+    for (const size of RESPONSIVE_SIZES) {
+      if (metadata.width <= size.width) continue;
       
-      await sharp(inputPath)
-        .resize(size.width, null, {
+      // WebP version
+      await image
+        .resize(size.width, null, { 
           withoutEnlargement: true,
           fit: 'inside'
         })
-        .webp({ 
-          quality: QUALITY,
-          effort: 6 // Higher effort for better compression
-        })
-        .toFile(outputFile);
-
-      const optimizedMetadata = await sharp(outputFile).metadata();
-      console.log(`  Created: ${outputFile} (${optimizedMetadata.width}x${optimizedMetadata.height}, ${Math.round(optimizedMetadata.size / 1024)}KB)`);
-    }
-
-    // Create original size WebP
-    await sharp(inputPath)
-      .webp({ 
-        quality: QUALITY,
-        effort: 6
-      })
-      .toFile(outputPath);
-
-    const finalMetadata = await sharp(outputPath).metadata();
-    console.log(`  Created: ${outputPath} (${finalMetadata.width}x${finalMetadata.height}, ${Math.round(finalMetadata.size / 1024)}KB)`);
-
-  } catch (error) {
-    console.error(`Error processing ${inputPath}:`, error.message);
-  }
-}
-
-async function optimizeAllImages() {
-  try {
-    const files = fs.readdirSync(INPUT_DIR);
-    const imageFiles = files.filter(file => 
-      SUPPORTED_FORMATS.some(format => file.toLowerCase().endsWith(format))
-    );
-
-    console.log(`Found ${imageFiles.length} images to optimize:`);
-    console.log(imageFiles);
-
-    for (const file of imageFiles) {
-      const inputPath = path.join(INPUT_DIR, file);
-      const outputPath = path.join(OUTPUT_DIR, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+        .webp({ quality: QUALITY_SETTINGS.webp })
+        .toFile(path.join(outputDir, `${basename}${size.suffix}.webp`));
       
-      await optimizeImage(inputPath, outputPath);
+      // AVIF version (for modern browsers)
+      await image
+        .resize(size.width, null, { 
+          withoutEnlargement: true,
+          fit: 'inside'
+        })
+        .avif({ quality: QUALITY_SETTINGS.avif })
+        .toFile(path.join(outputDir, `${basename}${size.suffix}.avif`));
     }
-
-    console.log('\n✅ Image optimization complete!');
-    console.log(`Optimized images saved to: ${OUTPUT_DIR}`);
+    
+    // Create original size optimized versions
+    // WebP
+    await image
+      .webp({ quality: QUALITY_SETTINGS.webp })
+      .toFile(path.join(outputDir, `${basename}.webp`));
+    
+    // AVIF
+    await image
+      .avif({ quality: QUALITY_SETTINGS.avif })
+      .toFile(path.join(outputDir, `${basename}.avif`));
+    
+    // Keep original format but compressed
+    if (ext === '.png') {
+      await image
+        .png({ quality: QUALITY_SETTINGS.png, compressionLevel: 9 })
+        .toFile(path.join(outputDir, `${basename}-optimized.png`));
+    } else if (ext === '.jpg' || ext === '.jpeg') {
+      await image
+        .jpeg({ quality: QUALITY_SETTINGS.jpeg, progressive: true })
+        .toFile(path.join(outputDir, `${basename}-optimized.jpg`));
+    }
+    
+    console.log(`✅ Optimized ${filename}`);
     
   } catch (error) {
-    console.error('Error during optimization:', error);
+    console.error(`❌ Error optimizing ${filename}:`, error.message);
   }
 }
 
-// Run optimization
-optimizeAllImages();
+async function optimizeDirectory(dirPath, outputDir) {
+  const items = fs.readdirSync(dirPath);
+  
+  for (const item of items) {
+    const itemPath = path.join(dirPath, item);
+    const stat = fs.statSync(itemPath);
+    
+    if (stat.isDirectory()) {
+      const subOutputDir = path.join(outputDir, item);
+      if (!fs.existsSync(subOutputDir)) {
+        fs.mkdirSync(subOutputDir, { recursive: true });
+      }
+      await optimizeDirectory(itemPath, subOutputDir);
+    } else if (stat.isFile()) {
+      const ext = path.parse(item).ext.toLowerCase();
+      if (['.png', '.jpg', '.jpeg', '.webp'].includes(ext)) {
+        await optimizeImage(itemPath, outputDir, item);
+      }
+    }
+  }
+}
+
+async function main() {
+  console.log('🚀 Starting image optimization...');
+  console.log(`Input directory: ${INPUT_DIR}`);
+  console.log(`Output directory: ${OUTPUT_DIR}`);
+  
+  try {
+    await optimizeDirectory(INPUT_DIR, OUTPUT_DIR);
+    console.log('✅ Image optimization completed!');
+    console.log('\n📊 Summary:');
+    console.log('- Created WebP versions for better compression');
+    console.log('- Created AVIF versions for modern browsers');
+    console.log('- Generated responsive sizes');
+    console.log('- Compressed original formats');
+    console.log('\n💡 Next steps:');
+    console.log('1. Review the optimized images');
+    console.log('2. Update your components to use the new images');
+    console.log('3. Test the performance improvements');
+  } catch (error) {
+    console.error('❌ Optimization failed:', error);
+    process.exit(1);
+  }
+}
+
+main();

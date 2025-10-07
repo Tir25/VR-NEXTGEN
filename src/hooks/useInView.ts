@@ -11,7 +11,7 @@ export function useInView<T extends HTMLElement>(options?: IntersectionObserverI
 
     // Check if IntersectionObserver is supported
     if (!('IntersectionObserver' in window)) {
-      console.warn('IntersectionObserver not supported, falling back to immediate visibility');
+      // IntersectionObserver not supported - fallback to immediate visibility
       setInView(true);
       return;
     }

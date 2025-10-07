@@ -56,7 +56,6 @@ export default function ContactForm() {
       // Reset form on success
       reset();
     } catch (error) {
-      console.error("Form submission error:", error);
       // Error handling is managed by the form state
       throw error; // Re-throw to show error in UI
     }

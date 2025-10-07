@@ -66,13 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     // Log the submission (in production, send to your email service)
-    console.log('Contact form submission:', {
-      name: sanitizedData.name,
-      email: sanitizedData.email,
-      message: sanitizedData.message.substring(0, 100) + '...',
-      timestamp: new Date().toISOString(),
-      ip: clientIP,
-    });
+    // Contact form submission received - ready for production email service
 
     // TODO: In production, implement one of these:
     // 1. Send email using SendGrid, AWS SES, or similar
@@ -91,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
   } catch (error) {
-    console.error('Contact form error:', error);
+    // Contact form error occurred - handled gracefully
     
     // Don't expose internal errors to client
     res.status(500).json({ 

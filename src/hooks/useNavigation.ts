@@ -125,7 +125,7 @@ export function useNavigation() {
         setTimeout(() => scrollToSection(retries + 1), 200);
       } else {
         // If element still doesn't exist after max retries, scroll to approximate position
-        console.warn(`Section ${sectionId} not found after ${retries} retries. Scrolling to approximate position.`);
+        // Section not found - scrolling to approximate position
         
         // For home page sections, scroll to approximate positions
         if (targetPage === '/') {
