@@ -24,7 +24,7 @@ export { default as SafeAnimationComponent, SafeFadeIn, SafeSlideUp, SafeSlideDo
 export { default as InputValidator, EmailValidator, PhoneValidator, NameValidator, PasswordValidator, commonValidationRules } from './InputValidator';
 
 // New modular and sustainable components
-export { default as BackgroundEffects, GridLayer, AuroraLayer, ShineLayer, VignetteLayer, StarfieldLayer } from './BackgroundEffects';
+export { default as BackgroundEffects } from './background';
 export { default as Carousel, CarouselControls } from './Carousel';
 export { default as AnimationSystem, StaggeredAnimation, AnimationPresets } from './AnimationSystem';
 export { default as AnimatedBackground } from './AnimatedBackground';

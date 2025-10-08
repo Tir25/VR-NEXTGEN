@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useUnifiedNavigation } from "@/contexts/ScrollContext";
 
 export interface Section {
   id: string;
@@ -70,42 +71,8 @@ export function useNavigation() {
   // Find current page data
   const currentPage = Object.values(navigationData).find(page => page.path === currentPath);
 
-  // Section highlighting effect
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!currentPage) return;
-
-      const windowHeight = window.innerHeight;
-      let mostVisibleSection = null;
-      let maxVisibility = 0;
-
-      for (const section of currentPage.sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const sectionTop = rect.top;
-          const sectionBottom = rect.bottom;
-          
-          const visibleTop = Math.max(0, sectionTop);
-          const visibleBottom = Math.min(windowHeight, sectionBottom);
-          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-          const visibilityRatio = visibleHeight / windowHeight;
-          
-          if (visibilityRatio > maxVisibility) {
-            maxVisibility = visibilityRatio;
-            mostVisibleSection = section.id;
-          }
-        }
-      }
-      
-      setCurrentSection(mostVisibleSection);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [currentPage]);
+  // Use unified navigation for scroll-based section highlighting
+  const { currentSection: unifiedCurrentSection } = useUnifiedNavigation(currentPath);
 
   // Navigate to section with smooth scrolling and lazy loading support
   const navigateToSection = async (sectionId: string, targetPath?: string) => {
@@ -169,6 +136,11 @@ export function useNavigation() {
       }, 100);
     }
   };
+
+  // Update currentSection with unified navigation result
+  useEffect(() => {
+    setCurrentSection(unifiedCurrentSection || null);
+  }, [unifiedCurrentSection]);
 
   return {
     navigationData,

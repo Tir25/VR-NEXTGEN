@@ -28,11 +28,12 @@ const eslintConfig = [
       'no-script-url': 'error',
       'no-alert': 'warn',
       
-      // Relaxed rules for development
-      'no-console': 'off',
+      // Code quality rules - balanced approach
+      'no-console': 'warn',
       'react/no-unescaped-entities': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
   {

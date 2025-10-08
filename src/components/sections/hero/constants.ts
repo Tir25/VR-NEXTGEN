@@ -4,7 +4,6 @@
  */
 
 import { HeroImageProps } from './types';
-import { LAYOUT_CONSTANTS, ANIMATION_CONSTANTS } from '@/config';
 
 // Banner image removed - using animated text content instead
 export const HERO_IMAGE_CONFIG: HeroImageProps = {
@@ -28,7 +27,7 @@ export const HERO_BUTTONS = {
 } as const;
 
 export const HERO_CONFIG = {
-  minHeight: LAYOUT_CONSTANTS.HERO_MIN_HEIGHT,
-  parallaxSpeed: ANIMATION_CONSTANTS.PARALLAX_SPEED,
-  fadeSpeed: ANIMATION_CONSTANTS.NORMAL,
+  minHeight: '100vh',
+  parallaxSpeed: 0.5,
+  fadeSpeed: 300,
 } as const;

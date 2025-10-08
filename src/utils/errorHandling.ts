@@ -1,140 +1,217 @@
 /**
- * Centralized Error Handling System
- * Provides consistent error handling across the application
+ * Enhanced error handling utilities
+ * Provides robust error handling patterns for the application
  */
 
-export interface AppError extends Error {
-  code?: string;
-  statusCode?: number;
-  context?: Record<string, any>;
+import React from 'react';
+
+export interface ErrorInfo {
+  message: string;
+  stack?: string;
+  component?: string;
   timestamp: Date;
+  userAgent?: string;
+  url?: string;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+  errorInfo?: ErrorInfo;
+}
+
+export interface AppError extends Error {
+  code: string;
+  status: number;
+  context?: any;
 }
 
 export class ErrorHandler {
   private static instance: ErrorHandler;
-  
-  private constructor() {}
-  
-  public static getInstance(): ErrorHandler {
+  private errorLog: ErrorInfo[] = [];
+  private maxLogSize = 100;
+
+  static getInstance(): ErrorHandler {
     if (!ErrorHandler.instance) {
       ErrorHandler.instance = new ErrorHandler();
     }
     return ErrorHandler.instance;
   }
-  
+
   /**
-   * Creates a standardized error object
+   * Log an error with context
    */
-  public createError(
-    message: string,
-    code?: string,
-    statusCode?: number,
-    context?: Record<string, any>
-  ): AppError {
-    const error = new Error(message) as AppError;
-    error.code = code;
-    error.statusCode = statusCode;
-    error.context = context;
-    error.timestamp = new Date();
-    return error;
-  }
-  
-  /**
-   * Handles and logs errors consistently
-   */
-  public handleError(error: Error | AppError, context?: Record<string, any>): void {
-    const appError = this.normalizeError(error, context);
-    
+  logError(error: Error, context?: string): void {
+    const errorInfo: ErrorInfo = {
+      message: error.message,
+      stack: error.stack,
+      component: context,
+      timestamp: new Date(),
+      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+      url: typeof window !== 'undefined' ? window.location.href : undefined,
+    };
+
+    this.errorLog.push(errorInfo);
+
+    // Keep log size manageable
+    if (this.errorLog.length > this.maxLogSize) {
+      this.errorLog = this.errorLog.slice(-this.maxLogSize);
+    }
+
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      // Error handled in development mode - ready for production error tracking
+      // Error logged
     }
-    
-    // In production, you might want to send to error tracking service
-    // Example: this.sendToErrorService(appError);
   }
-  
+
   /**
-   * Normalizes different error types into AppError format
+   * Get error log
    */
-  private normalizeError(error: Error | AppError, context?: Record<string, any>): AppError {
-    if (this.isAppError(error)) {
-      if (context) {
-        error.context = { ...error.context, ...context };
-      }
-      return error;
+  getErrorLog(): ErrorInfo[] {
+    return [...this.errorLog];
+  }
+
+  /**
+   * Clear error log
+   */
+  clearErrorLog(): void {
+    this.errorLog = [];
+  }
+
+  /**
+   * Handle async errors
+   */
+  async handleAsyncError<T>(
+    asyncFn: () => Promise<T>,
+    context?: string
+  ): Promise<T | null> {
+    try {
+      return await asyncFn();
+    } catch (error) {
+      this.logError(error as Error, context);
+      return null;
     }
-    
-    return this.createError(
-      error.message,
-      'UNKNOWN_ERROR',
-      500,
-      context
-    );
   }
-  
+
   /**
-   * Type guard for AppError
+   * Create error boundary state
    */
-  private isAppError(error: Error | AppError): error is AppError {
-    return 'code' in error && 'timestamp' in error;
-  }
-  
-  /**
-   * Creates user-friendly error messages
-   */
-  public getUserFriendlyMessage(error: AppError): string {
-    const errorMessages: Record<string, string> = {
-      NETWORK_ERROR: 'Please check your internet connection and try again.',
-      VALIDATION_ERROR: 'Please check your input and try again.',
-      AUTHENTICATION_ERROR: 'Please log in again to continue.',
-      AUTHORIZATION_ERROR: 'You do not have permission to perform this action.',
-      NOT_FOUND_ERROR: 'The requested resource was not found.',
-      SERVER_ERROR: 'Something went wrong on our end. Please try again later.',
-      UNKNOWN_ERROR: 'An unexpected error occurred. Please try again.'
+  createErrorState(error: Error, errorInfo?: any): ErrorBoundaryState {
+    return {
+      hasError: true,
+      error,
+      errorInfo: {
+        message: error.message,
+        stack: error.stack,
+        timestamp: new Date(),
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+        url: typeof window !== 'undefined' ? window.location.href : undefined,
+      },
     };
-    
-    return errorMessages[error.code || 'UNKNOWN_ERROR'] || errorMessages.UNKNOWN_ERROR;
   }
-  
+
   /**
-   * Determines if an error is recoverable
+   * Create error with code and status
    */
-  public isRecoverable(error: AppError): boolean {
-    const recoverableCodes = [
-      'NETWORK_ERROR',
-      'VALIDATION_ERROR',
-      'TEMPORARY_SERVER_ERROR'
-    ];
-    
-    return recoverableCodes.includes(error.code || '');
+  createError(message: string, code: string, status: number, context?: any): Error {
+    const error = new Error(message);
+    (error as any).code = code;
+    (error as any).status = status;
+    if (context) {
+      (error as any).context = context;
+    }
+    return error;
+  }
+
+  /**
+   * Handle error (alias for logError)
+   */
+  handleError(error: Error, context?: string): void {
+    this.logError(error, context);
+  }
+
+  /**
+   * Get user-friendly error message
+   */
+  getUserFriendlyMessage(error: AppError | null): string {
+    if (!error) {
+      return 'An unexpected error occurred';
+    }
+
+    // Return user-friendly messages for common error codes
+    switch (error.code) {
+      case 'VALIDATION_ERROR':
+        return 'Please check your input and try again';
+      case 'NETWORK_ERROR':
+        return 'Please check your internet connection and try again';
+      case 'PERMISSION_ERROR':
+        return 'You do not have permission to perform this action';
+      case 'NOT_FOUND':
+        return 'The requested resource was not found';
+      case 'SERVER_ERROR':
+        return 'A server error occurred. Please try again later';
+      default:
+        return error.message || 'An unexpected error occurred';
+    }
   }
 }
 
-// Export singleton instance
 export const errorHandler = ErrorHandler.getInstance();
 
-// Common error codes
-export const ERROR_CODES = {
-  NETWORK_ERROR: 'NETWORK_ERROR',
-  VALIDATION_ERROR: 'VALIDATION_ERROR',
-  AUTHENTICATION_ERROR: 'AUTHENTICATION_ERROR',
-  AUTHORIZATION_ERROR: 'AUTHORIZATION_ERROR',
-  NOT_FOUND_ERROR: 'NOT_FOUND_ERROR',
-  SERVER_ERROR: 'SERVER_ERROR',
-  TEMPORARY_SERVER_ERROR: 'TEMPORARY_SERVER_ERROR',
-  UNKNOWN_ERROR: 'UNKNOWN_ERROR'
-} as const;
-
-// Error boundary utilities
-export const createErrorFallback = (error: AppError) => {
-  const isRecoverable = errorHandler.isRecoverable(error);
-  const userMessage = errorHandler.getUserFriendlyMessage(error);
-  
-  return {
-    title: isRecoverable ? 'Something went wrong' : 'Error',
-    message: userMessage,
-    canRetry: isRecoverable,
-    showDetails: process.env.NODE_ENV === 'development'
+/**
+ * Higher-order function for error handling
+ */
+export function withErrorHandling<T extends any[], R>(
+  fn: (...args: T) => R,
+  context?: string
+): (...args: T) => R | null {
+  return (...args: T): R | null => {
+    try {
+      return fn(...args);
+    } catch (error) {
+      errorHandler.logError(error as Error, context);
+      return null;
+    }
   };
-};
+}
+
+/**
+ * Async error handling wrapper
+ */
+export function withAsyncErrorHandling<T extends any[], R>(
+  fn: (...args: T) => Promise<R>,
+  context?: string
+): (...args: T) => Promise<R | null> {
+  return async (...args: T): Promise<R | null> => {
+    try {
+      return await fn(...args);
+    } catch (error) {
+      errorHandler.logError(error as Error, context);
+      return null;
+    }
+  };
+}
+
+/**
+ * Error boundary hook
+ */
+export function useErrorBoundary() {
+  const [errorState, setErrorState] = React.useState<ErrorBoundaryState>({
+    hasError: false,
+  });
+
+  const resetError = () => {
+    setErrorState({ hasError: false });
+  };
+
+  const captureError = (error: Error, errorInfo?: any) => {
+    const newErrorState = errorHandler.createErrorState(error, errorInfo);
+    setErrorState(newErrorState);
+  };
+
+  return {
+    errorState,
+    resetError,
+    captureError,
+  };
+}

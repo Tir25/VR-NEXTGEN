@@ -1,0 +1,927 @@
+@import "tailwindcss";
+
+/* VR NextGEN Design System - Design Tokens */
+:root {
+  /* Core Brand Colors */
+  --color-black: #000000;
+  --color-deep-charcoal: #231F20;
+  --color-white: #ffffff;
+  --color-gold: #ffd700;
+  --color-gold-dark: #ad974f;
+  --color-gold-darker: #8e793e;
+  --color-light-grey: #eaeaea;
+  
+  /* New Section-Specific Colors */
+  --glory-white: #E6E6E6;
+  --sand-yellow: #FFBB01;
+  --gray-night-black: #1A1A1A;
+  
+  /* Semantic Color Mappings */
+  --background: var(--color-black);
+  --foreground: var(--color-white);
+  --accent-gold: var(--color-gold);
+  --text-secondary: var(--color-deep-charcoal);
+  --border-light: var(--color-light-grey);
+  
+  /* Section Background Variables */
+  --section-bg-hero: var(--color-black);
+  --section-bg-services: var(--glory-white);
+  --section-bg-why-choose: var(--gray-night-black);
+  --section-bg-clients: var(--glory-white);
+  
+  /* Section Text Colors */
+  --text-hero: var(--color-white);
+  --text-services: var(--color-black);
+  --text-why-choose: var(--color-white);
+  --text-clients: var(--color-black);
+}
+
+@theme inline {
+  /* Colors */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gold: #ffd700;
+
+  /* Fonts (kept generic; can be wired to Google Fonts later) */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
+
+  /* Breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Base document styles */
+html { height: 100%; }
+body {
+  min-height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Smooth scroll for in-page anchor links - only when explicitly triggered */
+html { scroll-behavior: smooth; }
+
+/* Utility helpers */
+.text-gold { color: var(--accent-gold); }
+.bg-gold { background-color: var(--accent-gold); }
+
+/* ===== Enhanced Button Micro-interactions ===== */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-enhanced:hover {
+  transform: translateY(-1px);
+}
+
+.btn-enhanced:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* Golden glow effects for different button variants */
+.btn-primary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+.btn-secondary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+.btn-outline:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+
+/* Ripple effect animation */
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 215, 0, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Mobile and touch device optimizations */
+@media (max-width: 768px) {
+  .btn-enhanced:hover { transform: none; }
+  .btn-enhanced:active { transform: scale(0.98); }
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-outline:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn-enhanced:hover { transform: none; }
+  .btn-enhanced:active { transform: scale(0.95); }
+}
+
+/* Link-wrapped button support */
+a .btn-enhanced {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* ===== Section-Specific Background System ===== */
+/* Base section styling with smooth transitions */
+section {
+  transition: background-color 1.5s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Ensure sections are above background */
+}
+
+/* Section-specific background classes - transparent to show animated background */
+.section-hero {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-hero);
+}
+
+.section-services {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-services);
+}
+
+.section-why-choose {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-why-choose);
+}
+
+.section-industries {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-hero);
+}
+
+.section-clients {
+  background-color: transparent; /* Let animated background show through */
+  color: var(--text-clients);
+}
+
+/* ===== Site-wide animated premium background ===== */
+/* Layered background that does not affect layout (pointer-events: none) */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0; /* lives behind header/main/footer which have higher stacking via content */
+  pointer-events: none;
+  --cursor-x: 0.5;
+  --cursor-y: 0.5;
+  --gold: var(--accent-gold);
+  transition: background-color 0.6s ease-in-out;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
+  will-change: background-color; /* Optimize for background transitions */
+}
+
+/* Subtle moving grid lines - Hardware accelerated */
+.site-bg__grid {
+  position: absolute;
+  inset: -2px; /* avoid seams */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
+  filter: blur(0.3px);
+  animation: bg-pan 20s linear infinite;
+  will-change: background-position;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
+}
+
+@keyframes bg-pan {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 400px 400px, 400px 400px; }
+}
+
+/* Aurora blobs with slow parallax drift - Hardware accelerated */
+.site-bg__aurora {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(173,151,79,0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(142,121,62,0.10), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.08), transparent 65%);
+  transform: translateZ(0);
+  animation: aurora-drift 50s ease-in-out infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden; /* Optimize rendering */
+  perspective: 1000px; /* Enable 3D acceleration */
+}
+
+@keyframes aurora-drift {
+  0% { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(0,-20px,0); }
+}
+
+/* Cursor reactive shine (subtle) - Hardware accelerated */
+.site-bg__shine {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    color-mix(in oklab, var(--gold) 12%, transparent),
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  transition: background-position 120ms ease-out;
+  will-change: background-position;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
+}
+
+/* Soft vignette for depth - Hardware accelerated */
+.site-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1200px 600px at 50% 120%, rgba(0,0,0,0.6), transparent 60%),
+              radial-gradient(1200px 600px at 50% -20%, rgba(0,0,0,0.5), transparent 60%),
+              linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4));
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Optimize rendering */
+}
+
+/* Respect user preference to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .site-bg__grid { 
+    animation: none !important; 
+  }
+  .site-bg__aurora { 
+    animation: none !important; 
+  }
+  .site-bg__shine {
+    transition: none !important;
+  }
+}
+
+/* Section-specific background layer adaptations */
+/* Apply background colors to the animated background layers instead of sections */
+
+/* Hero section - default dark background */
+.site-bg.section-hero {
+  background-color: var(--section-bg-hero);
+  transition: background-color 0.8s ease-in-out;
+}
+
+/* Services section - white background */
+.site-bg.section-services {
+  background-color: var(--section-bg-services);
+  transition: background-color 0.8s ease-in-out;
+}
+
+.site-bg.section-services .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+}
+
+.site-bg.section-services .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+}
+
+.site-bg.section-services .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(255, 187, 1, 0.15),
+    transparent 60%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Industries section - dark cosmic background */
+.site-bg.section-industries {
+  background-color: var(--section-bg-hero);
+  transition: background-color 0.8s ease-in-out;
+}
+
+.site-bg.section-industries .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+}
+
+.site-bg.section-industries .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+}
+
+.site-bg.section-industries .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(157, 0, 255, 0.15),
+    transparent 60%
+  );
+}
+
+/* Modular Starfield Layer */
+.site-bg__starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 25% 25%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(2px 2px at 75% 75%, white, transparent),
+    radial-gradient(2px 2px at 100% 100%, white, transparent);
+  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.3;
+  animation: twinkle 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Industries section - Animated Starfield (legacy support) */
+.site-bg.section-industries::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 25% 25%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(2px 2px at 75% 75%, white, transparent),
+    radial-gradient(2px 2px at 100% 100%, white, transparent);
+  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.3;
+  animation: twinkle 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Why Choose Us section - dark background */
+.site-bg.section-why-choose {
+  background-color: var(--section-bg-why-choose);
+}
+
+.site-bg.section-why-choose .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+}
+
+.site-bg.section-why-choose .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.15), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.12), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.10), transparent 65%);
+}
+
+/* Clients section - white background */
+.site-bg.section-clients {
+  background-color: var(--section-bg-clients);
+}
+
+.site-bg.section-clients .site-bg__grid {
+  background-image:
+    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+}
+
+.site-bg.section-clients .site-bg__aurora {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+}
+
+.site-bg.section-clients .site-bg__shine {
+  background: radial-gradient(
+    600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+    rgba(255, 187, 1, 0.15),
+    transparent 60%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Smaller grid and subtler glow on mobile to avoid distraction */
+@media (max-width: 768px) {
+  .site-bg__grid { background-size: 32px 32px, 32px 32px; }
+  .site-bg__shine { background: radial-gradient(
+      400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+      color-mix(in oklab, var(--gold) 10%, transparent),
+      transparent 60%
+    ); }
+  
+  /* Mobile adjustments for white sections */
+  .site-bg.section-services .site-bg__shine,
+  .site-bg.section-clients .site-bg__shine { 
+    background: radial-gradient(
+      400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+      rgba(255, 187, 1, 0.12),
+      transparent 60%
+    ); 
+  }
+  
+  /* Mobile adjustments for Industries section */
+  .site-bg.section-industries .site-bg__shine { 
+    background: radial-gradient(
+      400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
+      rgba(157, 0, 255, 0.12),
+      transparent 60%
+    ); 
+  }
+}
+
+/* ===== 3D Card Tilt Effects ===== */
+.card-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  /* Removed conflicting transition - handled by JavaScript */
+  will-change: transform, box-shadow;
+  backface-visibility: hidden; /* Optimize rendering */
+  -webkit-backface-visibility: hidden; /* Safari support */
+}
+
+/* Enhanced shadow effects for cards */
+.card-shadow {
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-shadow:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+/* Fade-in-up animation for service cards */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Twinkle animation for Industries starfield */
+@keyframes twinkle {
+  0% { 
+    background-position: 0 0, 0 0, 0 0, 0 0; 
+  }
+  100% { 
+    background-position: 200px 200px, 300px 300px, 400px 400px, 600px 600px; 
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Performance optimizations - consolidated above */
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 3D Industries Carousel Styles */
+.carousel-container {
+  touch-action: none;
+  user-select: none;
+  isolation: isolate;
+}
+
+.memory-card {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+
+.memory-card:hover .card-glow {
+  opacity: 1 !important;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at 50% 50%, var(--tw-gradient-stops));
+}
+
+.control-btn {
+  will-change: transform;
+  z-index: 30;
+}
+
+/* Responsive adjustments for carousel - reduced sizes */
+@media (max-width: 1024px) {
+  .memory-card {
+    width: clamp(160px, 16vw, 220px) !important;
+    height: clamp(240px, 26vh, 300px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .memory-card {
+    width: clamp(150px, 15vw, 200px) !important;
+    height: clamp(220px, 24vh, 280px) !important;
+  }
+  
+  .control-btn {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .memory-card {
+    width: clamp(140px, 14vw, 180px) !important;
+    height: clamp(200px, 22vh, 260px) !important;
+  }
+  
+  .control-btn {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .memory-card {
+    width: clamp(120px, 12vw, 160px) !important;
+    height: clamp(180px, 20vh, 240px) !important;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .memory-card:hover {
+    transform: none !important;
+  }
+  
+  .memory-card:hover .card-glow {
+    opacity: 0 !important;
+  }
+  
+  .control-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* Reduced motion support - Enhanced accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  /* Disable all animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .card-3d,
+  .card-shadow,
+  .animate-fade-in-up,
+  .memory-card,
+  .carousel-container,
+  .control-btn {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .memory-card {
+    scale: 1 !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure all elements are visible and accessible */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+  
+  .translate-y-8,
+  .translate-x-8,
+  .-translate-y-8,
+  .-translate-x-8 {
+    transform: none !important;
+  }
+}
+
+/* Responsive and accessibility adjustments - Allow 3D effects on all devices */
+@media (max-width: 768px) {
+  .card-3d {
+    /* Keep 3D effects enabled on mobile for better UX */
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+  }
+}
+
+/* Removed duplicate reduced motion rule - consolidated above */
+
+/* ===== Enhanced Visual Elements ===== */
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Removed unused CSS classes for optimization */
+
+/* Enhanced section dividers */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Interactive hover states for better UX */
+.interactive-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-hover:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Enhanced focus states for accessibility */
+.focus-ring:focus {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.5);
+}
+
+/* Performance optimizations - removed unused classes */
+
+/* Text selection styling */
+::selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: white;
+}
+
+/* Navigation Enhancements */
+.nav-dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.nav-dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.nav-dropdown-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-dropdown-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+/* Navigation hover effects */
+.nav-item-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-item-hover:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Mobile Navigation Styles */
+.mobile-nav-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.mobile-nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-gold);
+  transition: width 0.3s ease;
+}
+
+.mobile-nav-item.active::after {
+  width: 100%;
+}
+
+/* Smooth scrolling for all browsers - consolidated with main reduced motion rules */
+
+/* Focus styles for accessibility */
+.nav-focus:focus {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Mobile menu animations - consolidated */
+
+/* Enhanced dropdown animations */
+.dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}
+
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.dropdown-exit {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.dropdown-exit-active {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+/* Navigation item split button styles */
+.nav-item-split {
+  display: flex;
+  align-items: stretch;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.nav-item-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  border-right: none;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.nav-item-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid transparent;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  transition: all 0.2s ease;
+  background: inherit;
+}
+
+.nav-item-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item-toggle:focus {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Mobile navigation optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .nav-item-main,
+  .nav-item-toggle {
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.3);
+    tap-highlight-color: rgba(255, 215, 0, 0.3);
+  }
+  
+  .nav-item-main:active,
+  .nav-item-toggle:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Desktop hover behavior */
+@media (hover: hover) and (pointer: fine) {
+  .nav-item-main:hover + .nav-item-toggle {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Accessibility improvements */
+.nav-item-main:focus,
+.nav-item-toggle:focus {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .nav-item-main,
+  .nav-item-toggle {
+    border-color: currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item-main,
+  .nav-item-toggle {
+    transition: none;
+  }
+  
+  .dropdown-enter,
+  .dropdown-enter-active,
+  .dropdown-exit,
+  .dropdown-exit-active {
+    transition: none;
+  }
+}
+
+/* Mobile menu animations - consolidated */

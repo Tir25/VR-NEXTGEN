@@ -1,127 +1,127 @@
+/**
+ * Enhanced Error Boundary Component
+ * Provides robust error handling with recovery options
+ */
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { errorHandler, createErrorFallback, AppError } from '@/utils/errorHandling';
+import { errorHandler, ErrorBoundaryState } from '@/utils/errorHandling';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
-  onError?: (error: AppError, errorInfo: ErrorInfo) => void;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  resetKeys?: Array<string | number>;
+  resetOnPropsChange?: boolean;
 }
 
-interface State {
-  hasError: boolean;
-  error?: AppError;
-  errorInfo?: ErrorInfo;
+interface State extends ErrorBoundaryState {
+  resetKey: number;
 }
 
-/**
- * Error Boundary component for graceful error handling
- * Catches JavaScript errors anywhere in the child component tree
- */
 export default class ErrorBoundary extends Component<Props, State> {
+  private resetTimeoutId: number | null = null;
+
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasError: false,
+      resetKey: 0,
+    };
   }
 
-  static getDerivedStateFromError(error: Error): State {
-    // Convert to AppError format
-    const appError = errorHandler.createError(
-      error.message,
-      'COMPONENT_ERROR',
-      500,
-      { component: 'ErrorBoundary' }
-    );
-    
-    // Update state so the next render will show the fallback UI
-    return { hasError: true, error: appError };
+  static getDerivedStateFromError(error: Error): Partial<State> {
+    return {
+      hasError: true,
+      error,
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    const appError = errorHandler.createError(
-      error.message,
-      'COMPONENT_ERROR',
-      500,
-      { 
-        component: 'ErrorBoundary',
-        componentStack: errorInfo.componentStack,
-        errorBoundary: true
-      }
-    );
-    
-    // Handle error through centralized system
-    errorHandler.handleError(appError);
-    
+    // Log error with context
+    errorHandler.logError(error, 'ErrorBoundary');
+
     // Update state with error info
-    this.setState({ error: appError, errorInfo });
-    
-    // Call custom error handler if provided
-    if (this.props.onError) {
-      this.props.onError(appError, errorInfo);
+    this.setState({
+      error,
+      errorInfo: {
+        message: error.message,
+        stack: error.stack,
+        component: 'ErrorBoundary',
+        timestamp: new Date(),
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+        url: typeof window !== 'undefined' ? window.location.href : undefined,
+      },
+    });
+
+    // Call optional error callback
+    this.props.onError?.(error, errorInfo);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const { resetKeys, resetOnPropsChange } = this.props;
+    const { hasError, resetKey } = this.state;
+
+    if (hasError && prevProps.resetKeys !== resetKeys) {
+      if (resetOnPropsChange) {
+        this.resetErrorBoundary();
+      }
     }
   }
 
+  componentWillUnmount() {
+    if (this.resetTimeoutId) {
+      clearTimeout(this.resetTimeoutId);
+    }
+  }
+
+  resetErrorBoundary = () => {
+    if (this.resetTimeoutId) {
+      clearTimeout(this.resetTimeoutId);
+    }
+
+    this.setState({
+      hasError: false,
+      error: undefined,
+      errorInfo: undefined,
+      resetKey: this.state.resetKey + 1,
+    });
+  };
+
   render() {
     if (this.state.hasError) {
-      // Custom fallback UI
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
-      // Get error details for fallback UI
-      const errorDetails = this.state.error ? createErrorFallback(this.state.error) : null;
-      const canRetry = errorDetails?.canRetry ?? true;
-
-      // Default fallback UI with enhanced error information
       return (
-        <div className="min-h-[400px] flex items-center justify-center p-8">
-          <div className="text-center max-w-lg">
-            <div className="text-6xl mb-4">⚠️</div>
-            <h2 className="text-2xl font-bold text-white mb-4">
-              {errorDetails?.title || 'Something went wrong'}
-            </h2>
-            <p className="text-white/70 mb-6">
-              {errorDetails?.message || 'We\'re sorry, but something unexpected happened. Please try refreshing the page.'}
-            </p>
-            {canRetry && (
-              <button
-                onClick={() => window.location.reload()}
-                className="btn-enhanced bg-gold text-black px-6 py-3 rounded font-semibold hover:bg-gold/90 transition-colors"
-              >
-                Refresh Page
-              </button>
-            )}
-            {errorDetails?.showDetails && this.state.error && (
-              <details className="mt-6 text-left">
-                <summary className="text-white/60 cursor-pointer hover:text-white transition-colors">
-                  Error Details
-                </summary>
-                <div className="mt-2 p-4 bg-black/50 rounded text-red-400 text-sm overflow-auto">
-                  <div className="mb-2">
-                    <strong>Message:</strong> {this.state.error.message}
-                  </div>
-                  <div className="mb-2">
-                    <strong>Code:</strong> {this.state.error.code}
-                  </div>
-                  <div className="mb-2">
-                    <strong>Timestamp:</strong> {this.state.error.timestamp.toISOString()}
-                  </div>
-                  {this.state.error.context && (
-                    <div className="mb-2">
-                      <strong>Context:</strong>
-                      <pre className="mt-1 text-xs">
-                        {JSON.stringify(this.state.error.context, null, 2)}
-                      </pre>
-                    </div>
-                  )}
-                  <div>
-                    <strong>Stack:</strong>
-                    <pre className="mt-1 text-xs whitespace-pre-wrap">
-                      {this.state.error.stack}
-                    </pre>
-                  </div>
-                </div>
+        <div className="error-boundary">
+          <div className="error-boundary__content">
+            <h2>Something went wrong</h2>
+            <p>An error occurred while rendering this component.</p>
+            
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <details className="error-boundary__details">
+                <summary>Error Details</summary>
+                <pre className="error-boundary__stack">
+                  {this.state.error.stack}
+                </pre>
               </details>
             )}
+
+            <div className="error-boundary__actions">
+              <button
+                onClick={this.resetErrorBoundary}
+                className="error-boundary__retry"
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                className="error-boundary__reload"
+              >
+                Reload Page
+              </button>
+            </div>
           </div>
         </div>
       );

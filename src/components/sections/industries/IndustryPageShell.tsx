@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Container, SectionBoundary } from '@/components/common';
-import BackgroundEffects from '@/components/common/BackgroundEffects';
+import BackgroundEffects from '@/components/common/background/BackgroundEffects';
 
 type IndustryPageShellProps = {
   children: ReactNode;
@@ -10,7 +10,9 @@ export default function IndustryPageShell({ children }: IndustryPageShellProps) 
   return (
     <section className="relative w-full min-h-screen bg-black text-white overflow-hidden">
       {/* Background layers matching industries section */}
-      <BackgroundEffects variant="industries" zIndex={-1} className="absolute inset-0 -z-10" />
+      <div className="absolute inset-0 -z-10">
+        <BackgroundEffects currentSection="industries" />
+      </div>
 
       <SectionBoundary>
         <Container>

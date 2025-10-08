@@ -1,172 +1,286 @@
 /**
- * Global Constants Configuration
- * Centralized constants for easy maintenance and updates
+ * Application Constants
+ * All hard-coded values and magic numbers should be defined here
  */
 
-// Carousel configuration
-export const CAROUSEL_CONSTANTS = {
-  // Rotation and animation
-  FULL_CIRCLE: 360,
-  TRANSITION_DURATION: 1000,
-  ROTATION_SPEED: 0.3,
-  SWIPE_THRESHOLD: 30,
-  SNAP_THRESHOLD: 20,
-  
-  // Timing
-  ANIMATION_DELAY: 100,
-  DEBOUNCE_DELAY: 150,
-  
-  // Physics
-  FRICTION: 0.95,
-  SPRING_TENSION: 0.8,
-  
-  // Performance
-  RAF_THROTTLE: 16, // 60fps
-  RESIZE_THROTTLE: 100,
-} as const;
-
-// Animation constants
+// Animation Constants
 export const ANIMATION_CONSTANTS = {
-  // Durations (ms)
-  FAST: 150,
-  NORMAL: 300,
-  SLOW: 500,
-  VERY_SLOW: 1000,
-  
-  // Delays (ms)
-  STAGGER_DELAY: 100,
-  RIPPLE_DURATION: 600,
-  
-  // Count up animation
-  COUNT_UP_DURATION: 2000,
-  COUNT_UP_FPS: 60,
-  COUNT_UP_INTERVAL: 16, // 1000ms / 60fps
-  
-  // Parallax
-  PARALLAX_SPEED: 0.5,
-  PARALLAX_THROTTLE: 16,
-} as const;
-
-// Layout constants
-export const LAYOUT_CONSTANTS = {
-  // Container constraints
-  MAX_CONTAINER_WIDTH: '1536px',
-  CONTAINER_PADDING: '1rem',
-  
-  // Section spacing
-  SECTION_PADDING_TOP: '4rem',
-  SECTION_PADDING_BOTTOM: '4rem',
-  
-  // Hero section
-  HERO_MIN_HEIGHT: '100vh',
-  HERO_IMAGE_OPACITY: 0.03,
-  
-  // Z-index values
-  BACKGROUND: -10,
-  CONTENT: 0,
-  HEADER: 100,
-  CAROUSEL_CONTROLS: 200,
-  DROPDOWN: 1000,
-  MODAL: 2000,
-  TOAST: 3000,
-} as const;
-
-// Performance constants
-export const PERFORMANCE_CONSTANTS = {
-  // Throttling
-  SCROLL_THROTTLE: 16, // 60fps
-  RESIZE_THROTTLE: 100,
-  MOUSE_MOVE_THROTTLE: 16,
-  
-  // Intersection Observer
-  INTERSECTION_THRESHOLD: 0.1,
-  INTERSECTION_ROOT_MARGIN: '50px 0px',
-  
-  // Lazy loading
-  LAZY_LOAD_MARGIN: '100px',
-  IMAGE_LOAD_TIMEOUT: 5000,
-} as const;
-
-// API and data constants
-export const API_CONSTANTS = {
-  // Rate limiting
-  RATE_LIMIT_WINDOW: 60000, // 1 minute
-  RATE_LIMIT_MAX_REQUESTS: 10,
-  RETRY_AFTER: 60,
-  
-  // Request timeouts
-  REQUEST_TIMEOUT: 10000,
-  CONTACT_FORM_DELAY: 500,
-  
-  // Validation
-  MAX_NAME_LENGTH: 100,
-  MAX_EMAIL_LENGTH: 254,
-  MAX_MESSAGE_LENGTH: 1000,
-} as const;
-
-// Accessibility constants
-export const ACCESSIBILITY_CONSTANTS = {
-  // Focus management
-  FOCUS_VISIBLE_OFFSET: '2px',
-  SKIP_LINK_OFFSET: '2rem',
-  
-  // Screen reader
-  SCREEN_READER_ONLY: 'sr-only',
-  SKIP_TO_CONTENT: 'Skip to content',
-  
-  // ARIA labels
-  CAROUSEL_LABEL: 'Industries carousel',
-  NAVIGATION_LABEL: 'Main navigation',
-  CONTENT_LABEL: 'Main content',
-} as const;
-
-// Color and theme constants
-export const THEME_CONSTANTS = {
-  // Opacity values
-  BACKGROUND_OVERLAY: 0.8,
-  CARD_OVERLAY: 0.9,
-  GLOW_OPACITY: 0.3,
-  
-  // Gradient stops
-  GRADIENT_STOPS: {
-    start: '0%',
-    middle: '50%',
-    end: '100%',
+  durations: {
+    fast: 150,
+    normal: 300,
+    slow: 500,
+    verySlow: 1000,
   },
-  
-  // Border styles
-  BORDER_WIDTH: '1px',
-  BORDER_RADIUS: '0.75rem',
-  FOCUS_RING_WIDTH: '2px',
+  delays: {
+    stagger: 100,
+    section: 200,
+    component: 50,
+  },
+  easings: {
+    easeInOut: 'ease-in-out',
+    easeOut: 'ease-out',
+    easeIn: 'ease-in',
+    linear: 'linear',
+  },
+  // Additional animation constants
+  COUNT_UP_DURATION: 2000,
+  COUNT_UP_INTERVAL: 16, // ~60fps for smooth counting
+  RIPPLE_DURATION: 600,
 } as const;
 
-// Error handling constants
+// Scroll Constants
+export const SCROLL_CONSTANTS = {
+  throttle: {
+    fast: 16, // ~60fps
+    normal: 33, // ~30fps
+    slow: 100, // 10fps
+  },
+  thresholds: {
+    visibility: 0.1,
+    intersection: 0.5,
+    parallax: 0.3,
+  },
+  sections: [
+    'hero',
+    'services',
+    'why',
+    'cta',
+    'what-we-do-hero',
+    'who-we-are-hero',
+    'customer-stories',
+    'case-studies',
+    'events',
+    'industries',
+    'contact-hero',
+    'contact-form',
+    'blog-header',
+    'blog-feed',
+  ],
+} as const;
+
+// API Constants
+export const API_CONSTANTS = {
+  statusCodes: {
+    success: 200,
+    created: 201,
+    badRequest: 400,
+    unauthorized: 401,
+    forbidden: 403,
+    notFound: 404,
+    tooManyRequests: 429,
+    serverError: 500,
+  },
+  messages: {
+    success: 'Operation completed successfully',
+    error: 'An error occurred',
+    validation: 'Validation failed',
+    unauthorized: 'Unauthorized access',
+    notFound: 'Resource not found',
+    rateLimited: 'Too many requests',
+  },
+  timeouts: {
+    short: 5000, // 5 seconds
+    medium: 10000, // 10 seconds
+    long: 30000, // 30 seconds
+  },
+} as const;
+
+// UI Constants
+export const UI_CONSTANTS = {
+  dimensions: {
+    headerHeight: 80,
+    footerHeight: 200,
+    sidebarWidth: 280,
+    maxWidth: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
+  },
+  colors: {
+    primary: '#ffd700',
+    secondary: '#FFBB01',
+    success: '#10b981',
+    warning: '#f59e0b',
+    error: '#ef4444',
+    info: '#3b82f6',
+  },
+  shadows: {
+    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+  },
+} as const;
+
+// Form Constants
+export const FORM_CONSTANTS = {
+  validation: {
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    phone: /^\+?[\d\s\-\(\)]+$/,
+    name: /^[a-zA-Z\s]{2,50}$/,
+    message: {
+      minLength: 10,
+      maxLength: 1000,
+    },
+  },
+  limits: {
+    maxFileSize: 5 * 1024 * 1024, // 5MB
+    maxFiles: 5,
+    maxMessageLength: 1000,
+  },
+  messages: {
+    required: 'This field is required',
+    invalidEmail: 'Please enter a valid email address',
+    invalidPhone: 'Please enter a valid phone number',
+    minLength: 'Minimum length not met',
+    maxLength: 'Maximum length exceeded',
+    fileTooLarge: 'File size too large',
+    tooManyFiles: 'Too many files selected',
+  },
+} as const;
+
+// Carousel Constants
+export const CAROUSEL_CONSTANTS = {
+  autoplay: {
+    delay: 5000, // 5 seconds
+    pauseOnHover: true,
+    disableOnInteraction: false,
+  },
+  navigation: {
+    enabled: true,
+    position: 'bottom',
+  },
+  pagination: {
+    enabled: true,
+    clickable: true,
+  },
+  breakpoints: {
+    sm: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    md: {
+      slidesPerView: 2,
+      spaceBetween: 30,
+    },
+    lg: {
+      slidesPerView: 3,
+      spaceBetween: 40,
+    },
+  },
+  // Industry carousel specific constants
+  TRANSITION_DURATION: 800,
+  ROTATION_SPEED: 0.02,
+  SWIPE_THRESHOLD: 50,
+  SNAP_THRESHOLD: 100,
+  FULL_CIRCLE: 360,
+} as const;
+
+// Industry Card Constants
+export const INDUSTRY_CARD_CONSTANTS = {
+  dimensions: {
+    mobile: {
+      width: '280px',
+      height: '200px',
+    },
+    tablet: {
+      width: '320px',
+      height: '240px',
+    },
+    desktop: {
+      width: '360px',
+      height: '280px',
+    },
+  },
+  animation: {
+    flipDuration: 800,
+    hoverScale: 1.05,
+    transitionDuration: 300,
+  },
+  textScaling: {
+    mobile: {
+      category: '0.75rem',
+      title: '1rem',
+      description: '0.875rem',
+      icon: '1.5rem',
+    },
+    desktop: {
+      category: '0.875rem',
+      title: '1.25rem',
+      description: '1rem',
+      icon: '2rem',
+    },
+  },
+} as const;
+
+// Service Card Constants
+export const SERVICE_CARD_CONSTANTS = {
+  dimensions: {
+    iconSize: '4rem',
+    minHeight: '300px',
+  },
+  animation: {
+    hoverScale: 1.02,
+    transitionDuration: 300,
+    staggerDelay: 100,
+  },
+  features: {
+    maxDisplayed: 5,
+    showMoreThreshold: 3,
+  },
+} as const;
+
+// Background Constants
+export const BACKGROUND_CONSTANTS = {
+  effects: {
+    gridOpacity: 0.03,
+    auroraIntensity: 0.1,
+    shineIntensity: 0.05,
+    vignetteIntensity: 0.1,
+  },
+  cursor: {
+    updateThrottle: 16, // ~60fps
+    defaultX: 0.5,
+    defaultY: 0.5,
+  },
+  sections: {
+    hero: 'hero',
+    services: 'services',
+    why: 'why-choose',
+    cta: 'hero',
+    industries: 'industries',
+    contact: 'hero',
+  },
+} as const;
+
+// Error Constants
 export const ERROR_CONSTANTS = {
-  // Error messages
-  GENERIC_ERROR: 'An unexpected error occurred',
-  NETWORK_ERROR: 'Network connection failed',
-  VALIDATION_ERROR: 'Please check your input',
-  
-  // Retry configuration
-  MAX_RETRIES: 3,
-  RETRY_DELAY: 1000,
-  
-  // Error boundaries
-  FALLBACK_MESSAGE: 'Something went wrong. Please refresh the page.',
-  REPORT_ERROR_TEXT: 'Report this error',
-} as const;
-
-// Development constants
-export const DEV_CONSTANTS = {
-  // Debug flags
-  ENABLE_DEBUG_LOGS: process.env.NODE_ENV === 'development',
-  ENABLE_PERFORMANCE_MONITORING: process.env.NODE_ENV === 'development',
-  
-  // Console styling
-  CONSOLE_STYLES: {
-    success: 'color: #10B981; font-weight: bold;',
-    error: 'color: #EF4444; font-weight: bold;',
-    warning: 'color: #F59E0B; font-weight: bold;',
-    info: 'color: #3B82F6; font-weight: bold;',
+  codes: {
+    NETWORK_ERROR: 'NETWORK_ERROR',
+    VALIDATION_ERROR: 'VALIDATION_ERROR',
+    AUTHENTICATION_ERROR: 'AUTHENTICATION_ERROR',
+    AUTHORIZATION_ERROR: 'AUTHORIZATION_ERROR',
+    NOT_FOUND_ERROR: 'NOT_FOUND_ERROR',
+    SERVER_ERROR: 'SERVER_ERROR',
+    COMPONENT_ERROR: 'COMPONENT_ERROR',
+    ANIMATION_ERROR: 'ANIMATION_ERROR',
+  },
+  messages: {
+    NETWORK_ERROR: 'Network connection failed',
+    VALIDATION_ERROR: 'Input validation failed',
+    AUTHENTICATION_ERROR: 'Authentication required',
+    AUTHORIZATION_ERROR: 'Access denied',
+    NOT_FOUND_ERROR: 'Resource not found',
+    SERVER_ERROR: 'Internal server error',
+    COMPONENT_ERROR: 'Component rendering failed',
+    ANIMATION_ERROR: 'Animation failed to load',
+  },
+  retry: {
+    maxAttempts: 3,
+    baseDelay: 1000,
+    maxDelay: 10000,
   },
 } as const;

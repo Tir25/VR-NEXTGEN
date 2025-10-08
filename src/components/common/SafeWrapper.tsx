@@ -54,11 +54,11 @@ export default function SafeWrapper({
     setState(prev => ({
       ...prev,
       hasError: true,
-      error: appError,
+      error: appError as AppError,
     }));
 
     if (onError) {
-      onError(appError);
+      onError(appError as AppError);
     }
 
     // If not isolating, re-throw the error

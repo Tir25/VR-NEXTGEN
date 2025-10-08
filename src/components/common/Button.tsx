@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode, useRef } from "react";
-import { ANIMATION_CONSTANTS } from '@/config';
+import { ANIMATION_CONSTANTS } from '@/constants';
 
 /**
  * Button component interface following VR NextGEN design system
