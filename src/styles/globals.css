@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css";
 
 /* VR NextGEN Design System - Design Tokens */
 :root {

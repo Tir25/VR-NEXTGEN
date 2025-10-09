@@ -3,7 +3,7 @@
  * A reusable component for lazy-loading and optimizing images with Next.js
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image, { ImageProps } from 'next/image';
 import { useInView } from '@/hooks/useInView';
 
@@ -33,11 +33,17 @@ export default function LazyImage({
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const { ref, inView } = useInView({ 
-    triggerOnce: true,
+  const { ref: inViewRef, inView } = useInView<HTMLDivElement>({ 
     threshold: 0.1,
     rootMargin: '200px' // Start loading 200px before the image is visible
   });
+  
+  // Use a callback ref to handle the ref assignment
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    if (node !== null && inViewRef.current !== node) {
+      inViewRef.current = node;
+    }
+  }, [inViewRef]);
 
   // Handle image load completion
   const handleLoadingComplete = () => {

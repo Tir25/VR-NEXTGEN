@@ -61,13 +61,13 @@ export default function InteractiveCard({
   };
 
   // Combine event handlers
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (enableTilt) tiltMouseMove(e);
     if (onMouseMove) onMouseMove(e);
   };
 
-  const handleMouseLeave = (e: React.MouseEvent) => {
-    if (enableTilt) tiltMouseLeave(e);
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (enableTilt) tiltMouseLeave();
     if (onMouseLeave) onMouseLeave(e);
   };
 

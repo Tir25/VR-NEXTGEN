@@ -131,3 +131,4 @@ AppData/
 !/DEPLOYMENT_*.md
 !/FINAL_*.md
 !/PROJECT_*.md
+.vercel
