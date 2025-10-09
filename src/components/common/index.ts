@@ -31,4 +31,3 @@ export { default as Carousel, CarouselControls } from './Carousel';
 export { default as AnimationSystem, StaggeredAnimation, AnimationPresets } from './AnimationSystem';
 export { default as AnimatedBackground } from './AnimatedBackground';
 export { default as SectionBoundary } from './SectionBoundary';
-export { default as FlatContainer } from './FlatContainer';

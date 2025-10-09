@@ -4,8 +4,7 @@ import Footer from "./Footer";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 import ImportErrorBoundary from "@/components/common/ImportErrorBoundary";
 import AnimatedBackground from "@/components/common/AnimatedBackground";
-// import SectionBoundary from "@/components/common/SectionBoundary"; // Removed to reduce DOM depth
-import FlatContainer from "@/components/common/FlatContainer";
+import SectionBoundary from "@/components/common/SectionBoundary";
 import { ScrollProvider } from "@/contexts/ScrollContext";
 import { PerformanceProvider } from "@/utils/componentOptimizer";
 import { ReactNode } from "react";
@@ -35,28 +34,30 @@ export default function Layout({ title, description, children }: LayoutProps) {
             <meta property="og:title" content={pageTitle} />
             <meta property="og:description" content={pageDesc} />
             <meta property="og:type" content="website" />
-            {/* Optimized Font Awesome - Only load specific icons we need */}
-            <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
           </Head>
           
-          {/* Optimized DOM structure - reduced nesting depth */}
-          <FlatContainer className="relative z-10" aria-hidden>
+          <SectionBoundary>
             <AnimatedBackground />
-          </FlatContainer>
+          </SectionBoundary>
           
           <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-gold text-black px-3 py-1 rounded">
             Skip to content
           </a>
           
-          <Header />
+          <SectionBoundary>
+            <Header />
+          </SectionBoundary>
           
           <main id="main" className="flex-1">
-            {children}
+            <SectionBoundary>
+              {children}
+            </SectionBoundary>
           </main>
           
-          <Footer />
+          <SectionBoundary>
+            <Footer />
+          </SectionBoundary>
         </div>
         </ScrollProvider>
         </PerformanceProvider>
