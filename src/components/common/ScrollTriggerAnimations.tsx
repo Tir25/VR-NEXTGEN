@@ -1,6 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useScrollTrigger, ScrollTriggerUtils } from '@/utils/gsapScrollTrigger';
 
+// Import ScrollTrigger types from the utils
+interface ScrollTriggerCallbackInstance {
+  progress: number;
+  direction: number;
+  isActive: boolean;
+  trigger: Element;
+  start: number;
+  end: number;
+}
+
 /**
  * ScrollTriggerAnimations Component
  * 
@@ -27,7 +37,7 @@ export default function ScrollTriggerAnimations({
 }: ScrollTriggerAnimationsProps) {
   const elementRef = useRef<HTMLDivElement>(null);
   const scrollTrigger = useScrollTrigger();
-  const animationRefs = useRef<any[]>([]);
+  const animationRefs = useRef<ScrollTriggerCallbackInstance[]>([]);
 
   useEffect(() => {
     if (!scrollTrigger.isAvailable || !elementRef.current) return;
@@ -110,12 +120,12 @@ export function useScrollTriggerAnimation(
     start?: string;
     end?: string;
     scrub?: boolean | number;
-    onUpdate?: (self: any) => void;
+    onUpdate?: (self: ScrollTriggerCallbackInstance) => void;
     onEnter?: () => void;
     onLeave?: () => void;
     onEnterBack?: () => void;
     onLeaveBack?: () => void;
-    animation?: (target: any) => void;
+    animation?: (target: Element) => void;
   }
 ) {
   const scrollTrigger = useScrollTrigger();
@@ -160,7 +170,7 @@ export function useScrollTriggerTimeline(
     start?: string;
     end?: string;
     scrub?: boolean | number;
-    onUpdate?: (self: any) => void;
+    onUpdate?: (self: ScrollTriggerCallbackInstance) => void;
     onEnter?: () => void;
     onLeave?: () => void;
     onEnterBack?: () => void;

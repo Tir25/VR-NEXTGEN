@@ -7,11 +7,11 @@ export default function CTABanner() {
       <Container size="lg">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Transform your business with VR Next Gen Solutions.
+            Transform your business with VR NextGen Solutions.
           </h2>
           <Link href="/contact" aria-label="Contact us">
             <Button variant="primary" size="md">
-              Get Started
+              Contact
             </Button>
           </Link>
         </div>

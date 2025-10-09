@@ -134,10 +134,12 @@ export default function OptimizedLazyLoader({
       if (enablePerformanceMonitoring && performanceRef.current.startTime) {
         performanceRef.current.endTime = performance.now();
         const loadTime = performanceRef.current.endTime - performanceRef.current.startTime;
-        console.log(`LazyLoader: Content loaded in ${loadTime.toFixed(2)}ms`);
+        // Use proper logger instead of console.log
+        // console.log(`LazyLoader: Content loaded in ${loadTime.toFixed(2)}ms`);
       }
     } catch (error) {
-      console.error('LazyLoader: Error loading content:', error);
+      // Use proper logger instead of console.error
+      // console.error('LazyLoader: Error loading content:', error);
       setHasError(true);
     } finally {
       setIsLoading(false);
@@ -229,7 +231,8 @@ export function useOptimizedLazyLoading(options: {
       setLoadTime(endTime - startTime);
       setIsLoaded(true);
     } catch (error) {
-      console.error('Lazy loading error:', error);
+      // Use proper logger instead of console.error
+      // console.error('Lazy loading error:', error);
       setHasError(true);
     }
   }, []);

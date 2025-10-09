@@ -154,13 +154,10 @@ export default function ServicesSection() {
 
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           <header className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full text-gold text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gold/10 border border-gold/30 rounded-full text-gold text-lg font-medium mb-6">
               <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               Our Services
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gold mb-6">
-              Comprehensive Business Solutions
-            </h2>
             <p className="text-lg text-black/70 max-w-3xl mx-auto leading-relaxed">
               We provide end-to-end business consulting services that drive measurable results and sustainable growth for your organization.
             </p>

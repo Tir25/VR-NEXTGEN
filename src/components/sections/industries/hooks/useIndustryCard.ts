@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Industry } from '@/types/components';
 import { getResponsiveValue, RESPONSIVE_CAROUSEL_CONFIG, hasIndustryBackgroundImage, getIndustryBackgroundImage } from '@/config';
 import { MAGIC_NUMBERS } from '@/constants';
+import { useViewport } from '@/hooks/useViewport';
 
 interface UseIndustryCardProps {
   industry: Industry;
@@ -12,6 +13,7 @@ interface UseIndustryCardProps {
 export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   const router = useRouter();
   const [isFlipped, setIsFlipped] = useState(false);
+  const { width } = useViewport();
   const [cardDimensions, setCardDimensions] = useState({ 
     width: `${MAGIC_NUMBERS.SIZES.CARD_WIDTH_DEFAULT}px`, 
     height: `${MAGIC_NUMBERS.SIZES.CARD_HEIGHT_DEFAULT}px` 
@@ -26,20 +28,14 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   const hasBackgroundImage = (cardId: string) => hasIndustryBackgroundImage(cardId);
   const getBackgroundImagePath = (cardId: string) => getIndustryBackgroundImage(cardId);
 
-  // Responsive card dimensions
+  // Responsive card dimensions driven by shared viewport
   useEffect(() => {
-    const updateCardDimensions = () => {
-      const cardSizes = getResponsiveValue(
-        RESPONSIVE_CAROUSEL_CONFIG.cardSizes as any, 
-        RESPONSIVE_CAROUSEL_CONFIG.cardSizes.lg
-      );
-      setCardDimensions({ width: cardSizes.width, height: cardSizes.height });
-    };
-
-    updateCardDimensions();
-    window.addEventListener('resize', updateCardDimensions);
-    return () => window.removeEventListener('resize', updateCardDimensions);
-  }, []);
+    const cardSizes = getResponsiveValue(
+      RESPONSIVE_CAROUSEL_CONFIG.cardSizes as Record<string, { width: string; height: string }>, 
+      RESPONSIVE_CAROUSEL_CONFIG.cardSizes.lg
+    );
+    setCardDimensions({ width: cardSizes.width, height: cardSizes.height });
+  }, [width]);
 
   // Reset flip state when card becomes inactive
   useEffect(() => {

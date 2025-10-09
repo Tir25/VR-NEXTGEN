@@ -46,6 +46,23 @@ const nextConfig: NextConfig = {
     return config;
   },
   async headers() {
+    const isDev = process.env.NODE_ENV !== 'production';
+    const scriptSrc = [
+      "script-src 'self' 'unsafe-inline'",
+      isDev ? "'unsafe-eval'" : ''
+    ].filter(Boolean).join(' ');
+
+    const styleSrc = [
+      "style-src 'self' 'unsafe-inline'",
+      'https://cdnjs.cloudflare.com'
+    ].join(' ');
+
+    const connectSrc = [
+      'connect-src',
+      "'self' https:",
+      isDev ? 'ws:' : ''
+    ].filter(Boolean).join(' ');
+
     return [
       {
         source: '/(.*)',
@@ -75,11 +92,11 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js requires unsafe-inline for development
-              "style-src 'self' 'unsafe-inline'", // Tailwind requires unsafe-inline
+              scriptSrc,
+              styleSrc,
               "img-src 'self' data: blob: https:",
-              "font-src 'self' data:",
-              "connect-src 'self' https:",
+              "font-src 'self' data: https://cdnjs.cloudflare.com",
+              connectSrc,
               "frame-src 'none'",
               "object-src 'none'",
               "base-uri 'self'",

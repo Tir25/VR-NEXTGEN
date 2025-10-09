@@ -58,13 +58,23 @@ function Industries() {
           <SectionHeader
             badge={{
               text: "Industries We Serve",
-              color: "purple"
+              color: "purple",
+              size: "xl"
             }}
-            title="Industries We Transform"
-            description="Explore the diverse industries where our innovative solutions drive transformation and deliver measurable results."
-            titleColor="white"
-            descriptionColor="white"
+            showTitle={false}
+            showDescription={false}
           />
+          
+          {/* Title and Content */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold mb-6">
+              See How We Turn Data into Decisions, Everywhere
+            </h2>
+            <p className="text-lg md:text-xl text-white max-w-4xl mx-auto leading-relaxed">
+              Explore how VR NextGen Solutions empowers businesses across industries through data-driven strategies, automation, and process excellence. Select your industry to see how we turn challenges into measurable growth.
+            </p>
+          </div>
+          
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-pulse text-white/50">Loading...</div>
           </div>
@@ -83,23 +93,24 @@ function Industries() {
             <SectionHeader
               badge={{
                 text: "Industries We Serve",
-                color: "purple"
+                color: "purple",
+                size: "xl"
               }}
-              title="Industries We Transform"
-              description="Explore the diverse industries where our innovative solutions drive transformation and deliver measurable results."
-              titleColor="white"
-              descriptionColor="white"
+              showTitle={false}
+              showDescription={false}
               compact
             />
-            {/* Context heading and description between section header and carousel */}
-            <div className="mt-3 mb-1 text-center">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+            
+            {/* Title and Content */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold mb-6">
                 See How We Turn Data into Decisions, Everywhere
               </h2>
-              <p className="mt-3 text-white/80 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-white max-w-4xl mx-auto leading-relaxed">
                 Explore how VR NextGen Solutions empowers businesses across industries through data-driven strategies, automation, and process excellence. Select your industry to see how we turn challenges into measurable growth.
               </p>
             </div>
+
             <ScrollCarousel 
               industries={INDUSTRIES}
               className="pt-2 pb-4"

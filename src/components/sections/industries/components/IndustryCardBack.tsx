@@ -20,6 +20,12 @@ export default function IndustryCardBack({
   responsivePadding,
   onLearnMore
 }: IndustryCardBackProps) {
+  const categorySameAsTitle = (industry.category || '').trim().toLowerCase() === (industry.title || '').trim().toLowerCase();
+  const locationText = (industry.location || '').trim();
+  const timestampText = (industry.timestamp || '').trim();
+  const isGlobal = locationText.toLowerCase() === 'global';
+  const isYear2024 = timestampText === '2024';
+  const timestampContainsGlobal2024 = timestampText.toLowerCase().includes('global 2024');
   return (
     <div 
       className={`absolute w-full h-full rounded-xl overflow-hidden shadow-lg border border-cyan-500/30 transition-opacity duration-300 ${
@@ -50,11 +56,19 @@ export default function IndustryCardBack({
         
         <div className="relative z-10 flex flex-col h-full">
           <h3 
-            className="font-bold text-white mb-2 leading-tight drop-shadow-lg flex-shrink-0"
+            className="font-bold text-white mb-2 leading-tight drop-shadow-lg flex-shrink-0 text-center"
             style={{ fontSize: textScaling.title }}
           >
             {industry.title || 'Card Title'}
           </h3>
+          {industry.category && !categorySameAsTitle && (
+            <div 
+              className="font-mono text-sand-yellow -mt-1 mb-1"
+              style={{ fontSize: textScaling.category }}
+            >
+              {industry.category}
+            </div>
+          )}
           <div 
             className={`leading-relaxed mb-2 flex-1 overflow-y-auto font-medium drop-shadow-lg ${
               hasBackgroundImage(industry.id) ? 'text-white' : 'text-white/80'
@@ -71,16 +85,18 @@ export default function IndustryCardBack({
             className="font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0"
             style={{ fontSize: textScaling.category }}
           >
-            <div className="flex items-center gap-1 font-semibold">
-              <i className="fas fa-map-marker-alt w-2" />
-              <span>{industry.location || 'Location'}</span>
-            </div>
-            <div className="flex items-center gap-1 font-semibold">
-              <i className="fas fa-clock w-2" />
-              <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>
-                {industry.timestamp || 'Date'}
-              </span>
-            </div>
+            {!isGlobal && (
+              <div className="flex items-center gap-1 font-semibold">
+                <i className="fas fa-map-marker-alt w-2" />
+                <span>{locationText || 'Location'}</span>
+              </div>
+            )}
+            {!isYear2024 && !timestampContainsGlobal2024 && (
+              <div className="flex items-center gap-1 font-semibold">
+                <i className="fas fa-clock w-2" />
+                <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+              </div>
+            )}
           </div>
           
           {/* Learn More Button */}

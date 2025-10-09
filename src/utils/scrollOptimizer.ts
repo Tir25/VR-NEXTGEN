@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { logger } from './logger';
 // Simple throttle and debounce implementations
 const throttle = <T extends (...args: any[]) => any>(func: T, wait: number): T => {
   let timeout: NodeJS.Timeout | null = null;
@@ -115,7 +116,7 @@ class ScrollOptimizer {
     } = {}
   ): () => void {
     if (this.handlers.size >= this.config.maxHandlers) {
-      console.warn(`ScrollOptimizer: Maximum handlers (${this.config.maxHandlers}) reached`);
+      logger.warn(`ScrollOptimizer: Maximum handlers (${this.config.maxHandlers}) reached`);
       return () => {};
     }
 
@@ -332,7 +333,7 @@ class ScrollOptimizer {
       try {
         handler(scrollEvent);
       } catch (error) {
-        console.error('ScrollOptimizer: Handler error:', error);
+        logger.error('ScrollOptimizer: Handler error:', error);
       }
     });
   }
@@ -375,7 +376,7 @@ class ScrollOptimizer {
 
       // Warn about performance issues
       if (this.performanceMetrics.fps < 45) {
-        console.warn(`ScrollOptimizer: Low FPS detected: ${this.performanceMetrics.fps}`);
+        logger.warn(`ScrollOptimizer: Low FPS detected: ${this.performanceMetrics.fps}`);
       }
     }
   }
@@ -416,6 +417,7 @@ const scrollOptimizer = new ScrollOptimizer();
 
 /**
  * React hook for optimized scroll handling
+ * @deprecated Use useUnifiedScroll from @/utils/UnifiedScrollManager instead
  */
 export function useOptimizedScroll(
   handler: (event: ScrollEvent) => void,
@@ -426,6 +428,8 @@ export function useOptimizedScroll(
     deps?: React.DependencyList;
   } = {}
 ) {
+  logger.warn('useOptimizedScroll is deprecated. Use useUnifiedScroll from @/utils/UnifiedScrollManager instead.');
+  
   const { deps = [], ...scrollOptions } = options;
   
   React.useEffect(() => {

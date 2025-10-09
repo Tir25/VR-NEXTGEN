@@ -11,7 +11,7 @@ export default function DataVisualization() {
         badgeText="Data Visualization & Reporting"
         title="See What Matters. Act with Clarity."
         subtitle="In the modern enterprise, clarity drives confidence."
-        cardBgUrl="/images/Our Services/Data Visualization & Reporting.png"
+        cardBgUrl="/images-optimized/Our Services/Data Visualization & Reporting.webp"
         cardTitle="Data Visualization & Reporting"
       >
             <section className="relative z-10 max-w-none">

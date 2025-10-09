@@ -25,7 +25,7 @@ export default function EducationEdTech() {
           <div
             className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-purple-500/30 overflow-hidden"
             style={{
-              backgroundImage: "url('/images/Industries/Education.png')",
+              backgroundImage: "url('/images-optimized/Industries/Education.webp')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'

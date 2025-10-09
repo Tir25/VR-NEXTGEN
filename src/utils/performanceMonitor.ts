@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { logger } from './logger';
 
 interface PerformanceMetrics {
   fps: number;
@@ -116,7 +117,7 @@ class PerformanceMonitor {
       try {
         observer(metrics);
       } catch (error) {
-        console.warn('Performance observer error:', error);
+        logger.warn('Performance observer error:', error);
       }
     });
 
@@ -161,9 +162,9 @@ class PerformanceMonitor {
    */
   private checkPerformanceIssues(metrics: PerformanceMetrics): void {
     if (metrics.fps < this.config.criticalThreshold) {
-      console.warn(`Critical performance issue: ${metrics.fps.toFixed(1)}fps (below ${this.config.criticalThreshold}fps)`);
+      logger.warn(`Critical performance issue: ${metrics.fps.toFixed(1)}fps (below ${this.config.criticalThreshold}fps)`);
     } else if (metrics.fps < this.config.warningThreshold) {
-      console.warn(`Performance warning: ${metrics.fps.toFixed(1)}fps (below ${this.config.warningThreshold}fps)`);
+      logger.warn(`Performance warning: ${metrics.fps.toFixed(1)}fps (below ${this.config.warningThreshold}fps)`);
     }
   }
 

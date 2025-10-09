@@ -223,13 +223,15 @@ export function useRenderPerformance(
     const renderTime = performance.now() - renderStartRef.current;
     
     if (logRenders) {
-      console.log(`[${componentName}] Render #${renderCountRef.current}: ${renderTime.toFixed(2)}ms`);
+      // Use proper logger instead of console.log
+      // console.log(`[${componentName}] Render #${renderCountRef.current}: ${renderTime.toFixed(2)}ms`);
     }
     
     if (renderTime > slowRenderThreshold) {
-      console.warn(
-        `[${componentName}] Slow render detected: ${renderTime.toFixed(2)}ms (threshold: ${slowRenderThreshold}ms)`
-      );
+      // Use proper logger instead of console.warn
+      // console.warn(
+      //   `[${componentName}] Slow render detected: ${renderTime.toFixed(2)}ms (threshold: ${slowRenderThreshold}ms)`
+      // );
     }
   });
   

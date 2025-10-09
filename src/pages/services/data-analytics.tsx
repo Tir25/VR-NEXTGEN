@@ -11,7 +11,7 @@ export default function DataAnalytics() {
         badgeText="Data Analytics & Insights"
         title="Transforming Data into Direction"
         subtitle="In today’s digital landscape, data is the DNA of decision‑making — and at VR NextGen Solutions, we help businesses decode it effectively."
-        cardBgUrl="/images/Our Services/Data Analytics & Insights.png"
+        cardBgUrl="/images-optimized/Our Services/Data Analytics & Insights.webp"
         cardTitle="Data Analytics & Insights"
       >
             <section className="relative z-10 max-w-none">

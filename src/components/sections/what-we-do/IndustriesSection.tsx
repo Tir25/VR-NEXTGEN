@@ -151,16 +151,10 @@ export default function IndustriesSection() {
 
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           <header className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full text-gold text-sm font-medium mb-6">
-              <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
-              Industry Expertise
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gold mb-6">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-purple-500/10 border border-purple-500/30 rounded-full text-purple-400 text-lg font-medium mb-6">
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
               Industries We Serve
-            </h2>
-            <p className="text-lg text-black/70 max-w-3xl mx-auto leading-relaxed">
-              Our deep industry knowledge and specialized expertise help organizations across diverse sectors achieve their strategic objectives.
-            </p>
+            </div>
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

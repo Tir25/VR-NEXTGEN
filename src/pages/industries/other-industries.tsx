@@ -25,7 +25,7 @@ export default function OtherIndustries() {
           <div
             className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-purple-500/30 overflow-hidden"
             style={{
-              backgroundImage: "url('/images/Industries/Other.png')",
+              backgroundImage: "url('/images-optimized/Industries/Other.webp')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'

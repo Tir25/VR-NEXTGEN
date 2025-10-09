@@ -25,7 +25,7 @@ export default function IndustrialInfrastructure() {
           <div
             className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-purple-500/30 overflow-hidden"
             style={{
-              backgroundImage: "url('/images/Industries/engineering.png')",
+              backgroundImage: "url('/images-optimized/Industries/engineering.webp')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'

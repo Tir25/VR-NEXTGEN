@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useCallback, ReactNode } from 'react';
-import { createOptimizedScrollHandler, getOptimalScrollConfig, applyScrollOptimizations } from '@/utils/scrollPerformance';
-import { getScrollTriggerManager } from '@/utils/gsapScrollTrigger';
+import { getUnifiedScrollManager, ScrollEvent } from '@/utils/UnifiedScrollManager';
 
 /**
  * Global scroll state and handlers
@@ -39,8 +38,8 @@ interface ScrollProviderProps {
 }
 
 /**
- * Global scroll controller that manages all scroll-related events
- * Uses a single scroll listener with requestAnimationFrame for optimal performance
+ * Enhanced scroll controller that uses the unified scroll manager
+ * Provides a single scroll listener with requestAnimationFrame for optimal performance
  */
 export function ScrollProvider({ children }: ScrollProviderProps) {
   const [scrollState, setScrollState] = useState<ScrollState>({
@@ -53,135 +52,53 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     viewportWidth: 0,
   });
 
-  // Get optimal configuration based on device capabilities
-  const scrollConfig = getOptimalScrollConfig();
-
-  const handlersRef = useRef<ScrollHandlers>({
-    parallax: new Set(),
-    fade: new Set(),
-    navigation: new Set(),
-    background: new Set(),
-    custom: new Set(),
-  });
-
-  const lastScrollY = useRef(0);
-  const lastScrollX = useRef(0);
-  const lastScrollTime = useRef(Date.now());
-  const ticking = useRef(false);
+  const unifiedScrollManager = getUnifiedScrollManager();
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   /**
-   * Calculate scroll direction and velocity
-   */
-  const calculateScrollMetrics = useCallback((currentScrollY: number, currentScrollX: number) => {
-    const now = Date.now();
-    const timeDelta = now - lastScrollTime.current;
-    
-    if (timeDelta > 0) {
-      const scrollDeltaY = currentScrollY - lastScrollY.current;
-      const scrollDeltaX = currentScrollX - lastScrollX.current;
-      const velocity = Math.sqrt(scrollDeltaY * scrollDeltaY + scrollDeltaX * scrollDeltaX) / timeDelta;
-      
-      lastScrollY.current = currentScrollY;
-      lastScrollX.current = currentScrollX;
-      lastScrollTime.current = now;
-      
-      return {
-        direction: scrollDeltaY > 0 ? 'down' : scrollDeltaY < 0 ? 'up' : null,
-        velocity,
-      };
-    }
-    
-    return {
-      direction: null,
-      velocity: 0,
-    };
-  }, []);
-
-  /**
-   * Unified scroll handler that processes all scroll events
-   */
-  const handleScroll = useCallback(() => {
-    if (!ticking.current) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const scrollX = window.scrollX;
-        const viewportHeight = window.innerHeight;
-        const viewportWidth = window.innerWidth;
-        
-        const { direction, velocity } = calculateScrollMetrics(scrollY, scrollX);
-        
-        const newScrollState: ScrollState = {
-          scrollY,
-          scrollX,
-          scrollDirection: direction as 'up' | 'down' | null,
-          isScrolling: true,
-          scrollVelocity: velocity,
-          viewportHeight,
-          viewportWidth,
-        };
-        
-        setScrollState(newScrollState);
-        
-        // Execute all registered handlers
-        Object.values(handlersRef.current).forEach(handlerSet => {
-          handlerSet.forEach((handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
-            try {
-              handler(scrollY, direction as 'up' | 'down' | null);
-            } catch (error) {
-              // Scroll handler error
-            }
-          });
-        });
-        
-        // Update GSAP ScrollTrigger after all custom handlers
-        const scrollTriggerManager = getScrollTriggerManager();
-        if (scrollTriggerManager && scrollTriggerManager.isAvailable()) {
-          scrollTriggerManager.update();
-        }
-        
-        ticking.current = false;
-      });
-      
-      ticking.current = true;
-    }
-    
-    // Clear existing timeout and set new one to detect scroll end
-    if (scrollTimeout.current) {
-      clearTimeout(scrollTimeout.current);
-    }
-    
-    scrollTimeout.current = setTimeout(() => {
-      setScrollState(prev => ({ ...prev, isScrolling: false, scrollVelocity: 0 }));
-    }, 150);
-  }, [calculateScrollMetrics]);
-
-  /**
-   * Register a scroll handler
+   * Register a scroll handler using the unified manager
    */
   const registerHandler = useCallback((type: keyof ScrollHandlers, handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
-    handlersRef.current[type].add(handler);
-    
-    // Return unregister function
-    return () => {
-      handlersRef.current[type].delete(handler);
+    // Convert handler to work with ScrollEvent
+    const unifiedHandler = (event: ScrollEvent) => {
+      handler(event.scrollY, event.direction as 'up' | 'down' | null);
     };
-  }, []);
+
+    const unregister = unifiedScrollManager.register(
+      `context-${type}-${Date.now()}`,
+      unifiedHandler,
+      { type, priority: getPriorityForType(type) }
+    );
+    
+    return unregister;
+  }, [unifiedScrollManager]);
 
   /**
    * Unregister a scroll handler
    */
   const unregisterHandler = useCallback((type: keyof ScrollHandlers, handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
-    handlersRef.current[type].delete(handler);
+    // Note: This is a simplified implementation since the unified manager handles cleanup automatically
+    // In practice, components should use the returned unregister function from registerHandler
   }, []);
 
   /**
-   * Initialize scroll listener with performance optimizations
+   * Get priority for handler type
+   */
+  function getPriorityForType(type: keyof ScrollHandlers): number {
+    const priorities = {
+      parallax: 1,
+      fade: 2,
+      navigation: 3,
+      background: 4,
+      custom: 5,
+    };
+    return priorities[type] || 5;
+  }
+
+  /**
+   * Initialize scroll state tracking
    */
   useEffect(() => {
-    // Apply scroll optimizations
-    applyScrollOptimizations();
-
     // Set initial viewport dimensions
     setScrollState(prev => ({
       ...prev,
@@ -189,52 +106,39 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
       viewportWidth: window.innerWidth,
     }));
 
-    // Create optimized scroll handler
-    const { handler: optimizedHandler } = createOptimizedScrollHandler(
-      () => {
-        handleScroll();
+    // Register scroll state updater with the unified manager
+    const unregisterStateUpdater = unifiedScrollManager.register(
+      'scroll-context-state-updater',
+      (event: ScrollEvent) => {
+        setScrollState({
+          scrollY: event.scrollY,
+          scrollX: event.scrollX,
+          scrollDirection: event.direction as 'up' | 'down' | null,
+          isScrolling: true,
+          scrollVelocity: event.velocity,
+          viewportHeight: event.viewportHeight,
+          viewportWidth: event.viewportWidth,
+        });
+
+        // Clear existing timeout and set new one to detect scroll end
+        if (scrollTimeout.current) {
+          clearTimeout(scrollTimeout.current);
+        }
+        
+        scrollTimeout.current = setTimeout(() => {
+          setScrollState(prev => ({ ...prev, isScrolling: false, scrollVelocity: 0 }));
+        }, 150);
       },
-      {
-        throttle: true,
-        debounce: false,
-        monitor: process.env.NODE_ENV === 'development',
-        config: scrollConfig,
-      }
+      { type: 'custom', priority: 0 } // Highest priority for state updates
     );
 
-    // Create event listener wrapper
-    const scrollEventListener = () => {
-      optimizedHandler(window.scrollY, window.scrollX);
-    };
-
-    // Add optimized scroll listener with passive flag for better performance
-    window.addEventListener('scroll', scrollEventListener, { passive: true });
-    
-    // Handle resize events
-    const handleResize = () => {
-      setScrollState(prev => ({
-        ...prev,
-        viewportHeight: window.innerHeight,
-        viewportWidth: window.innerWidth,
-      }));
-      
-      // Refresh ScrollTrigger on resize
-      const scrollTriggerManager = getScrollTriggerManager();
-      if (scrollTriggerManager && scrollTriggerManager.isAvailable()) {
-        scrollTriggerManager.refresh();
-      }
-    };
-    
-    window.addEventListener('resize', handleResize, { passive: true });
-    
     return () => {
-      window.removeEventListener('scroll', scrollEventListener);
-      window.removeEventListener('resize', handleResize);
+      unregisterStateUpdater();
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
     };
-  }, [handleScroll, scrollConfig]);
+  }, [unifiedScrollManager]);
 
   const contextValue: ScrollContextType = {
     scrollState,

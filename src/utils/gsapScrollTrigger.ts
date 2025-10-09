@@ -5,6 +5,8 @@
  * It ensures compatibility with both GSAP animations and the existing scroll system.
  */
 
+import { logger } from './logger';
+
 // Dynamic imports for GSAP to avoid SSR issues
 let gsap: any = null;
 let ScrollTrigger: any = null;
@@ -47,7 +49,9 @@ async function initializeGSAP() {
     
     return true;
   } catch (error) {
-    console.warn('GSAP ScrollTrigger not available:', error);
+    // Use dev-safe logger
+    const { logger } = await import('./logger');
+    logger.warn('GSAP ScrollTrigger not available:', error);
     return false;
   }
 }
@@ -99,7 +103,7 @@ class ScrollTriggerManager {
       try {
         ScrollTrigger.update();
       } catch (error) {
-        console.warn('ScrollTrigger update error:', error);
+        logger.warn('ScrollTrigger update error:', error);
       }
     }
   }
@@ -118,7 +122,7 @@ class ScrollTriggerManager {
         try {
           ScrollTrigger.refresh();
         } catch (error) {
-          console.warn('ScrollTrigger refresh error:', error);
+          logger.warn('ScrollTrigger refresh error:', error);
         }
       }, 100);
     }
@@ -140,7 +144,7 @@ class ScrollTriggerManager {
     animation?: (target: Element) => void;
   }) {
     if (!this.isAvailable()) {
-      console.warn('ScrollTrigger not available, skipping animation creation');
+          logger.warn('ScrollTrigger not available, skipping animation creation');
       return null;
     }
 
@@ -158,7 +162,7 @@ class ScrollTriggerManager {
         animation: config.animation,
       });
     } catch (error) {
-      console.error('ScrollTrigger animation creation error:', error);
+      logger.error('ScrollTrigger animation creation error:', error);
       return null;
     }
   }
@@ -179,7 +183,7 @@ class ScrollTriggerManager {
     animation?: (tl: TimelineInstance) => void;
   }) {
     if (!this.isAvailable()) {
-      console.warn('ScrollTrigger not available, skipping timeline creation');
+      logger.warn('ScrollTrigger not available, skipping timeline creation');
       return null;
     }
 
@@ -205,7 +209,7 @@ class ScrollTriggerManager {
 
       return tl;
     } catch (error) {
-      console.error('ScrollTrigger timeline creation error:', error);
+          logger.error('ScrollTrigger timeline creation error:', error);
       return null;
     }
   }
@@ -218,7 +222,7 @@ class ScrollTriggerManager {
       try {
         ScrollTrigger.killAll();
       } catch (error) {
-        console.warn('ScrollTrigger killAll error:', error);
+        logger.warn('ScrollTrigger killAll error:', error);
       }
     }
   }
@@ -232,7 +236,7 @@ class ScrollTriggerManager {
     try {
       return ScrollTrigger.getById(id);
     } catch (error) {
-      console.warn('ScrollTrigger getById error:', error);
+      logger.warn('ScrollTrigger getById error:', error);
       return null;
     }
   }

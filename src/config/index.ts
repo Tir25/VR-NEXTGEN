@@ -9,3 +9,4 @@ export * from './sections';
 export * from './animations';
 export * from './responsive';
 export * from './industryImages';
+export * from './navigation';

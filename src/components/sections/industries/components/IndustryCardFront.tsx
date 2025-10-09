@@ -20,6 +20,7 @@ export default function IndustryCardFront({
   responsivePadding,
   onLearnMore
 }: IndustryCardFrontProps) {
+  const categorySameAsTitle = (industry.category || '').trim().toLowerCase() === (industry.title || '').trim().toLowerCase();
   return (
     <div 
       className={`absolute w-full h-full rounded-xl overflow-hidden shadow-lg border border-purple-500/30 transition-opacity duration-300 ${
@@ -49,16 +50,18 @@ export default function IndustryCardFront({
         <div className="absolute inset-0 bg-black rounded-xl pointer-events-none opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
         
         <div className="relative z-10 flex flex-col h-full">
-          <div 
-            className={`font-mono mb-1 tracking-wider font-semibold drop-shadow-lg ${
-              hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
-            }`}
-            style={{ fontSize: textScaling.category }}
-          >
-            {industry.category || 'CATEGORY'}
-          </div>
+          {industry.category && !categorySameAsTitle && (
+            <div 
+              className={`font-mono mb-1 tracking-wider font-semibold drop-shadow-lg ${
+                hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
+              }`}
+              style={{ fontSize: textScaling.category }}
+            >
+              {industry.category}
+            </div>
+          )}
           <h3 
-            className="font-bold text-white mb-2 leading-tight drop-shadow-lg"
+            className="font-bold text-white mb-2 leading-tight drop-shadow-lg text-center"
             style={{ fontSize: textScaling.title }}
           >
             {industry.title || 'Card Title'}

@@ -73,6 +73,11 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Low-end device guards: simplify heavy background layers */
+html.low-end .site-bg__grid { animation: none !important; opacity: 0.2; }
+html.low-end .site-bg__aurora { animation-duration: 80s; }
+html.low-end .site-bg__starfield { display: none !important; }
+
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
 html { scroll-behavior: smooth; }
 

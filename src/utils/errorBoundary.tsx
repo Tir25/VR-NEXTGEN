@@ -5,6 +5,7 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AppError } from './errorHandling';
+import { logger } from './logger';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -78,7 +79,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     // Log error for debugging
     if (process.env.NODE_ENV === 'development') {
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
+      logger.error('ErrorBoundary caught an error:', error, errorInfo);
     }
   }
 
@@ -218,7 +219,7 @@ export function useErrorHandler() {
     };
 
     // Log error
-    console.error('Error caught by useErrorHandler:', appError);
+    logger.error('Error caught by useErrorHandler:', appError);
     
     // In a real app, you might want to send this to an error reporting service
     // errorReportingService.report(appError);

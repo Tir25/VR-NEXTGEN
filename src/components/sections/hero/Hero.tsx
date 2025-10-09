@@ -1,11 +1,13 @@
 import { useParallax } from "@/hooks/useParallax";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { HeroSection } from "@/components/common";
-import { HeroText, HeroButtons } from ".";
+import { HeroText } from ".";
 import { HERO_CONFIG } from "./constants";
 import SectionBoundary from "@/components/common/SectionBoundary";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useScroll, useSpring, useTransform } from "framer-motion";
+import React, { useMemo } from "react";
+import { useViewport } from "@/hooks/useViewport";
+import HeroBackground from "./HeroBackground";
 
 /**
  * Optimized Hero component with consolidated scroll handling and performance optimizations
@@ -17,31 +19,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 export default function Hero() {
   const parallax = useParallax(HERO_CONFIG.parallaxSpeed);
   const { scrollY } = useScroll();
-  const [viewportHeight, setViewportHeight] = useState(0);
-
-  // Optimized viewport height calculation with throttling
-  const updateViewportHeight = useCallback(() => {
-    const newHeight = window.innerHeight || 0;
-    setViewportHeight(prevHeight => prevHeight !== newHeight ? newHeight : prevHeight);
-  }, []);
-
-  useEffect(() => {
-    // Initial calculation
-    updateViewportHeight();
-    
-    // Throttled resize listener for better performance
-    let timeoutId: NodeJS.Timeout;
-    const throttledUpdate = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateViewportHeight, 100);
-    };
-
-    window.addEventListener('resize', throttledUpdate, { passive: true });
-    return () => {
-      window.removeEventListener('resize', throttledUpdate);
-      clearTimeout(timeoutId);
-    };
-  }, [updateViewportHeight]);
+  const { height: viewportHeight } = useViewport();
 
   // Memoized opacity calculations for better performance
   const opacityConfig = useMemo(() => {
@@ -71,28 +49,12 @@ export default function Hero() {
       ariaLabel="Hero"
       minHeight={HERO_CONFIG.minHeight}
     >
-      {/* Optimized background image with smooth scroll-bound fade */}
-      <motion.div
-        className="absolute inset-0 -z-30 bg-[url('/images/Hero.png')] bg-cover bg-center bg-no-repeat"
-        aria-hidden
-        style={{ 
-          opacity: smoothedOpacity, 
-          willChange: 'opacity',
-          transform: 'translateZ(0)', // Force hardware acceleration
-          backfaceVisibility: 'hidden' // Optimize rendering
-        }}
-        transition={{ duration: 0.7, ease: 'easeInOut' }}
-      />
-
-      {/* Optimized grid/decoration overlay with hardware acceleration */}
-      <div
-        className="absolute inset-0 -z-20 bg-[url('/next.svg')] bg-no-repeat bg-center opacity-[0.03]"
-        aria-hidden
-        style={{ 
-          transform: `translate3d(0, ${parallax * -1}px, 0)`,
-          willChange: 'transform',
-          backfaceVisibility: 'hidden'
-        }}
+      {/* Reusable optimized background with parallax and fade effects */}
+      <HeroBackground 
+        backgroundImage="/images-optimized/Hero.webp"
+        opacity={smoothedOpacity}
+        overlayImage="/next.svg"
+        parallaxOffset={parallax}
       />
 
       {/* Original Hero Text Content with Animations */}
@@ -100,10 +62,6 @@ export default function Hero() {
         <HeroText />
       </SectionBoundary>
 
-      {/* Action Buttons */}
-      <SectionBoundary>
-        <HeroButtons />
-      </SectionBoundary>
     </HeroSection>
   );
 }

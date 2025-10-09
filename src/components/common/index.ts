@@ -4,7 +4,9 @@
  */
 
 export { default as Button } from './Button';
+export { default as DropdownMenu } from './DropdownMenu';
 export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as ImportErrorBoundary } from './ImportErrorBoundary';
 export { default as Input } from './Input';
 export { default as LazyWrapper } from './LazyWrapper';
 export { default as Logo } from './Logo';
@@ -18,13 +20,13 @@ export { default as ButtonGroup, CTAButtonGroup, NavigationButtonGroup, ActionBu
 export { default as AnimationWrapper, FadeInWrapper, SlideUpWrapper, SlideDownWrapper, ScaleInWrapper, StaggeredWrapper } from './AnimationWrapper';
 
 // Error isolation and safety components
-export { default as SafeWrapper, SafeSection, SafeAnimation } from './SafeWrapper';
+export { default as SafeWrapper, SafeSection } from './SafeWrapper';
 export { default as BrowserCompatibility, IntersectionObserverCompatible, AnimationCompatible, StorageCompatible, ModernBrowserCompatible } from './BrowserCompatibility';
-export { default as SafeAnimationComponent, SafeFadeIn, SafeSlideUp, SafeSlideDown, SafeScaleIn, SafeStaticAnimation } from './SafeAnimation';
+export { default as SafeAnimation, SafeFadeIn, SafeSlideUp, SafeSlideDown, SafeScaleIn, SafeStaticAnimation } from './SafeAnimation';
 export { default as InputValidator, EmailValidator, PhoneValidator, NameValidator, PasswordValidator, commonValidationRules } from './InputValidator';
 
 // New modular and sustainable components
-export { default as BackgroundEffects } from './background';
+export { BackgroundEffects } from './background';
 export { default as Carousel, CarouselControls } from './Carousel';
 export { default as AnimationSystem, StaggeredAnimation, AnimationPresets } from './AnimationSystem';
 export { default as AnimatedBackground } from './AnimatedBackground';

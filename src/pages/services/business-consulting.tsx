@@ -11,7 +11,7 @@ export default function BusinessConsulting() {
         badgeText="Business Consulting & Strategic Transformation"
         title="Where Insight Meets Execution"
         cardTitle="Business Consulting & Strategic Transformation"
-        cardBgUrl="/images/Our Services/Business Consulting & Strategy.png"
+        cardBgUrl="/images-optimized/Our Services/Business Consulting & Strategy.webp"
       >
             <section className="relative z-10 max-w-none">
               <p className="text-gray-700 leading-relaxed text-base md:text-lg mb-6">

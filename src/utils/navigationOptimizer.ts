@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { logger } from './logger';
 
 interface FileInfo {
   path: string;
@@ -119,7 +120,7 @@ class NavigationOptimizer {
 
       this.fileMap.set(filePath, fileInfo);
     } catch (error) {
-      console.warn(`Failed to analyze file ${filePath}:`, error);
+      logger.warn(`Failed to analyze file ${filePath}:`, error);
     }
   }
 

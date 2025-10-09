@@ -6,7 +6,9 @@ export default function Footer() {
   const year = new Date().getFullYear();
   
   return (
-    <footer className="bg-black text-white border-t border-white/10">
+    <footer 
+      className="bg-black text-white"
+    >
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-12 grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -14,7 +16,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <h3 className="text-xl font-bold text-gold mb-4">VR NextGEN Solutions</h3>
             <p className="text-sm text-white/70 mb-4 leading-relaxed">
-              {COMPANY_INFO.tagline}
+              Transform your business with VR Next Gen Solutions. Join Next Gen to NextGen
             </p>
             <div className="text-sm text-white/60 space-y-1">
               <p>{COMPANY_INFO.address}</p>
@@ -56,7 +58,7 @@ export default function Footer() {
             <p className="text-sm text-white/70 mb-6">
               Stay connected with us for the latest insights, industry updates, and business solutions.
             </p>
-            <div className="flex flex-wrap gap-4" aria-label="Social media links">
+            <div className="flex flex-row gap-3 justify-start items-center" aria-label="Social media links">
               <SocialIcon 
                 type="instagram" 
                 href={COMPANY_INFO.socialMedia.instagram}

@@ -25,7 +25,7 @@ export default function PharmaceuticalLifeSciences() {
           <div
             className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-purple-500/30 overflow-hidden"
             style={{
-              backgroundImage: "url('/images/Industries/Pharmaceutical & Life Sciences.png')",
+              backgroundImage: "url('/images-optimized/Industries/Pharmaceutical & Life Sciences.webp')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'

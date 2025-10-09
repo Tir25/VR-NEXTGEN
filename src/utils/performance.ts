@@ -123,27 +123,10 @@ export function useIntersectionObserverOptimized(
   return { ref, isIntersecting, hasIntersected };
 }
 
-/**
- * Custom hook for optimized scroll event handling
- */
-export function useOptimizedScroll(callback: (scrollY: number) => void) {
-  const ticking = useRef(false);
-
-  const handleScroll = useCallback(() => {
-    if (!ticking.current) {
-      requestAnimationFrame(() => {
-        callback(window.scrollY);
-        ticking.current = false;
-      });
-      ticking.current = true;
-    }
-  }, [callback]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-}
+// Note: Scroll-related hooks have been moved to the unified scroll system
+// Use hooks from @/utils/UnifiedScrollManager instead:
+// - useUnifiedScroll
+// - getUnifiedScrollManager
 
 /**
  * Custom hook for memoized expensive calculations
@@ -302,7 +285,6 @@ export const performanceUtils = {
   useDebounce,
   useThrottle,
   useIntersectionObserverOptimized,
-  useOptimizedScroll,
   useMemoizedCallback,
   useMemoizedValue,
   PerformanceMonitor,

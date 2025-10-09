@@ -1,0 +1,52 @@
+/* Hero Component Styles */
+
+.hero-title {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+}
+
+.highlight {
+  position: relative;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+}
+
+.stat-item {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  opacity: 0.9;
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  transform: translateY(2rem);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+.delay-2000 {
+  animation-delay: 2s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+}

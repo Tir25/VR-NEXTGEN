@@ -86,6 +86,12 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
     const cards = useMemo(() => industries.map((industry, index) => {
       const backgroundImage = hasBackgroundImage(industry.id) ? getBackgroundImagePath(industry.id) : null;
       const isFlipped = flippedCards.has(index);
+      const categorySameAsTitle = (industry.category || '').trim().toLowerCase() === (industry.title || '').trim().toLowerCase();
+      const locationText = (industry.location || '').trim();
+      const timestampText = (industry.timestamp || '').trim();
+      const isGlobal = locationText.toLowerCase() === 'global';
+      const isYear2024 = timestampText === '2024';
+      const timestampContainsGlobal2024 = timestampText.toLowerCase().includes('global 2024');
       
       return (
         <div
@@ -143,13 +149,15 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
               <div className="absolute inset-0 rounded-xl pointer-events-none bg-black opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
               
               <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
-                <div className={`text-xs font-mono mb-2 tracking-wider font-semibold drop-shadow-lg ${
-                  hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
-                }`}>
-                  {industry.category || 'CATEGORY'}
-                </div>
+                {!categorySameAsTitle && (
+                  <div className={`text-xs font-mono mb-2 tracking-wider font-semibold drop-shadow-lg ${
+                    hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
+                  }`}>
+                    {industry.category}
+                  </div>
+                )}
                 
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg text-center">
                   {industry.title || 'Card Title'}
                 </h3>
                 
@@ -180,16 +188,18 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                 </div>
                 
                 <div className="mt-3 sm:mt-4 text-xs font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0">
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-map-marker-alt w-2" />
-                    <span>{industry.location || 'Location'}</span>
-                  </div>
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-clock w-2" />
-                    <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>
-                      {industry.timestamp || 'Date'}
-                    </span>
-                  </div>
+                  {!isGlobal && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-map-marker-alt w-2" />
+                      <span>{locationText || 'Location'}</span>
+                    </div>
+                  )}
+                  {!isYear2024 && !timestampContainsGlobal2024 && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-clock w-2" />
+                      <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-1 font-semibold justify-center mt-2 opacity-70">
                     <i className="fas fa-hand-pointer w-2" />
                     <span className="text-xs">Tap to flip for more</span>
@@ -211,10 +221,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                     </button>
                   </div>
-                  {/* Debug indicator - remove in production */}
-                  <div className="absolute top-2 right-2 text-xs bg-red-500 text-white px-1 rounded opacity-50">
-                    {isFlipped ? 'FLIPPED' : 'FRONT'}
-                  </div>
+                  {/* Debug indicator removed for production */}
                 </div>
               </div>
             </div>
@@ -244,7 +251,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
               {/* Brightness overlay for consistent hover effect */}
               <div className="absolute inset-0 rounded-xl pointer-events-none bg-black opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
               
-              <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
+                <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg flex-shrink-0">
                   {industry.title || 'Card Title'}
                 </h3>
@@ -266,16 +273,18 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                 </div>
                 
                 <div className="mt-3 sm:mt-4 text-xs font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0">
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-map-marker-alt w-2" />
-                    <span>{industry.location || 'Location'}</span>
-                  </div>
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-clock w-2" />
-                    <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>
-                      {industry.timestamp || 'Date'}
-                    </span>
-                  </div>
+                  {!isGlobal && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-map-marker-alt w-2" />
+                      <span>{locationText || 'Location'}</span>
+                    </div>
+                  )}
+                  {!isYear2024 && !timestampContainsGlobal2024 && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-clock w-2" />
+                      <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+                    </div>
+                  )}
                 </div>
                 
                 {/* Learn More Button */}
@@ -294,10 +303,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                   </button>
                 </div>
-                {/* Debug indicator for back card */}
-                <div className="absolute top-2 right-2 text-xs bg-green-500 text-white px-1 rounded opacity-50">
-                  BACK
-                </div>
+                {/* Debug indicator removed for production */}
               </div>
             </div>
             

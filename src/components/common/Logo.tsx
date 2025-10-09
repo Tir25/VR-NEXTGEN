@@ -18,7 +18,7 @@ export default function Logo({ className, alt = "VR NextGEN Solutions", size = '
 
   return (
     <Image
-      src="/images/logo-Final-png.svg"
+      src="/icons-optimized/vr-logo-md.webp"
       alt={alt}
       width={width}
       height={height}

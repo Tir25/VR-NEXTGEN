@@ -4,7 +4,8 @@
  */
 
 import React, { useRef, useState, useEffect, useCallback, memo } from 'react';
-import { IndustriesSection, Container, SectionHeader, SafeAnimationComponent, SafeWrapper } from '@/components/common';
+import { IndustriesSection, Container, SectionHeader, SafeWrapper } from '@/components/common';
+import SafeAnimation from '@/components/common/SafeAnimation';
 import IndustriesControls from './IndustriesControls';
 import IndustryCard from './IndustryCard';
 import { INDUSTRIES, CAROUSEL_CONFIG, RESPONSIVE_RADIUS } from './constants';
@@ -234,17 +235,16 @@ function DesktopCarouselInner() {
         <SectionHeader
           badge={{
             text: "Industries We Serve",
-            color: "purple"
+            color: "purple",
+            size: "xl"
           }}
-          title="Industries We Transform"
-          description="Explore the diverse industries where our innovative solutions drive transformation and deliver measurable results."
-          titleColor="white"
-          descriptionColor="white"
+          showTitle={false}
+          showDescription={false}
           compact
         />
 
         {/* Context heading and description between section header and carousel (desktop) */}
-        <div className="mt-3 mb-1 text-center">
+        <div className="mt-2 mb-0 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
             See How We Turn Data into Decisions, Everywhere
           </h2>
@@ -255,7 +255,7 @@ function DesktopCarouselInner() {
 
         {/* 3D Carousel Container */}
         <SafeWrapper isolate={true}>
-          <SafeAnimationComponent
+          <SafeAnimation
             animation="slideUp"
             className="relative w-full mx-auto flex items-center justify-center"
             requireAnimations={false}
@@ -263,8 +263,8 @@ function DesktopCarouselInner() {
             style={{ 
               minHeight: getResponsiveValue(RESPONSIVE_CAROUSEL_CONFIG.containerHeights, RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg),
               maxHeight: getResponsiveValue(RESPONSIVE_CAROUSEL_CONFIG.containerHeights, RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg),
-              marginTop: 'clamp(0.75rem, 1.5vh, 2rem)',
-              marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)',
+              marginTop: 'clamp(0rem, 0.5vh, 0.75rem)',
+              marginBottom: 'clamp(0rem, 0.25vh, 0.25rem)',
               paddingTop: 'clamp(0.5rem, 1vh, 1.25rem)',
               paddingBottom: 'clamp(0.25rem, 0.5vh, 0.75rem)',
               // Mobile optimization: Full width with padding, adjusted for left positioning
@@ -313,7 +313,7 @@ function DesktopCarouselInner() {
                 />
               ))}
             </div>
-          </SafeAnimationComponent>
+          </SafeAnimation>
         </SafeWrapper>
 
         <IndustriesControls

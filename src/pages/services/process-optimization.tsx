@@ -11,7 +11,7 @@ export default function ProcessOptimization() {
         badgeText="Process Optimization & Operational Excellence"
         title="Streamline Processes. Strengthen Systems. Scale Performance."
         subtitle="Operational inefficiency is the silent killer of profitability."
-        cardBgUrl="/images/Our Services/Process Optimization & Alignment.png"
+        cardBgUrl="/images-optimized/Our Services/Process Optimization & Alignment.webp"
         cardTitle="Process Optimization & Operational Excellence"
       >
             <section className="relative z-10 max-w-none">

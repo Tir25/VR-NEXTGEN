@@ -23,16 +23,17 @@ export default function Services() {
         <SectionHeader
           badge={{
             text: "Our Services",
-            color: "gold"
+            color: "gold",
+            size: "xl"
           }}
-          title="Comprehensive Business Solutions"
-          description="We provide end-to-end business solutions that drive growth, optimize operations, and deliver measurable results across all industries."
-          titleColor="white"
+          title="Powering End-to-End Business Transformation through Process, Data, and Strategy"
+          description=""
+          titleColor="black"
           descriptionColor="gray"
         />
 
         <SafeWrapper isolate={true}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr gap-6 lg:gap-8">
             <StaggeredWrapper
               items={serviceCards}
               animation="slideUp"

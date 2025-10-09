@@ -2,6 +2,7 @@ import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
+import ImportErrorBoundary from "@/components/common/ImportErrorBoundary";
 import AnimatedBackground from "@/components/common/AnimatedBackground";
 import SectionBoundary from "@/components/common/SectionBoundary";
 import { ScrollProvider } from "@/contexts/ScrollContext";
@@ -22,8 +23,9 @@ export default function Layout({ title, description, children }: LayoutProps) {
 
   return (
     <ErrorBoundary>
-      <PerformanceProvider>
-        <ScrollProvider>
+      <ImportErrorBoundary>
+        <PerformanceProvider>
+          <ScrollProvider>
           <div className="flex min-h-screen flex-col bg-black text-white">
           <Head>
             <title>{pageTitle}</title>
@@ -58,7 +60,8 @@ export default function Layout({ title, description, children }: LayoutProps) {
           </SectionBoundary>
         </div>
         </ScrollProvider>
-      </PerformanceProvider>
+        </PerformanceProvider>
+      </ImportErrorBoundary>
     </ErrorBoundary>
   );
 }

@@ -11,7 +11,7 @@ export default function EndToEndSolutions() {
         badgeText="End-to-End Business Solutions"
         title="Integrating Strategy, Process, and Technology for Sustainable Growth"
         subtitle="We connect strategy, process, analytics, automation, and capability building into one seamless transformation framework."
-        cardBgUrl="/images/Our Services/End-to-End Business Solutions.png"
+        cardBgUrl="/images-optimized/Our Services/End-to-End Business Solutions.webp"
         cardTitle="End-to-End Business Solutions"
       >
             <section className="relative z-10 prose prose-lg max-w-none">
