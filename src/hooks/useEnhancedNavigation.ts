@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useNavigation } from "./useNavigation";
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useNavigation } from './useNavigation';
 
 /**
  * Enhanced navigation hook that handles lazy-loaded sections
@@ -13,13 +13,13 @@ export function useEnhancedNavigation() {
 
   const navigateToSection = async (sectionId: string, targetPath?: string) => {
     const targetPage = targetPath || router.asPath.split('#')[0];
-    
+
     const scrollToSection = (retries = 0) => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ 
+        element.scrollIntoView({
           behavior: 'smooth',
-          block: 'start'
+          block: 'start',
         });
         setIsTriggeringLazyLoad(false);
         return true;
@@ -44,14 +44,14 @@ export function useEnhancedNavigation() {
         return false;
       }
     };
-    
+
     if (targetPage === router.asPath.split('#')[0]) {
       // Same page - scroll to section
       scrollToSection();
     } else {
       // Different page - navigate then scroll
       await router.push(`${targetPage}#${sectionId}`);
-      
+
       // Wait for page to load, then scroll to section
       setTimeout(() => {
         scrollToSection();
@@ -62,20 +62,20 @@ export function useEnhancedNavigation() {
   const triggerLazyLoading = (sectionId: string, targetPage: string) => {
     // Scroll to approximate position to trigger intersection observer
     const approximatePosition = getApproximatePosition(sectionId, targetPage);
-    
+
     // Scroll to trigger lazy loading
     window.scrollTo({
       top: approximatePosition,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
   const scrollToApproximatePosition = (sectionId: string, targetPage: string) => {
     const position = getApproximatePosition(sectionId, targetPage);
-    
+
     window.scrollTo({
       top: position,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -137,13 +137,13 @@ export function useEnhancedNavigation() {
           return window.innerHeight;
       }
     }
-    
+
     return window.innerHeight * 1.5; // Default fallback
   };
 
   return {
     ...navigationProps,
     navigateToSection,
-    isTriggeringLazyLoad
+    isTriggeringLazyLoad,
   };
 }

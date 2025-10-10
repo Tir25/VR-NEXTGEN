@@ -4,12 +4,12 @@
  * Includes memoization, lazy loading, and rendering optimizations
  */
 
-import React, { 
-  memo, 
-  useMemo, 
-  useCallback, 
-  lazy, 
-  Suspense, 
+import React, {
+  memo,
+  useMemo,
+  useCallback,
+  lazy,
+  Suspense,
   ComponentType,
   ReactNode,
   createContext,
@@ -63,17 +63,16 @@ export function PerformanceProvider({ children }: { children: ReactNode }) {
     };
   }, [metrics]);
 
-  const contextValue = useMemo(() => ({
-    trackRender,
-    trackRerender,
-    getMetrics,
-  }), [trackRender, trackRerender, getMetrics]);
-
-  return (
-    <PerformanceContext.Provider value={contextValue}>
-      {children}
-    </PerformanceContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      trackRender,
+      trackRerender,
+      getMetrics,
+    }),
+    [trackRender, trackRerender, getMetrics]
   );
+
+  return <PerformanceContext.Provider value={contextValue}>{children}</PerformanceContext.Provider>;
 }
 
 /**
@@ -109,7 +108,7 @@ export function withOptimization<P extends object>(
   } = {}
 ) {
   const { memo: enableMemo = true, displayName, customCompare } = options;
-  
+
   let OptimizedComponent = Component;
 
   // Apply memoization if enabled
@@ -138,10 +137,7 @@ export function useOptimizedCallback<T extends (...args: any[]) => any>(
 /**
  * Hook for optimized memoized values
  */
-export function useOptimizedMemo<T>(
-  factory: () => T,
-  deps: React.DependencyList
-): T {
+export function useOptimizedMemo<T>(factory: () => T, deps: React.DependencyList): T {
   return useMemo(factory, deps);
 }
 
@@ -158,16 +154,16 @@ export function createLazyComponent<P extends object>(
   } = {}
 ) {
   const {
-    fallback = <div className="animate-pulse bg-gray-200/10 rounded h-32" />,
-    errorFallback = <div className="text-red-400">Failed to load component</div>,
+    fallback = <div className='animate-pulse bg-gray-200/10 rounded h-32' />,
+    errorFallback = <div className='text-red-400'>Failed to load component</div>,
     retryDelay = 1000,
     maxRetries = 3,
   } = options;
 
-  const LazyComponent = lazy(() => 
-    importFn().catch(async (error) => {
+  const LazyComponent = lazy(() =>
+    importFn().catch(async error => {
       console.error('Lazy component import failed:', error);
-      
+
       // Retry logic
       for (let i = 0; i < maxRetries; i++) {
         await new Promise(resolve => setTimeout(resolve, retryDelay * (i + 1)));
@@ -177,7 +173,7 @@ export function createLazyComponent<P extends object>(
           console.error(`Lazy component retry ${i + 1} failed:`, retryError);
         }
       }
-      
+
       throw error;
     })
   );
@@ -237,10 +233,7 @@ export function useVirtualScrolling<T>(
 /**
  * Debounced state hook
  */
-export function useDebouncedState<T>(
-  initialValue: T,
-  delay: number
-): [T, T, (value: T) => void] {
+export function useDebouncedState<T>(initialValue: T, delay: number): [T, T, (value: T) => void] {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
@@ -258,20 +251,20 @@ export function useDebouncedState<T>(
 /**
  * Throttled state hook
  */
-export function useThrottledState<T>(
-  initialValue: T,
-  delay: number
-): [T, (value: T) => void] {
+export function useThrottledState<T>(initialValue: T, delay: number): [T, (value: T) => void] {
   const [value, setValue] = useState<T>(initialValue);
   const lastUpdate = useRef<number>(0);
 
-  const throttledSetValue = useCallback((newValue: T) => {
-    const now = Date.now();
-    if (now - lastUpdate.current >= delay) {
-      setValue(newValue);
-      lastUpdate.current = now;
-    }
-  }, [delay]);
+  const throttledSetValue = useCallback(
+    (newValue: T) => {
+      const now = Date.now();
+      if (now - lastUpdate.current >= delay) {
+        setValue(newValue);
+        lastUpdate.current = now;
+      }
+    },
+    [delay]
+  );
 
   return [value, throttledSetValue];
 }
@@ -279,30 +272,28 @@ export function useThrottledState<T>(
 /**
  * Intersection observer hook with optimization
  */
-export function useOptimizedIntersectionObserver(
-  options: IntersectionObserverInit = {}
-) {
+export function useOptimizedIntersectionObserver(options: IntersectionObserverInit = {}) {
   const [entries, setEntries] = useState<IntersectionObserverEntry[]>([]);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const elementRef = useRef<Element | null>(null);
 
-  const observe = useCallback((element: Element) => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
+  const observe = useCallback(
+    (element: Element) => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
 
-    elementRef.current = element;
-    observerRef.current = new IntersectionObserver(
-      (newEntries) => {
+      elementRef.current = element;
+      observerRef.current = new IntersectionObserver(newEntries => {
         setEntries(newEntries);
         setIsIntersecting(newEntries.some(entry => entry.isIntersecting));
-      },
-      options
-    );
+      }, options);
 
-    observerRef.current.observe(element);
-  }, [options]);
+      observerRef.current.observe(element);
+    },
+    [options]
+  );
 
   const unobserve = useCallback(() => {
     if (observerRef.current) {
@@ -329,12 +320,12 @@ export function useOptimizedIntersectionObserver(
 /**
  * Component render optimization wrapper
  */
-export function OptimizedWrapper({ 
-  children, 
+export function OptimizedWrapper({
+  children,
   shouldRender = true,
-  fallback = null 
-}: { 
-  children: ReactNode; 
+  fallback = null,
+}: {
+  children: ReactNode;
   shouldRender?: boolean;
   fallback?: ReactNode;
 }) {
@@ -348,9 +339,7 @@ export function OptimizedWrapper({
 /**
  * Batch state updates utility
  */
-export function useBatchedState<T>(
-  initialState: T
-): [T, (updates: Partial<T>) => void] {
+export function useBatchedState<T>(initialState: T): [T, (updates: Partial<T>) => void] {
   const [state, setState] = useState<T>(initialState);
 
   const batchUpdate = useCallback((updates: Partial<T>) => {

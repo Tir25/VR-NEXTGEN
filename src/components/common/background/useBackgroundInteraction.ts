@@ -24,7 +24,7 @@ export function useBackgroundInteraction() {
       const ev = e as unknown;
       const maybeTouch = ev as Partial<TouchLike>;
       if (
-        typeof maybeTouch === "object" &&
+        typeof maybeTouch === 'object' &&
         maybeTouch !== null &&
         Array.isArray(maybeTouch.touches) &&
         maybeTouch.touches[0]
@@ -34,10 +34,7 @@ export function useBackgroundInteraction() {
         y = t.clientY / window.innerHeight;
       } else {
         const maybeMouse = ev as Partial<MouseLike>;
-        if (
-          typeof maybeMouse?.clientX === "number" &&
-          typeof maybeMouse?.clientY === "number"
-        ) {
+        if (typeof maybeMouse?.clientX === 'number' && typeof maybeMouse?.clientY === 'number') {
           x = maybeMouse.clientX / window.innerWidth;
           y = maybeMouse.clientY / window.innerHeight;
         }
@@ -46,29 +43,29 @@ export function useBackgroundInteraction() {
       if (!target) return;
 
       requestAnimationFrame(() => {
-        target.style.setProperty("--cursor-x", `${x}`);
-        target.style.setProperty("--cursor-y", `${y}`);
+        target.style.setProperty('--cursor-x', `${x}`);
+        target.style.setProperty('--cursor-y', `${y}`);
       });
     }
 
-    window.addEventListener("pointermove", update as EventListener, {
+    window.addEventListener('pointermove', update as EventListener, {
       passive: true,
     });
-    window.addEventListener("pointerdown", update as EventListener, {
+    window.addEventListener('pointerdown', update as EventListener, {
       passive: true,
     });
-    
+
     // Initialize cursor position
     update(
-      new MouseEvent("mousemove", {
+      new MouseEvent('mousemove', {
         clientX: window.innerWidth / 2,
         clientY: window.innerHeight / 2,
       })
     );
 
     return () => {
-      window.removeEventListener("pointermove", update as EventListener);
-      window.removeEventListener("pointerdown", update as EventListener);
+      window.removeEventListener('pointermove', update as EventListener);
+      window.removeEventListener('pointerdown', update as EventListener);
     };
   }, []);
 

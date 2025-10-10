@@ -75,13 +75,13 @@ export default function ButtonGroup({
 
 // Convenience components for common button group patterns
 export const CTAButtonGroup = (props: Omit<ButtonGroupProps, 'layout' | 'align'>) => (
-  <ButtonGroup {...props} layout="responsive" align="center" />
+  <ButtonGroup {...props} layout='responsive' align='center' />
 );
 
 export const NavigationButtonGroup = (props: Omit<ButtonGroupProps, 'layout' | 'align'>) => (
-  <ButtonGroup {...props} layout="horizontal" align="between" />
+  <ButtonGroup {...props} layout='horizontal' align='between' />
 );
 
 export const ActionButtonGroup = (props: Omit<ButtonGroupProps, 'layout' | 'align'>) => (
-  <ButtonGroup {...props} layout="horizontal" align="right" />
+  <ButtonGroup {...props} layout='horizontal' align='right' />
 );

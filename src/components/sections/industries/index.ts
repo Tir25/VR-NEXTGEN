@@ -9,10 +9,10 @@ export { default as IndustriesHeader } from './IndustriesHeader';
 export { default as IndustriesControls } from './IndustriesControls';
 
 // Types
-export type { 
-  IndustryCard as IndustryCardType, 
+export type {
+  IndustryCard as IndustryCardType,
   IndustryCardProps,
-  IndustriesSectionProps 
+  IndustriesSectionProps,
 } from './types';
 
 // Constants

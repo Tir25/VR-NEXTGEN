@@ -19,7 +19,7 @@ export default function IndustryCardContainer({
   cardDimensions,
   isFlipped,
   onCardClick,
-  children
+  children,
 }: IndustryCardContainerProps) {
   return (
     <div
@@ -35,26 +35,32 @@ export default function IndustryCardContainer({
         transformStyle: 'preserve-3d',
         willChange: 'transform, opacity',
         position: 'absolute',
-        minHeight: typeof window !== 'undefined' && window.innerWidth < MAGIC_NUMBERS.BREAKPOINTS.MD ? `${MAGIC_NUMBERS.SIZES.TOUCH_TARGET_MIN}px` : 'auto',
-        minWidth: typeof window !== 'undefined' && window.innerWidth < MAGIC_NUMBERS.BREAKPOINTS.MD ? `${MAGIC_NUMBERS.SIZES.TOUCH_TARGET_MIN}px` : 'auto',
+        minHeight:
+          typeof window !== 'undefined' && window.innerWidth < MAGIC_NUMBERS.BREAKPOINTS.MD
+            ? `${MAGIC_NUMBERS.SIZES.TOUCH_TARGET_MIN}px`
+            : 'auto',
+        minWidth:
+          typeof window !== 'undefined' && window.innerWidth < MAGIC_NUMBERS.BREAKPOINTS.MD
+            ? `${MAGIC_NUMBERS.SIZES.TOUCH_TARGET_MIN}px`
+            : 'auto',
         WebkitUserSelect: 'none',
         MozUserSelect: 'none',
         msUserSelect: 'none',
         userSelect: 'none',
         WebkitTapHighlightColor: 'transparent',
-        touchAction: 'manipulation'
+        touchAction: 'manipulation',
       }}
       onClick={onCardClick}
-      role="button"
+      role='button'
       tabIndex={0}
       aria-label={`${industry.title} - Click to flip for more details`}
       data-index={index}
     >
-      <div 
-        className="relative w-full h-full transition-transform duration-800"
-        style={{ 
+      <div
+        className='relative w-full h-full transition-transform duration-800'
+        style={{
           transformStyle: 'preserve-3d',
-          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
         {children}

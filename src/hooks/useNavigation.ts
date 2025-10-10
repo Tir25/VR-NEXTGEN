@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useUnifiedNavigation } from "@/contexts/ScrollContext";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useUnifiedNavigation } from '@/contexts/ScrollContext';
 
 export interface Section {
   id: string;
@@ -15,50 +15,50 @@ export interface NavigationPage {
 
 export const navigationData: Record<string, NavigationPage> = {
   home: {
-    path: "/",
-    label: "Home",
+    path: '/',
+    label: 'Home',
     sections: [
-      { id: "hero", label: "Hero" },
-      { id: "services", label: "Services" },
-      { id: "industries", label: "Industries" },
-      { id: "cta", label: "CTA Banner" }
-    ]
+      { id: 'hero', label: 'Hero' },
+      { id: 'services', label: 'Services' },
+      { id: 'industries', label: 'Industries' },
+      { id: 'cta', label: 'CTA Banner' },
+    ],
   },
   whatWeDo: {
-    path: "/what-we-do",
-    label: "What We Do",
+    path: '/what-we-do',
+    label: 'What We Do',
     sections: [
-      { id: "what-we-do-hero", label: "Hero" },
-      { id: "services", label: "Services Section" },
-      { id: "industries", label: "Industries Section" }
-    ]
+      { id: 'what-we-do-hero', label: 'Hero' },
+      { id: 'services', label: 'Services Section' },
+      { id: 'industries', label: 'Industries Section' },
+    ],
   },
   whoWeAre: {
-    path: "/who-we-are",
-    label: "Who We Are",
+    path: '/who-we-are',
+    label: 'Who We Are',
     sections: [
-      { id: "who-we-are-hero", label: "Hero" },
-      { id: "customer-stories", label: "Customer Stories" },
-      { id: "case-studies", label: "Case Studies" },
-      { id: "events", label: "Events & Workshops" }
-    ]
+      { id: 'who-we-are-hero', label: 'Hero' },
+      { id: 'customer-stories', label: 'Customer Stories' },
+      { id: 'case-studies', label: 'Case Studies' },
+      { id: 'events', label: 'Events & Workshops' },
+    ],
   },
   contact: {
-    path: "/contact",
-    label: "Contact",
+    path: '/contact',
+    label: 'Contact',
     sections: [
-      { id: "contact-hero", label: "Hero Header" },
-      { id: "contact-form", label: "Contact Form" }
-    ]
+      { id: 'contact-hero', label: 'Hero Header' },
+      { id: 'contact-form', label: 'Contact Form' },
+    ],
   },
   blog: {
-    path: "/nextgen-blog",
-    label: "Blog",
+    path: '/nextgen-blog',
+    label: 'Blog',
     sections: [
-      { id: "blog-header", label: "Instagram-Style Header" },
-      { id: "blog-feed", label: "Blog Feed" }
-    ]
-  }
+      { id: 'blog-header', label: 'Instagram-Style Header' },
+      { id: 'blog-feed', label: 'Blog Feed' },
+    ],
+  },
 };
 
 export function useNavigation() {
@@ -77,13 +77,13 @@ export function useNavigation() {
   // Navigate to section with smooth scrolling and lazy loading support
   const navigateToSection = async (sectionId: string, targetPath?: string) => {
     const targetPage = targetPath || currentPath;
-    
+
     const scrollToSection = (retries = 0) => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ 
+        element.scrollIntoView({
           behavior: 'smooth',
-          block: 'start'
+          block: 'start',
         });
         return true;
       } else if (retries < 10) {
@@ -93,7 +93,7 @@ export function useNavigation() {
       } else {
         // If element still doesn't exist after max retries, scroll to approximate position
         // Section not found - scrolling to approximate position
-        
+
         // For home page sections, scroll to approximate positions
         if (targetPage === '/') {
           let approximateScrollPosition = 0;
@@ -113,23 +113,23 @@ export function useNavigation() {
             default:
               approximateScrollPosition = window.innerHeight * 2;
           }
-          
+
           window.scrollTo({
             top: approximateScrollPosition,
-            behavior: 'smooth'
+            behavior: 'smooth',
           });
         }
         return false;
       }
     };
-    
+
     if (targetPage === currentPath) {
       // Same page - scroll to section
       scrollToSection();
     } else {
       // Different page - navigate then scroll
       await router.push(`${targetPage}#${sectionId}`);
-      
+
       // Wait for page to load, then scroll to section
       setTimeout(() => {
         scrollToSection();
@@ -148,6 +148,6 @@ export function useNavigation() {
     currentPath,
     currentSection,
     navigateToSection,
-    isCurrentPage: (path: string) => currentPath === path
+    isCurrentPage: (path: string) => currentPath === path,
   };
 }

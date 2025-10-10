@@ -13,20 +13,20 @@ export const theme = {
     goldDark: '#ad974f',
     goldDarker: '#8e793e',
     lightGrey: '#eaeaea',
-    
+
     // Section-Specific Colors
     gloryWhite: '#E6E6E6',
     sandYellow: '#FFBB01',
     grayNightBlack: '#1A1A1A',
     deepCharcoal: '#231F20',
-    
+
     // Semantic Colors
     background: 'var(--color-black)',
     foreground: 'var(--color-white)',
     accent: 'var(--color-gold)',
     textSecondary: 'var(--color-deep-charcoal)',
     borderLight: 'var(--color-light-grey)',
-    
+
     // Section Backgrounds
     sectionBg: {
       hero: 'var(--color-black)',
@@ -34,7 +34,7 @@ export const theme = {
       whyChoose: 'var(--gray-night-black)',
       clients: 'var(--glory-white)',
     },
-    
+
     // Section Text Colors
     text: {
       hero: 'var(--color-white)',
@@ -43,7 +43,7 @@ export const theme = {
       clients: 'var(--color-black)',
     },
   },
-  
+
   // Typography
   typography: {
     fontFamily: {
@@ -76,7 +76,7 @@ export const theme = {
       loose: '2',
     },
   },
-  
+
   // Spacing System
   spacing: {
     xs: '0.25rem',
@@ -89,7 +89,7 @@ export const theme = {
     '4xl': '6rem',
     '5xl': '8rem',
   },
-  
+
   // Breakpoints
   breakpoints: {
     xs: '320px',
@@ -99,7 +99,7 @@ export const theme = {
     xl: '1280px',
     '2xl': '1536px',
   },
-  
+
   // Animation Durations
   animation: {
     duration: {
@@ -115,7 +115,7 @@ export const theme = {
       linear: 'linear',
     },
   },
-  
+
   // Z-Index Scale
   zIndex: {
     hide: -1,
@@ -132,7 +132,7 @@ export const theme = {
     toast: 1700,
     tooltip: 1800,
   },
-  
+
   // Shadows
   shadows: {
     sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -144,7 +144,7 @@ export const theme = {
     inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
     none: 'none',
   },
-  
+
   // Border Radius
   borderRadius: {
     none: '0',

@@ -16,17 +16,15 @@ export function FeatureComponent({ title, onAction }: FeatureComponentProps) {
   const handleClick = () => {
     // Emit feature-specific event
     eventBus.emit('feature:action', { title });
-    
+
     // Call optional callback
     onAction?.();
   };
 
   return (
-    <div className="feature-component">
+    <div className='feature-component'>
       <h3>{title}</h3>
-      <button onClick={handleClick}>
-        Feature Action
-      </button>
+      <button onClick={handleClick}>Feature Action</button>
     </div>
   );
 }

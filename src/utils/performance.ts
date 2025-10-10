@@ -13,7 +13,7 @@ export function debounce<T extends (...args: any[]) => any>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -28,7 +28,7 @@ export function throttle<T extends (...args: any[]) => any>(
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
-  
+
   return (...args: Parameters<T>) => {
     if (!inThrottle) {
       func(...args);
@@ -65,12 +65,15 @@ export function useThrottle<T>(value: T, limit: number): T {
   const lastRan = useRef(Date.now());
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      if (Date.now() - lastRan.current >= limit) {
-        setThrottledValue(value);
-        lastRan.current = Date.now();
-      }
-    }, limit - (Date.now() - lastRan.current));
+    const handler = setTimeout(
+      () => {
+        if (Date.now() - lastRan.current >= limit) {
+          setThrottledValue(value);
+          lastRan.current = Date.now();
+        }
+      },
+      limit - (Date.now() - lastRan.current)
+    );
 
     return () => {
       clearTimeout(handler);
@@ -83,9 +86,7 @@ export function useThrottle<T>(value: T, limit: number): T {
 /**
  * Custom hook for intersection observer with performance optimizations
  */
-export function useIntersectionObserverOptimized(
-  options: IntersectionObserverInit = {}
-) {
+export function useIntersectionObserverOptimized(options: IntersectionObserverInit = {}) {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hasIntersected, setHasIntersected] = useState(false);
   const ref = useRef<HTMLElement>(null);
@@ -158,10 +159,7 @@ export function useMemoizedCallback<T extends (...args: any[]) => any>(
 /**
  * Custom hook for memoized expensive values
  */
-export function useMemoizedValue<T>(
-  factory: () => T,
-  deps: React.DependencyList
-): T {
+export function useMemoizedValue<T>(factory: () => T, deps: React.DependencyList): T {
   return useMemo(factory, deps);
 }
 
@@ -181,17 +179,17 @@ export class PerformanceMonitor {
     if (typeof window !== 'undefined' && window.performance) {
       window.performance.mark(`${name}-end`);
       window.performance.measure(name, `${name}-start`, `${name}-end`);
-      
+
       const measure = window.performance.getEntriesByName(name)[0];
       const duration = measure ? measure.duration : 0;
-      
+
       this.measurements.set(name, duration);
-      
+
       // Clean up marks and measures
       window.performance.clearMarks(`${name}-start`);
       window.performance.clearMarks(`${name}-end`);
       window.performance.clearMeasures(name);
-      
+
       return duration;
     }
     return 0;
@@ -232,18 +230,18 @@ export function createLazyImageLoader() {
       // Create new loading promise
       const promise = new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
-        
+
         img.onload = () => {
           imageCache.set(src, img);
           loadingPromises.delete(src);
           resolve(img);
         };
-        
+
         img.onerror = () => {
           loadingPromises.delete(src);
           reject(new Error(`Failed to load image: ${src}`));
         };
-        
+
         img.src = src;
       });
 
@@ -258,7 +256,7 @@ export function createLazyImageLoader() {
     clearCache(): void {
       imageCache.clear();
       loadingPromises.clear();
-    }
+    },
   };
 }
 
@@ -280,19 +278,28 @@ export const BundleOptimizer = {
    * Creates a loading component for lazy-loaded components
    */
   createLoadingComponent(message: string = 'Loading...'): React.ComponentType {
-    return () => React.createElement('div', {
-      className: 'flex items-center justify-center p-8'
-    }, [
-      React.createElement('div', {
-        key: 'spinner',
-        className: 'animate-spin rounded-full h-8 w-8 border-b-2 border-gold'
-      }),
-      React.createElement('span', {
-        key: 'message',
-        className: 'ml-3 text-white/70'
-      }, message)
-    ]);
-  }
+    return () =>
+      React.createElement(
+        'div',
+        {
+          className: 'flex items-center justify-center p-8',
+        },
+        [
+          React.createElement('div', {
+            key: 'spinner',
+            className: 'animate-spin rounded-full h-8 w-8 border-b-2 border-gold',
+          }),
+          React.createElement(
+            'span',
+            {
+              key: 'message',
+              className: 'ml-3 text-white/70',
+            },
+            message
+          ),
+        ]
+      );
+  },
 };
 
 // Export performance utilities

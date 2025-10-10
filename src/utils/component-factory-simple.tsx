@@ -23,7 +23,7 @@ export function createComponent<T extends BaseComponentProps>(
   };
 
   Component.displayName = displayName || baseComponent.displayName || 'Component';
-  
+
   return memo(Component);
 }
 
@@ -44,9 +44,12 @@ export const componentFactory = {
 // Common variant configurations
 export const commonVariants = {
   button: {
-    primary: 'bg-gold text-black font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
-    secondary: 'bg-white/10 text-white border border-white/20 font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
-    outline: 'border border-gold text-gold font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
+    primary:
+      'bg-gold text-black font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
+    secondary:
+      'bg-white/10 text-white border border-white/20 font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
+    outline:
+      'border border-gold text-gold font-semibold rounded focus:outline-none focus:ring-2 focus:ring-gold',
   },
   card: {
     default: 'bg-white/5 border border-white/10 rounded-lg p-6',
@@ -54,8 +57,11 @@ export const commonVariants = {
     secondary: 'bg-white/10 border-white/20 rounded-lg p-6',
   },
   input: {
-    default: 'w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent',
-    primary: 'w-full px-4 py-2 bg-white/10 border border-gold/50 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
-    error: 'w-full px-4 py-2 bg-white/10 border border-red-500 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
+    default:
+      'w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent',
+    primary:
+      'w-full px-4 py-2 bg-white/10 border border-gold/50 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+    error:
+      'w-full px-4 py-2 bg-white/10 border border-red-500 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
   },
 };

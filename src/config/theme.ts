@@ -18,7 +18,7 @@ export const THEME_CONFIG = {
       800: '#854d0e',
       900: '#713f12',
     },
-    
+
     gold: {
       50: '#fffef7',
       100: '#fffbeb',
@@ -31,7 +31,7 @@ export const THEME_CONFIG = {
       800: '#4a3f00',
       900: '#2d2300',
     },
-    
+
     gray: {
       50: '#f9fafb',
       100: '#f3f4f6',
@@ -44,7 +44,7 @@ export const THEME_CONFIG = {
       800: '#1f2937',
       900: '#111827',
     },
-    
+
     // Semantic colors
     semantic: {
       success: '#10b981',
@@ -52,7 +52,7 @@ export const THEME_CONFIG = {
       error: '#ef4444',
       info: '#3b82f6',
     },
-    
+
     // Background colors
     background: {
       primary: '#000000',
@@ -61,7 +61,7 @@ export const THEME_CONFIG = {
       surface: '#ffffff',
       overlay: 'rgba(0, 0, 0, 0.6)',
     },
-    
+
     // Text colors
     text: {
       primary: '#ffffff',
@@ -70,7 +70,7 @@ export const THEME_CONFIG = {
       inverse: '#000000',
     },
   },
-  
+
   // Typography
   typography: {
     fontFamily: {
@@ -78,7 +78,7 @@ export const THEME_CONFIG = {
       body: ['Montserrat', 'Open Sans', 'sans-serif'],
       mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
     },
-    
+
     fontSize: {
       xs: '0.75rem',
       sm: '0.875rem',
@@ -91,7 +91,7 @@ export const THEME_CONFIG = {
       '5xl': '3rem',
       '6xl': '3.75rem',
     },
-    
+
     fontWeight: {
       light: '300',
       normal: '400',
@@ -100,7 +100,7 @@ export const THEME_CONFIG = {
       bold: '700',
       extrabold: '800',
     },
-    
+
     lineHeight: {
       tight: '1.25',
       normal: '1.5',
@@ -108,7 +108,7 @@ export const THEME_CONFIG = {
       loose: '2',
     },
   },
-  
+
   // Spacing scale
   spacing: {
     px: '1px',
@@ -131,7 +131,7 @@ export const THEME_CONFIG = {
     56: '14rem',
     64: '16rem',
   },
-  
+
   // Border radius
   borderRadius: {
     none: '0',
@@ -144,7 +144,7 @@ export const THEME_CONFIG = {
     '3xl': '1.5rem',
     full: '9999px',
   },
-  
+
   // Shadows
   boxShadow: {
     sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -156,7 +156,7 @@ export const THEME_CONFIG = {
     inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
     none: 'none',
   },
-  
+
   // Transitions
   transition: {
     duration: {
@@ -165,7 +165,7 @@ export const THEME_CONFIG = {
       slow: '500ms',
       verySlow: '1000ms',
     },
-    
+
     easing: {
       linear: 'linear',
       ease: 'ease',
@@ -174,7 +174,7 @@ export const THEME_CONFIG = {
       easeInOut: 'ease-in-out',
     },
   },
-  
+
   // Component-specific themes
   components: {
     button: {
@@ -190,14 +190,14 @@ export const THEME_CONFIG = {
         lg: '1.125rem',
       },
     },
-    
+
     card: {
       padding: '1.5rem',
       borderRadius: '0.75rem',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
       backgroundColor: 'rgba(255, 255, 255, 0.05)',
     },
-    
+
     input: {
       padding: '0.75rem 1rem',
       borderRadius: '0.5rem',
@@ -211,7 +211,7 @@ export const THEME_CONFIG = {
 export function getThemeValue(path: string): any {
   const keys = path.split('.');
   let value: any = THEME_CONFIG;
-  
+
   for (const key of keys) {
     if (value && typeof value === 'object' && key in value) {
       value = value[key];
@@ -219,14 +219,14 @@ export function getThemeValue(path: string): any {
       return undefined;
     }
   }
-  
+
   return value;
 }
 
 // CSS custom properties generator
 export function generateCSSVariables(): Record<string, string> {
   const variables: Record<string, string> = {};
-  
+
   // Generate color variables
   Object.entries(THEME_CONFIG.colors).forEach(([category, colors]) => {
     if (typeof colors === 'object') {
@@ -237,16 +237,16 @@ export function generateCSSVariables(): Record<string, string> {
       });
     }
   });
-  
+
   // Generate spacing variables
   Object.entries(THEME_CONFIG.spacing).forEach(([key, value]) => {
     variables[`--spacing-${key}`] = value;
   });
-  
+
   // Generate typography variables
   Object.entries(THEME_CONFIG.typography.fontSize).forEach(([key, value]) => {
     variables[`--font-size-${key}`] = value;
   });
-  
+
   return variables;
 }

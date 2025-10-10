@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Industry } from '@/types/components';
-import { getResponsiveValue, RESPONSIVE_CAROUSEL_CONFIG, hasIndustryBackgroundImage, getIndustryBackgroundImage } from '@/config';
+import {
+  getResponsiveValue,
+  RESPONSIVE_CAROUSEL_CONFIG,
+  hasIndustryBackgroundImage,
+  getIndustryBackgroundImage,
+} from '@/config';
 import { MAGIC_NUMBERS } from '@/constants';
 
 interface UseIndustryCardProps {
@@ -12,9 +17,9 @@ interface UseIndustryCardProps {
 export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   const router = useRouter();
   const [isFlipped, setIsFlipped] = useState(false);
-  const [cardDimensions, setCardDimensions] = useState({ 
-    width: `${MAGIC_NUMBERS.SIZES.CARD_WIDTH_DEFAULT}px`, 
-    height: `${MAGIC_NUMBERS.SIZES.CARD_HEIGHT_DEFAULT}px` 
+  const [cardDimensions, setCardDimensions] = useState({
+    width: `${MAGIC_NUMBERS.SIZES.CARD_WIDTH_DEFAULT}px`,
+    height: `${MAGIC_NUMBERS.SIZES.CARD_HEIGHT_DEFAULT}px`,
   });
 
   const handleLearnMore = (e: React.MouseEvent) => {
@@ -30,7 +35,7 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   useEffect(() => {
     const updateCardDimensions = () => {
       const cardSizes = getResponsiveValue(
-        RESPONSIVE_CAROUSEL_CONFIG.cardSizes as any, 
+        RESPONSIVE_CAROUSEL_CONFIG.cardSizes as any,
         RESPONSIVE_CAROUSEL_CONFIG.cardSizes.lg
       );
       setCardDimensions({ width: cardSizes.width, height: cardSizes.height });
@@ -50,7 +55,7 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (isActive && !(e.target as HTMLElement).closest('button')) {
       setIsFlipped(!isFlipped);
     }
@@ -83,6 +88,6 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
     hasBackgroundImage,
     getBackgroundImagePath,
     textScaling,
-    responsivePadding
+    responsivePadding,
   };
 }

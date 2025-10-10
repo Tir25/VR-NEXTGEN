@@ -1,4 +1,4 @@
-import { useUnifiedScrollFade } from "@/contexts/ScrollContext";
+import { useUnifiedScrollFade } from '@/contexts/ScrollContext';
 
 /**
  * Optimized scroll fade hook using the global scroll controller

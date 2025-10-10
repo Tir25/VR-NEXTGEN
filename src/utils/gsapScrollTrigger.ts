@@ -1,6 +1,6 @@
 /**
  * GSAP ScrollTrigger Integration Utility
- * 
+ *
  * This module provides safe integration of GSAP ScrollTrigger with the unified scroll handler.
  * It ensures compatibility with both GSAP animations and the existing scroll system.
  */
@@ -22,7 +22,11 @@ interface ScrollTriggerInstance {
 interface TimelineInstance {
   to: (target: Element | string, vars: Record<string, unknown>) => TimelineInstance;
   from: (target: Element | string, vars: Record<string, unknown>) => TimelineInstance;
-  fromTo: (target: Element | string, fromVars: Record<string, unknown>, toVars: Record<string, unknown>) => TimelineInstance;
+  fromTo: (
+    target: Element | string,
+    fromVars: Record<string, unknown>,
+    toVars: Record<string, unknown>
+  ) => TimelineInstance;
   play: () => void;
   pause: () => void;
   reverse: () => void;
@@ -33,18 +37,18 @@ interface TimelineInstance {
  */
 async function initializeGSAP() {
   if (typeof window === 'undefined') return false;
-  
+
   try {
     // Dynamic import to avoid SSR issues
     const gsapModule = await import('gsap');
     const scrollTriggerModule = await import('gsap/ScrollTrigger');
-    
+
     gsap = gsapModule.default || gsapModule;
     ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-    
+
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
-    
+
     return true;
   } catch (error) {
     console.warn('GSAP ScrollTrigger not available:', error);
@@ -70,16 +74,16 @@ class ScrollTriggerManager {
    */
   private async initialize() {
     if (typeof window === 'undefined') return;
-    
+
     this.scrollTriggerAvailable = await initializeGSAP();
-    
+
     if (this.scrollTriggerAvailable) {
       // Configure ScrollTrigger for optimal performance
       ScrollTrigger.config({
         ignoreMobileResize: true,
         syncInterval: 16, // ~60fps
       });
-      
+
       this.isInitialized = true;
     }
   }
@@ -113,7 +117,7 @@ class ScrollTriggerManager {
       if (this.refreshTimeout) {
         clearTimeout(this.refreshTimeout);
       }
-      
+
       this.refreshTimeout = setTimeout(() => {
         try {
           ScrollTrigger.refresh();
@@ -195,7 +199,7 @@ class ScrollTriggerManager {
           onLeave: config.onLeave,
           onEnterBack: config.onEnterBack,
           onLeaveBack: config.onLeaveBack,
-        }
+        },
       });
 
       // Add animation if provided
@@ -228,7 +232,7 @@ class ScrollTriggerManager {
    */
   getById(id: string) {
     if (!this.isAvailable()) return null;
-    
+
     try {
       return ScrollTrigger.getById(id);
     } catch (error) {
@@ -263,14 +267,17 @@ export const ScrollTriggerUtils = {
   /**
    * Create a fade-in animation
    */
-  fadeIn: (element: string | Element, options: {
-    duration?: number;
-    delay?: number;
-    ease?: string;
-    trigger?: string | Element;
-    start?: string;
-    end?: string;
-  } = {}) => {
+  fadeIn: (
+    element: string | Element,
+    options: {
+      duration?: number;
+      delay?: number;
+      ease?: string;
+      trigger?: string | Element;
+      start?: string;
+      end?: string;
+    } = {}
+  ) => {
     const {
       duration = 1,
       delay = 0,
@@ -285,25 +292,26 @@ export const ScrollTriggerUtils = {
       start,
       end,
       animation: (tl: TimelineInstance) => {
-        tl.fromTo(element, 
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration, delay, ease }
-        );
-      }
+        tl.fromTo(element, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration, delay, ease });
+      },
     });
   },
 
   /**
    * Create a slide-in animation
    */
-  slideIn: (element: string | Element, direction: 'left' | 'right' | 'up' | 'down' = 'left', options: {
-    duration?: number;
-    distance?: number;
-    ease?: string;
-    trigger?: string | Element;
-    start?: string;
-    end?: string;
-  } = {}) => {
+  slideIn: (
+    element: string | Element,
+    direction: 'left' | 'right' | 'up' | 'down' = 'left',
+    options: {
+      duration?: number;
+      distance?: number;
+      ease?: string;
+      trigger?: string | Element;
+      start?: string;
+      end?: string;
+    } = {}
+  ) => {
     const {
       duration = 1,
       distance = 100,
@@ -327,25 +335,29 @@ export const ScrollTriggerUtils = {
       start,
       end,
       animation: (tl: TimelineInstance) => {
-        tl.fromTo(element,
+        tl.fromTo(
+          element,
           { opacity: 0, ...transform },
           { opacity: 1, x: 0, y: 0, duration, ease }
         );
-      }
+      },
     });
   },
 
   /**
    * Create a scale animation
    */
-  scaleIn: (element: string | Element, options: {
-    duration?: number;
-    scale?: number;
-    ease?: string;
-    trigger?: string | Element;
-    start?: string;
-    end?: string;
-  } = {}) => {
+  scaleIn: (
+    element: string | Element,
+    options: {
+      duration?: number;
+      scale?: number;
+      ease?: string;
+      trigger?: string | Element;
+      start?: string;
+      end?: string;
+    } = {}
+  ) => {
     const {
       duration = 1,
       scale = 0.8,
@@ -360,27 +372,24 @@ export const ScrollTriggerUtils = {
       start,
       end,
       animation: (tl: TimelineInstance) => {
-        tl.fromTo(element,
-          { opacity: 0, scale },
-          { opacity: 1, scale: 1, duration, ease }
-        );
-      }
+        tl.fromTo(element, { opacity: 0, scale }, { opacity: 1, scale: 1, duration, ease });
+      },
     });
   },
 
   /**
    * Create a parallax effect
    */
-  parallax: (element: string | Element, speed: number = 0.5, options: {
-    trigger?: string | Element;
-    start?: string;
-    end?: string;
-  } = {}) => {
-    const {
-      trigger = element,
-      start = 'top bottom',
-      end = 'bottom top',
-    } = options;
+  parallax: (
+    element: string | Element,
+    speed: number = 0.5,
+    options: {
+      trigger?: string | Element;
+      start?: string;
+      end?: string;
+    } = {}
+  ) => {
+    const { trigger = element, start = 'top bottom', end = 'bottom top' } = options;
 
     return scrollTriggerManager.createAnimation({
       trigger,
@@ -393,7 +402,7 @@ export const ScrollTriggerUtils = {
             y: self.progress * 100 * speed,
           });
         }
-      }
+      },
     });
   },
 };

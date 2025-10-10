@@ -94,7 +94,7 @@ export class EventBus {
     for (const subscription of subscriptionsCopy) {
       try {
         await subscription.handler(data);
-        
+
         // Remove subscription if it's a one-time subscription
         if (subscription.once) {
           this.off(subscription.id);
@@ -120,7 +120,7 @@ export class EventBus {
     for (const subscription of subscriptionsCopy) {
       try {
         subscription.handler(data);
-        
+
         // Remove subscription if it's a one-time subscription
         if (subscription.once) {
           this.off(subscription.id);

@@ -1,11 +1,11 @@
-import { useParallax } from "@/hooks/useParallax";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { HeroSection } from "@/components/common";
-import { HeroText, HeroButtons } from ".";
-import { HERO_CONFIG } from "./constants";
-import SectionBoundary from "@/components/common/SectionBoundary";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useParallax } from '@/hooks/useParallax';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { HeroSection } from '@/components/common';
+import { HeroText, HeroButtons } from '.';
+import { HERO_CONFIG } from './constants';
+import SectionBoundary from '@/components/common/SectionBoundary';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * Optimized Hero component with consolidated scroll handling and performance optimizations
@@ -22,13 +22,13 @@ export default function Hero() {
   // Optimized viewport height calculation with throttling
   const updateViewportHeight = useCallback(() => {
     const newHeight = window.innerHeight || 0;
-    setViewportHeight(prevHeight => prevHeight !== newHeight ? newHeight : prevHeight);
+    setViewportHeight(prevHeight => (prevHeight !== newHeight ? newHeight : prevHeight));
   }, []);
 
   useEffect(() => {
     // Initial calculation
     updateViewportHeight();
-    
+
     // Throttled resize listener for better performance
     let timeoutId: NodeJS.Timeout;
     const throttledUpdate = () => {
@@ -50,36 +50,32 @@ export default function Hero() {
   }, [viewportHeight]);
 
   const rawOpacity = useTransform(
-    scrollY, 
-    [0, opacityConfig.fadeStart], 
-    [1, opacityConfig.fadeEnd], 
+    scrollY,
+    [0, opacityConfig.fadeStart],
+    [1, opacityConfig.fadeEnd],
     { clamp: true }
   );
-  
-  const smoothedOpacity = useSpring(rawOpacity, { 
-    damping: 20, 
-    stiffness: 120, 
-    mass: 0.3 
+
+  const smoothedOpacity = useSpring(rawOpacity, {
+    damping: 20,
+    stiffness: 120,
+    mass: 0.3,
   });
 
   // Scroll to top on component mount
   useScrollToTop();
 
   return (
-    <HeroSection
-      id="hero"
-      ariaLabel="Hero"
-      minHeight={HERO_CONFIG.minHeight}
-    >
+    <HeroSection id='hero' ariaLabel='Hero' minHeight={HERO_CONFIG.minHeight}>
       {/* Optimized background image with smooth scroll-bound fade */}
       <motion.div
         className="absolute inset-0 -z-30 bg-[url('/images/Hero.png')] bg-cover bg-center bg-no-repeat"
         aria-hidden
-        style={{ 
-          opacity: smoothedOpacity, 
+        style={{
+          opacity: smoothedOpacity,
           willChange: 'opacity',
           transform: 'translateZ(0)', // Force hardware acceleration
-          backfaceVisibility: 'hidden' // Optimize rendering
+          backfaceVisibility: 'hidden', // Optimize rendering
         }}
         transition={{ duration: 0.7, ease: 'easeInOut' }}
       />
@@ -88,10 +84,10 @@ export default function Hero() {
       <div
         className="absolute inset-0 -z-20 bg-[url('/next.svg')] bg-no-repeat bg-center opacity-[0.03]"
         aria-hidden
-        style={{ 
+        style={{
           transform: `translate3d(0, ${parallax * -1}px, 0)`,
           willChange: 'transform',
-          backfaceVisibility: 'hidden'
+          backfaceVisibility: 'hidden',
         }}
       />
 
@@ -107,5 +103,3 @@ export default function Hero() {
     </HeroSection>
   );
 }
-
-

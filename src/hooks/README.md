@@ -39,6 +39,7 @@ hooks/
 **Purpose:** Provides navigation state management and section navigation functionality.
 
 **Returns:**
+
 ```typescript
 interface NavigationHook {
   currentPath: string;
@@ -50,6 +51,7 @@ interface NavigationHook {
 ```
 
 **Features:**
+
 - ✅ Section detection and highlighting
 - ✅ Smooth scrolling navigation
 - ✅ Cross-page navigation
@@ -57,16 +59,17 @@ interface NavigationHook {
 - ✅ Navigation data structure
 
 **Usage:**
+
 ```typescript
 import { useNavigation } from '@/hooks/useNavigation';
 
 function MyComponent() {
   const { navigateToSection, currentSection, isCurrentPage } = useNavigation();
-  
+
   const handleClick = () => {
     navigateToSection('services');
   };
-  
+
   return (
     <div>
       <p>Current section: {currentSection}</p>
@@ -77,17 +80,18 @@ function MyComponent() {
 ```
 
 **Navigation Data Structure:**
+
 ```typescript
 const navigationData = {
   home: {
     label: 'Home',
     href: '/',
-    sections: ['hero', 'services', 'why', 'cta']
+    sections: ['hero', 'services', 'why', 'cta'],
   },
   'what-we-do': {
     label: 'What We Do',
     href: '/what-we-do',
-    sections: ['what-we-do-hero', 'services', 'industries']
+    sections: ['what-we-do-hero', 'services', 'industries'],
   },
   // ... other pages
 };
@@ -100,6 +104,7 @@ const navigationData = {
 **Purpose:** Enhanced navigation hook with lazy loading support and improved section detection.
 
 **Returns:**
+
 ```typescript
 interface EnhancedNavigationHook extends NavigationHook {
   isTriggeringLazyLoad: boolean;
@@ -108,6 +113,7 @@ interface EnhancedNavigationHook extends NavigationHook {
 ```
 
 **Features:**
+
 - ✅ All features from useNavigation
 - ✅ Lazy loading trigger detection
 - ✅ Enhanced section detection
@@ -115,16 +121,17 @@ interface EnhancedNavigationHook extends NavigationHook {
 - ✅ Performance monitoring
 
 **Usage:**
+
 ```typescript
 import { useEnhancedNavigation } from '@/hooks/useEnhancedNavigation';
 
 function MyComponent() {
   const { navigateToSection, isTriggeringLazyLoad } = useEnhancedNavigation();
-  
+
   const handleClick = () => {
     navigateToSection('why'); // Will trigger lazy loading if needed
   };
-  
+
   return (
     <button onClick={handleClick} disabled={isTriggeringLazyLoad}>
       {isTriggeringLazyLoad ? 'Loading...' : 'Go to Why Choose Us'}
@@ -144,27 +151,31 @@ function MyComponent() {
 **Purpose:** Creates parallax scrolling effects based on scroll position.
 
 **Parameters:**
+
 ```typescript
-function useParallax(intensity: number): number
+function useParallax(intensity: number): number;
 ```
 
 **Parameters:**
+
 - `intensity` (number): Parallax intensity (0-1, where 0.25 = 25% movement)
 
 **Returns:**
+
 - `number`: Y-axis offset value for transform
 
 **Usage:**
+
 ```typescript
 import { useParallax } from '@/hooks/useParallax';
 
 function ParallaxSection() {
   const parallax = useParallax(0.25); // 25% parallax intensity
-  
+
   return (
-    <div 
-      style={{ 
-        transform: `translateY(${parallax}px)` 
+    <div
+      style={{
+        transform: `translateY(${parallax}px)`
       }}
     >
       Parallax content
@@ -174,6 +185,7 @@ function ParallaxSection() {
 ```
 
 **Implementation Details:**
+
 - Uses `useEffect` with scroll event listener
 - Throttled for performance (60fps)
 - Cleans up event listeners on unmount
@@ -186,22 +198,29 @@ function ParallaxSection() {
 **Purpose:** Creates typewriter effect for text animation.
 
 **Parameters:**
+
 ```typescript
-function useTypewriter(text: string, speed?: number): {
+function useTypewriter(
+  text: string,
+  speed?: number
+): {
   display: string;
   isComplete: boolean;
-}
+};
 ```
 
 **Parameters:**
+
 - `text` (string): Text to animate
 - `speed` (number, optional): Speed in milliseconds (default: 80ms)
 
 **Returns:**
+
 - `display` (string): Currently displayed text
 - `isComplete` (boolean): Whether animation is complete
 
 **Usage:**
+
 ```typescript
 import { useTypewriter } from '@/hooks/useTypewriter';
 
@@ -210,7 +229,7 @@ function TypewriterText() {
     "Your Partner in Data-Driven Business Growth",
     80 // Speed in milliseconds
   );
-  
+
   return (
     <h1>
       {display}
@@ -221,6 +240,7 @@ function TypewriterText() {
 ```
 
 **Features:**
+
 - ✅ Configurable typing speed
 - ✅ Completion state tracking
 - ✅ Automatic cleanup
@@ -233,31 +253,35 @@ function TypewriterText() {
 **Purpose:** Creates 3D tilt effects on mouse movement.
 
 **Parameters:**
+
 ```typescript
 function use3DTilt(intensity?: number): {
   tiltX: number;
   tiltY: number;
   transform: string;
-}
+};
 ```
 
 **Parameters:**
+
 - `intensity` (number, optional): Tilt intensity (default: 10)
 
 **Returns:**
+
 - `tiltX` (number): X-axis tilt value
 - `tiltY` (number): Y-axis tilt value
 - `transform` (string): CSS transform string
 
 **Usage:**
+
 ```typescript
 import { use3DTilt } from '@/hooks/use3DTilt';
 
 function TiltCard() {
   const { transform } = use3DTilt(15);
-  
+
   return (
-    <div 
+    <div
       style={{ transform }}
       className="transition-transform duration-300"
     >
@@ -274,6 +298,7 @@ function TiltCard() {
 **Purpose:** Animates numbers from 0 to target value.
 
 **Parameters:**
+
 ```typescript
 function useCountUp(
   target: number,
@@ -284,27 +309,30 @@ function useCountUp(
   isAnimating: boolean;
   start: () => void;
   reset: () => void;
-}
+};
 ```
 
 **Parameters:**
+
 - `target` (number): Target number to count to
 - `duration` (number, optional): Animation duration in ms (default: 2000)
 - `startOnMount` (boolean, optional): Start animation on mount (default: true)
 
 **Returns:**
+
 - `count` (number): Current count value
 - `isAnimating` (boolean): Whether animation is running
 - `start` (function): Start animation function
 - `reset` (function): Reset count function
 
 **Usage:**
+
 ```typescript
 import { useCountUp } from '@/hooks/useCountUp';
 
 function AnimatedCounter() {
   const { count, isAnimating, start } = useCountUp(100, 3000);
-  
+
   return (
     <div>
       <span>{count}</span>
@@ -327,6 +355,7 @@ function AnimatedCounter() {
 **Purpose:** Detects when elements enter or leave the viewport.
 
 **Parameters:**
+
 ```typescript
 interface IntersectionObserverOptions {
   threshold?: number | number[];
@@ -336,6 +365,7 @@ interface IntersectionObserverOptions {
 ```
 
 **Returns:**
+
 ```typescript
 interface IntersectionObserverHook {
   elementRef: RefObject<HTMLDivElement>;
@@ -345,6 +375,7 @@ interface IntersectionObserverHook {
 ```
 
 **Usage:**
+
 ```typescript
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
@@ -354,7 +385,7 @@ function LazyComponent() {
     rootMargin: '400px',
     triggerOnce: true
   });
-  
+
   return (
     <div ref={elementRef}>
       {hasIntersected ? <ExpensiveComponent /> : <LoadingSpinner />}
@@ -364,6 +395,7 @@ function LazyComponent() {
 ```
 
 **Features:**
+
 - ✅ Configurable thresholds
 - ✅ Root margin support
 - ✅ Trigger once option
@@ -376,20 +408,22 @@ function LazyComponent() {
 **Purpose:** Simplified hook for detecting element visibility.
 
 **Parameters:**
+
 ```typescript
 function useInView(options?: IntersectionObserverInit): {
   ref: RefObject<HTMLElement>;
   inView: boolean;
-}
+};
 ```
 
 **Usage:**
+
 ```typescript
 import { useInView } from '@/hooks/useInView';
 
 function VisibilityComponent() {
   const { ref, inView } = useInView();
-  
+
   return (
     <div ref={ref} className={inView ? 'animate-fade-in' : 'opacity-0'}>
       {inView ? 'I am visible!' : 'I am hidden'}
@@ -405,24 +439,26 @@ function VisibilityComponent() {
 **Purpose:** Provides scroll to top functionality.
 
 **Parameters:**
+
 ```typescript
 function useScrollToTop(): {
   scrollToTop: () => void;
   isVisible: boolean;
-}
+};
 ```
 
 **Usage:**
+
 ```typescript
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 function ScrollToTopButton() {
   const { scrollToTop, isVisible } = useScrollToTop();
-  
+
   if (!isVisible) return null;
-  
+
   return (
-    <button 
+    <button
       onClick={scrollToTop}
       className="fixed bottom-4 right-4 bg-gold text-black p-2 rounded-full"
     >
@@ -433,6 +469,7 @@ function ScrollToTopButton() {
 ```
 
 **Features:**
+
 - ✅ Smooth scrolling
 - ✅ Visibility detection
 - ✅ Performance optimized
@@ -449,6 +486,7 @@ function ScrollToTopButton() {
 **Purpose:** Performance-optimized useEffect with deep comparison.
 
 **Usage:**
+
 ```typescript
 import { performanceUtils } from '@/utils/performance';
 
@@ -457,12 +495,13 @@ function MyComponent({ data }) {
     // Effect that only runs when data deeply changes
     processData(data);
   }, [data]);
-  
+
   return <div>Content</div>;
 }
 ```
 
 **Features:**
+
 - ✅ Deep dependency comparison
 - ✅ Prevents unnecessary re-runs
 - ✅ Performance optimized
@@ -499,12 +538,12 @@ function parallaxEffect() {}
 function useCustomHook(param1: string, param2?: number) {
   // 1. State declarations
   const [state, setState] = useState(initialValue);
-  
+
   // 2. Computed values
   const computedValue = useMemo(() => {
     return expensiveCalculation(state);
   }, [state]);
-  
+
   // 3. Effects
   useEffect(() => {
     // Side effects
@@ -512,12 +551,12 @@ function useCustomHook(param1: string, param2?: number) {
       // Cleanup
     };
   }, [dependencies]);
-  
+
   // 4. Event handlers
   const handleEvent = useCallback(() => {
     // Event handling logic
   }, [dependencies]);
-  
+
   // 5. Return object
   return {
     state,
@@ -558,21 +597,21 @@ import { useCounter } from '@/hooks/useCounter';
 
 test('should increment counter', () => {
   const { result } = renderHook(() => useCounter(0));
-  
+
   act(() => {
     result.current.increment();
   });
-  
+
   expect(result.current.count).toBe(1);
 });
 
 test('should reset counter', () => {
   const { result } = renderHook(() => useCounter(10));
-  
+
   act(() => {
     result.current.reset();
   });
-  
+
   expect(result.current.count).toBe(0);
 });
 ```
@@ -593,11 +632,11 @@ jest.mock('next/router', () => ({
 
 test('should navigate to section', async () => {
   const { result } = renderHook(() => useNavigation());
-  
+
   await act(async () => {
     await result.current.navigateToSection('services');
   });
-  
+
   expect(result.current.currentSection).toBe('services');
 });
 ```
@@ -629,46 +668,46 @@ interface UseTimerReturn {
 function useTimer({
   initialTime = 0,
   interval = 1000,
-  autoStart = false
+  autoStart = false,
 }: UseTimerOptions = {}): UseTimerReturn {
   const [time, setTime] = useState(initialTime);
   const [isRunning, setIsRunning] = useState(autoStart);
-  
+
   const formattedTime = useMemo(() => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }, [time]);
-  
+
   const start = useCallback(() => {
     setIsRunning(true);
   }, []);
-  
+
   const pause = useCallback(() => {
     setIsRunning(false);
   }, []);
-  
+
   const reset = useCallback(() => {
     setTime(initialTime);
     setIsRunning(false);
   }, [initialTime]);
-  
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-    
+
     if (isRunning) {
       intervalId = setInterval(() => {
         setTime(prevTime => prevTime + 1);
       }, interval);
     }
-    
+
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
       }
     };
   }, [isRunning, interval]);
-  
+
   return {
     time,
     isRunning,
@@ -710,7 +749,7 @@ interface UseCustomHookReturn {
 
 function useCustomHook(options: UseCustomHookOptions = {}): UseCustomHookReturn {
   // Hook implementation
-  
+
   return {
     // Return object
   };

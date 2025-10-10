@@ -61,39 +61,39 @@ export function useOptimizedScroll(options: ScrollOptions = {}) {
     const isWindow = container === window;
     const scrollY = isWindow ? window.scrollY : (container as HTMLElement).scrollTop;
     const scrollX = isWindow ? window.scrollX : (container as HTMLElement).scrollLeft;
-    
+
     const now = performance.now();
     const deltaY = scrollY - lastScrollRef.current.y;
     const deltaX = scrollX - lastScrollRef.current.x;
     const deltaTime = now - lastScrollRef.current.time;
-    
+
     // Calculate direction
     let direction: 'up' | 'down' | null = null;
     if (trackDirection && deltaTime > 0) {
       direction = deltaY > 0 ? 'down' : deltaY < 0 ? 'up' : null;
     }
-    
+
     // Calculate velocity
     let velocity = 0;
     if (trackVelocity && deltaTime > 0) {
       velocity = Math.abs(deltaY) / deltaTime;
     }
-    
+
     // Calculate scroll percentage
     let scrollPercentage = 0;
     if (trackPercentage) {
-      const documentHeight = isWindow 
+      const documentHeight = isWindow
         ? document.documentElement.scrollHeight - window.innerHeight
         : (container as HTMLElement).scrollHeight - (container as HTMLElement).clientHeight;
-      
+
       if (documentHeight > 0) {
         scrollPercentage = Math.min(Math.max(scrollY / documentHeight, 0), 1);
       }
     }
-    
+
     // Update last scroll position
     lastScrollRef.current = { y: scrollY, x: scrollX, time: now };
-    
+
     return {
       scrollY,
       scrollX,
@@ -108,17 +108,17 @@ export function useOptimizedScroll(options: ScrollOptions = {}) {
   const handleScroll = useStableCallback(() => {
     const newState = calculateScrollState();
     setScrollState(newState);
-    
+
     // Set scrolling flag
     if (!isScrollingRef.current) {
       isScrollingRef.current = true;
     }
-    
+
     // Clear existing timeout
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);
     }
-    
+
     // Set timeout to detect scroll end
     scrollTimeoutRef.current = setTimeout(() => {
       isScrollingRef.current = false;
@@ -161,16 +161,17 @@ export function useScrollProgress(
   options: ScrollOptions = {}
 ) {
   const scrollState = useOptimizedScroll(options);
-  
+
   const progress = useCallback(() => {
     const { scrollPercentage } = scrollState;
     return Math.max(0, Math.min(1, (scrollPercentage - startOffset) / (endOffset - startOffset)));
   }, [scrollState, startOffset, endOffset]);
-  
+
   return {
     progress: progress(),
     scrollState,
-    isInRange: scrollState.scrollPercentage >= startOffset && scrollState.scrollPercentage <= endOffset,
+    isInRange:
+      scrollState.scrollPercentage >= startOffset && scrollState.scrollPercentage <= endOffset,
   };
 }
 
@@ -178,34 +179,35 @@ export function useScrollProgress(
  * Hook for scroll-triggered visibility
  * Efficiently tracks when elements enter/exit viewport
  */
-export function useScrollVisibility(
-  threshold: number = 0.1,
-  options: ScrollOptions = {}
-) {
+export function useScrollVisibility(threshold: number = 0.1, options: ScrollOptions = {}) {
   const scrollState = useOptimizedScroll(options);
   const [isVisible, setIsVisible] = useState(false);
   const [visibilityProgress, setVisibilityProgress] = useState(0);
-  
-  const updateVisibility = useCallback((element: HTMLElement | null) => {
-    if (!element) return;
-    
-    const rect = element.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    const elementHeight = rect.height;
-    
-    // Calculate visibility based on element position
-    const elementTop = rect.top;
-    const elementBottom = rect.bottom;
-    
-    // Calculate progress through viewport
-    const progress = Math.max(0, Math.min(1, 
-      (windowHeight - elementTop) / (windowHeight + elementHeight)
-    ));
-    
-    setVisibilityProgress(progress);
-    setIsVisible(progress > threshold);
-  }, [threshold]);
-  
+
+  const updateVisibility = useCallback(
+    (element: HTMLElement | null) => {
+      if (!element) return;
+
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
+
+      // Calculate visibility based on element position
+      const elementTop = rect.top;
+      const elementBottom = rect.bottom;
+
+      // Calculate progress through viewport
+      const progress = Math.max(
+        0,
+        Math.min(1, (windowHeight - elementTop) / (windowHeight + elementHeight))
+      );
+
+      setVisibilityProgress(progress);
+      setIsVisible(progress > threshold);
+    },
+    [threshold]
+  );
+
   return {
     isVisible,
     visibilityProgress,
@@ -227,16 +229,16 @@ export function useScrollParallax(
 ) {
   const { calculateParallax, ...scrollOptions } = options;
   const scrollState = useOptimizedScroll(scrollOptions);
-  
+
   const parallaxOffset = useCallback(() => {
     if (calculateParallax) {
       return calculateParallax(scrollState.scrollY, speed);
     }
-    
+
     // Default parallax calculation
     return scrollState.scrollY * speed;
   }, [scrollState.scrollY, speed, calculateParallax]);
-  
+
   return {
     offset: parallaxOffset(),
     scrollState,
@@ -253,40 +255,40 @@ export function useScrollSectionDetection(
 ) {
   const scrollState = useOptimizedScroll(options);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  
+
   const updateActiveSection = useCallback(() => {
     const scrollY = scrollState.scrollY;
     const windowHeight = window.innerHeight;
-    
+
     let currentSection: string | null = null;
     let maxVisibility = 0;
-    
+
     for (const { id, element } of sections) {
       if (!element) continue;
-      
+
       const rect = element.getBoundingClientRect();
       const elementTop = rect.top + scrollY;
       const elementBottom = elementTop + rect.height;
-      
+
       // Calculate visibility percentage
       const visibleTop = Math.max(elementTop, scrollY);
       const visibleBottom = Math.min(elementBottom, scrollY + windowHeight);
       const visibleHeight = Math.max(0, visibleBottom - visibleTop);
       const visibilityPercentage = visibleHeight / rect.height;
-      
+
       if (visibilityPercentage > maxVisibility && visibilityPercentage > 0.3) {
         maxVisibility = visibilityPercentage;
         currentSection = id;
       }
     }
-    
+
     setActiveSection(currentSection);
   }, [scrollState.scrollY, sections]);
-  
+
   useEffect(() => {
     updateActiveSection();
   }, [updateActiveSection]);
-  
+
   return {
     activeSection,
     updateActiveSection,

@@ -52,9 +52,7 @@ function AllTheProviders({ children }: { children: ReactNode }) {
   return (
     <ErrorBoundary>
       <PerformanceProvider>
-        <ScrollProvider>
-          {children}
-        </ScrollProvider>
+        <ScrollProvider>{children}</ScrollProvider>
       </PerformanceProvider>
     </ErrorBoundary>
   );
@@ -65,7 +63,7 @@ function AllTheProviders({ children }: { children: ReactNode }) {
 //   options: CustomRenderOptions = {}
 // ) {
 //   const { wrapper: Wrapper = AllTheProviders, ...renderOptions } = options;
-//   
+//
 //   return render(ui, {
 //     wrapper: Wrapper,
 //     ...renderOptions,
@@ -220,9 +218,9 @@ export const testData = {
 //   // Assert component handles errors gracefully
 //   assertErrorHandling: (Component: React.ComponentType<any>, props: any = {}) => {
 //     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-//     
+//
 //     renderWithProviders(<Component {...props} />);
-//     
+//
 //     expect(consoleSpy).not.toHaveBeenCalled();
 //     consoleSpy.mockRestore();
 //   },
@@ -259,15 +257,15 @@ export const testData = {
 // export const setupTests = () => {
 //   // Mock GSAP
 //   jest.mock('gsap', () => mockGSAP);
-//   
+//
 //   // Mock Framer Motion
 //   jest.mock('framer-motion', () => mockFramerMotion);
-//   
+//
 //   // Setup test utilities
 //   testUtils.mockIntersectionObserver();
 //   testUtils.mockPerformance();
 //   testUtils.mockRequestAnimationFrame();
-//   
+//
 //   // Mock environment
 //   process.env.NODE_ENV = 'test';
 //   process.env.NEXT_PUBLIC_APP_NAME = 'VR NextGEN Solutions Test';

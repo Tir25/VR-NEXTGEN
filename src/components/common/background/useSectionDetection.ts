@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
 
 const SECTIONS = [
-  "hero",
-  "services",
-  "why",
-  "cta",
-  "what-we-do-hero",
-  "who-we-are-hero",
-  "customer-stories",
-  "case-studies",
-  "events",
-  "industries",
-  "contact-hero",
-  "contact-form",
-  "blog-header",
-  "blog-feed",
+  'hero',
+  'services',
+  'why',
+  'cta',
+  'what-we-do-hero',
+  'who-we-are-hero',
+  'customer-stories',
+  'case-studies',
+  'events',
+  'industries',
+  'contact-hero',
+  'contact-form',
+  'blog-header',
+  'blog-feed',
 ];
 
 export function useSectionDetection() {
-  const [currentSection, setCurrentSection] = useState("hero");
+  const [currentSection, setCurrentSection] = useState('hero');
 
   useEffect(() => {
     let lastSectionUpdateTime = 0;
@@ -30,7 +30,7 @@ export function useSectionDetection() {
       lastSectionUpdateTime = now;
 
       const windowHeight = window.innerHeight;
-      let mostVisibleSection = "hero";
+      let mostVisibleSection = 'hero';
       let maxVisibility = 0;
 
       for (let i = 0; i < SECTIONS.length; i++) {

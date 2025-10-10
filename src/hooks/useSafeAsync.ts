@@ -19,10 +19,10 @@ export function useSafeAsync() {
   function run<T>(promise: Promise<T>): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       promise
-        .then((value) => {
+        .then(value => {
           if (isMountedRef.current) resolve(value);
         })
-        .catch((error) => {
+        .catch(error => {
           if (isMountedRef.current) reject(error);
         });
     });
@@ -32,5 +32,3 @@ export function useSafeAsync() {
 }
 
 export type UseSafeAsyncReturn = ReturnType<typeof useSafeAsync>;
-
-

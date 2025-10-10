@@ -5,7 +5,7 @@
 
 export const SECTION_IDS = {
   HERO: 'hero',
-  SERVICES: 'services', 
+  SERVICES: 'services',
   INDUSTRIES: 'industries',
   CTA: 'cta',
   WHO_WE_ARE: 'who-we-are',
@@ -16,7 +16,7 @@ export const SECTION_IDS = {
 export const SECTION_CLASSES = {
   HERO: 'section-hero',
   SERVICES: 'section-services',
-  INDUSTRIES: 'section-industries', 
+  INDUSTRIES: 'section-industries',
   CTA: 'section-cta',
   WHO_WE_ARE: 'section-who-we-are',
   WHAT_WE_DO: 'section-what-we-do',
@@ -33,5 +33,5 @@ export const SECTION_BACKGROUNDS = {
   [SECTION_CLASSES.CONTACT]: 'hero',
 } as const;
 
-export type SectionId = typeof SECTION_IDS[keyof typeof SECTION_IDS];
-export type SectionClass = typeof SECTION_CLASSES[keyof typeof SECTION_CLASSES];
+export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
+export type SectionClass = (typeof SECTION_CLASSES)[keyof typeof SECTION_CLASSES];

@@ -8,21 +8,17 @@ type IndustryPageShellProps = {
 
 export default function IndustryPageShell({ children }: IndustryPageShellProps) {
   return (
-    <section className="relative w-full min-h-screen bg-black text-white overflow-hidden">
+    <section className='relative w-full min-h-screen bg-black text-white overflow-hidden'>
       {/* Background layers matching industries section */}
-      <div className="absolute inset-0 -z-10">
-        <BackgroundEffects currentSection="industries" />
+      <div className='absolute inset-0 -z-10'>
+        <BackgroundEffects currentSection='industries' />
       </div>
 
       <SectionBoundary>
         <Container>
-          <div className="py-12 md:py-16 lg:py-20">
-            {children}
-          </div>
+          <div className='py-12 md:py-16 lg:py-20'>{children}</div>
         </Container>
       </SectionBoundary>
     </section>
   );
 }
-
-

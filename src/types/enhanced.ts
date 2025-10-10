@@ -107,7 +107,6 @@ export interface Theme {
 
 // Performance types
 
-
 // Error types
 export interface ErrorContext {
   component?: string;
@@ -118,7 +117,6 @@ export interface ErrorContext {
   userAgent?: string;
   url?: string;
 }
-
 
 // Form types
 export interface FormField<T = any> {

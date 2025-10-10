@@ -29,13 +29,13 @@ export async function submitContactForm(formData: ContactFormData): Promise<ApiR
     if (!response.ok) {
       return {
         success: false,
-        error: result.error || 'Failed to send message'
+        error: result.error || 'Failed to send message',
       };
     }
 
     return {
       success: true,
-      data: undefined
+      data: undefined,
     };
   } catch (error) {
     // Ensure API errors stay isolated with a stable shape

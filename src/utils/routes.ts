@@ -6,5 +6,3 @@ export const APP_ROUTES = {
   industryById: (id: string | number) => `/industries/${id}`,
   contact: '/contact',
 } as const;
-
-

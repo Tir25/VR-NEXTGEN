@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo } from 'react';
 
 type Stat = {
   value: string | number;
@@ -15,14 +15,14 @@ function HeroStatsBase({ stats, className }: HeroStatsProps) {
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
         {safeStats.slice(0, 3).map((s, idx) => (
-          <div key={idx} className="stat-item">
-            <div className="text-3xl md:text-4xl font-bold text-gold mb-1 md:mb-2">
-              {s?.value ?? "-"}
+          <div key={idx} className='stat-item'>
+            <div className='text-3xl md:text-4xl font-bold text-gold mb-1 md:mb-2'>
+              {s?.value ?? '-'}
             </div>
-            <div className="text-sm md:text-base text-gray-300 uppercase tracking-wider">
-              {s?.label ?? ""}
+            <div className='text-sm md:text-base text-gray-300 uppercase tracking-wider'>
+              {s?.label ?? ''}
             </div>
           </div>
         ))}
@@ -33,5 +33,3 @@ function HeroStatsBase({ stats, className }: HeroStatsProps) {
 
 const HeroStats = memo(HeroStatsBase);
 export default HeroStats;
-
-

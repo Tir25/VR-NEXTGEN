@@ -12,9 +12,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Pharmaceutical & Life Sciences',
     icon: 'fas fa-pills',
     preview: 'Driving Compliance, Quality, and Agility',
-    description: '• Lean Manufacturing & GMP Compliance Coaching\n• Batch Yield Optimization & Changeover Reduction (SMED)\n• Digital Documentation & Quality Dashboards\n• Expiry, Wastage, & Material Flow Optimization\n\nBetter productivity, reduced quality deviations, and data-backed decision-making across production and quality teams. 💊 Efficiency meets compliance — powered by data.',
+    description:
+      '• Lean Manufacturing & GMP Compliance Coaching\n• Batch Yield Optimization & Changeover Reduction (SMED)\n• Digital Documentation & Quality Dashboards\n• Expiry, Wastage, & Material Flow Optimization\n\nBetter productivity, reduced quality deviations, and data-backed decision-making across production and quality teams. 💊 Efficiency meets compliance — powered by data.',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'manufacturing-engineering',
@@ -22,9 +23,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Manufacturing & Engineering',
     icon: 'fas fa-industry',
     preview: 'Building Smarter, Leaner, and Connected Operations',
-    description: '• Inventory & Supply Chain Optimization\n• OEE Monitoring & Process Automation\n• ERP–Analytics Integration for Real-Time Reporting\n• Preventive Maintenance & Resource Allocation Analytics\n\nTurning traditional plants into data-smart factories with full visibility and optimized operations. 🏭',
+    description:
+      '• Inventory & Supply Chain Optimization\n• OEE Monitoring & Process Automation\n• ERP–Analytics Integration for Real-Time Reporting\n• Preventive Maintenance & Resource Allocation Analytics\n\nTurning traditional plants into data-smart factories with full visibility and optimized operations. 🏭',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'retail-fmcg',
@@ -32,9 +34,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Retail & FMCG',
     icon: 'fas fa-shopping-cart',
     preview: 'Transforming Consumer Insights into Competitive Advantage',
-    description: '• Demand Forecasting & Inventory Management\n• Sales Performance Dashboards & Price Analytics\n• Distribution Efficiency & Route Optimization\n• Customer Segmentation & Market Trend Analysis\n\nFrom shelf to strategy — every move informed by data. 🛒',
+    description:
+      '• Demand Forecasting & Inventory Management\n• Sales Performance Dashboards & Price Analytics\n• Distribution Efficiency & Route Optimization\n• Customer Segmentation & Market Trend Analysis\n\nFrom shelf to strategy — every move informed by data. 🛒',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'healthcare-hospitals',
@@ -42,9 +45,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Healthcare & Hospitals',
     icon: 'fas fa-hospital',
     preview: 'Enhancing Patient Outcomes Through Process and Data Excellence',
-    description: '• Hospital Process Optimization (Admissions, Billing, Discharge)\n• Bed Utilization & Patient Flow Analytics\n• Resource Allocation & Staffing Dashboards\n• Quality, Compliance, & Accreditation Reporting\n\nBetter patient satisfaction, faster service delivery, and reduced administrative inefficiencies. 🏥',
+    description:
+      '• Hospital Process Optimization (Admissions, Billing, Discharge)\n• Bed Utilization & Patient Flow Analytics\n• Resource Allocation & Staffing Dashboards\n• Quality, Compliance, & Accreditation Reporting\n\nBetter patient satisfaction, faster service delivery, and reduced administrative inefficiencies. 🏥',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'education-edtech',
@@ -52,9 +56,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Education & EdTech',
     icon: 'fas fa-graduation-cap',
     preview: 'Building Smarter Institutions with Insightful Data',
-    description: '• Student Performance & Placement Dashboards\n• Admission Forecasting & Resource Planning\n• ERP & LMS Integration for Centralized Data\n• Faculty Productivity & Operational Analytics\n\nFrom learning to leading — powered by analytics. 🎓',
+    description:
+      '• Student Performance & Placement Dashboards\n• Admission Forecasting & Resource Planning\n• ERP & LMS Integration for Centralized Data\n• Faculty Productivity & Operational Analytics\n\nFrom learning to leading — powered by analytics. 🎓',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'financial-services-insurance',
@@ -62,9 +67,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Financial Services & Insurance',
     icon: 'fas fa-chart-line',
     preview: 'Empowering Financial Clarity and Compliance',
-    description: '• Risk Management & Compliance Analytics\n• Reporting & KPI Dashboards\n• Process Automation & Efficiency\n• Profitability & Performance Insights\n\nWhere precision meets performance. 💰',
+    description:
+      '• Risk Management & Compliance Analytics\n• Reporting & KPI Dashboards\n• Process Automation & Efficiency\n• Profitability & Performance Insights\n\nWhere precision meets performance. 💰',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'industrial-infrastructure',
@@ -72,9 +78,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Industrial & Infrastructure',
     icon: 'fas fa-hard-hat',
     preview: 'Building Efficiency from the Ground Up',
-    description: '• Project Gantt Charts & Progress Dashboards\n• Material, Cost & Resource Utilization Analytics\n• Delay Prediction & Risk Mitigation\n• Contractor & Vendor Performance Monitoring\n\nEngineering excellence through intelligence. 🏗️',
+    description:
+      '• Project Gantt Charts & Progress Dashboards\n• Material, Cost & Resource Utilization Analytics\n• Delay Prediction & Risk Mitigation\n• Contractor & Vendor Performance Monitoring\n\nEngineering excellence through intelligence. 🏗️',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'it-professional-services',
@@ -82,9 +89,10 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'IT & Professional Services',
     icon: 'fas fa-laptop-code',
     preview: 'Optimizing Human Capital and Project Delivery',
-    description: '• Resource Allocation & Time Utilization Dashboards\n• KPI & SLA Tracking\n• Automation for Report Generation & Task Monitoring\n• Workforce Productivity & Billing Analytics\n\nTurning human effort into measurable impact. 💼',
+    description:
+      '• Resource Allocation & Time Utilization Dashboards\n• KPI & SLA Tracking\n• Automation for Report Generation & Task Monitoring\n• Workforce Productivity & Billing Analytics\n\nTurning human effort into measurable impact. 💼',
     location: 'Global',
-    timestamp: '2024'
+    timestamp: '2024',
   },
   {
     id: 'other-industries',
@@ -92,10 +100,11 @@ export const INDUSTRIES: IndustryCard[] = [
     title: 'Other Industries',
     icon: 'fas fa-cogs',
     preview: 'Custom Solutions for Diverse Business Ecosystems',
-    description: '• Logistics, Hospitality & Energy Solutions\n• Data-Driven Process Optimization\n• Analytics & Reporting Tailored to Needs\n• Scalable & Flexible Frameworks\n\nCustom analytics and process optimization designed for any business. Measurable, data-led improvement across sectors. 🔧',
+    description:
+      '• Logistics, Hospitality & Energy Solutions\n• Data-Driven Process Optimization\n• Analytics & Reporting Tailored to Needs\n• Scalable & Flexible Frameworks\n\nCustom analytics and process optimization designed for any business. Measurable, data-led improvement across sectors. 🔧',
     location: 'Global',
-    timestamp: '2024'
-  }
+    timestamp: '2024',
+  },
 ];
 
 // Import centralized configuration

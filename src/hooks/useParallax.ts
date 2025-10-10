@@ -1,4 +1,4 @@
-import { useUnifiedParallax } from "@/contexts/ScrollContext";
+import { useUnifiedParallax } from '@/contexts/ScrollContext';
 
 /**
  * Optimized parallax hook using the global scroll controller

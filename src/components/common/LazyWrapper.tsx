@@ -20,8 +20,8 @@ interface LazyWrapperProps {
 function LazyWrapper({
   children,
   fallback = (
-    <div className="animate-pulse bg-gray-200/10 rounded-lg h-64 flex items-center justify-center">
-      <div className="text-gray-400 text-sm">Loading...</div>
+    <div className='animate-pulse bg-gray-200/10 rounded-lg h-64 flex items-center justify-center'>
+      <div className='text-gray-400 text-sm'>Loading...</div>
     </div>
   ),
   threshold = 0.1,
@@ -29,12 +29,12 @@ function LazyWrapper({
   className = '',
   triggerOnce = true,
   placeholder,
-  enablePerformanceMonitoring = false
+  enablePerformanceMonitoring = false,
 }: LazyWrapperProps) {
   const { elementRef, hasIntersected } = useIntersectionObserver({
     threshold,
     rootMargin,
-    triggerOnce
+    triggerOnce,
   });
 
   // Performance monitoring
@@ -46,13 +46,7 @@ function LazyWrapper({
 
   return (
     <div ref={elementRef} className={className}>
-      {hasIntersected ? (
-        <Suspense fallback={fallback}>
-          {children}
-        </Suspense>
-      ) : (
-        displayFallback
-      )}
+      {hasIntersected ? <Suspense fallback={fallback}>{children}</Suspense> : displayFallback}
     </div>
   );
 }

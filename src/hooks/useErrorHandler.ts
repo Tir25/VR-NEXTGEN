@@ -11,12 +11,12 @@ export function useErrorHandler() {
     errorHandler.logError(error, context);
   }, []);
 
-  const handleAsyncError = useCallback(async <T>(
-    asyncFn: () => Promise<T>,
-    context?: string
-  ): Promise<T | null> => {
-    return await errorHandler.handleAsyncError(asyncFn, context);
-  }, []);
+  const handleAsyncError = useCallback(
+    async <T>(asyncFn: () => Promise<T>, context?: string): Promise<T | null> => {
+      return await errorHandler.handleAsyncError(asyncFn, context);
+    },
+    []
+  );
 
   const getErrorLog = useCallback(() => {
     return errorHandler.getErrorLog();

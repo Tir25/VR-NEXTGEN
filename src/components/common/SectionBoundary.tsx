@@ -1,6 +1,6 @@
-import React from "react";
-import ErrorBoundary from "./ErrorBoundary";
-import SafeWrapper from "./SafeWrapper";
+import React from 'react';
+import ErrorBoundary from './ErrorBoundary';
+import SafeWrapper from './SafeWrapper';
 
 /**
  * SectionBoundary
@@ -19,5 +19,3 @@ export default function SectionBoundary({ children, isolate = true }: SectionBou
     </ErrorBoundary>
   );
 }
-
-

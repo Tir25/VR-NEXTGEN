@@ -19,7 +19,7 @@ export function withIsolation<P extends object>(
   WrappedComponent: ComponentType<P>,
   config: IsolationConfig = {}
 ) {
-  const IsolatedWrapper: React.FC<P> = (props) => {
+  const IsolatedWrapper: React.FC<P> = props => {
     return (
       <IsolatedComponent
         fallback={config.fallback}

@@ -35,10 +35,7 @@ export interface ResponsiveConfig<T> {
 }
 
 // Create responsive style hook
-export function useResponsiveStyle<T>(
-  config: ResponsiveConfig<T>,
-  fallback: T
-): T {
+export function useResponsiveStyle<T>(config: ResponsiveConfig<T>, fallback: T): T {
   return getResponsiveValue(config, fallback);
 }
 
@@ -91,19 +88,26 @@ export const createContainer = (config: ContainerConfig): React.ReactElement => 
 
   const responsivePadding = getResponsiveValue(padding, '1rem');
   const responsiveMargin = getResponsiveValue(margin, '0 auto');
-  const maxWidthValue = maxWidth === 'full' ? '100%' : RESPONSIVE_BREAKPOINTS[maxWidth as keyof typeof RESPONSIVE_BREAKPOINTS] + 'px';
+  const maxWidthValue =
+    maxWidth === 'full'
+      ? '100%'
+      : RESPONSIVE_BREAKPOINTS[maxWidth as keyof typeof RESPONSIVE_BREAKPOINTS] + 'px';
 
-  return React.createElement('div', {
-    className: `container ${className}`,
-    style: {
-      maxWidth: maxWidthValue,
-      padding: responsivePadding,
-      margin: responsiveMargin,
-      backgroundColor: background,
-      borderRadius: designTokens.borderRadius[rounded],
-      ...style,
+  return React.createElement(
+    'div',
+    {
+      className: `container ${className}`,
+      style: {
+        maxWidth: maxWidthValue,
+        padding: responsivePadding,
+        margin: responsiveMargin,
+        backgroundColor: background,
+        borderRadius: designTokens.borderRadius[rounded],
+        ...style,
+      },
     },
-  }, children);
+    children
+  );
 };
 
 // Flexible section component factory
@@ -130,16 +134,20 @@ export const createSection = (config: SectionConfig): React.ReactElement => {
   const responsivePadding = getResponsiveValue(padding, '4rem 0');
   const backgroundClass = background === 'custom' ? '' : `section-${background}`;
 
-  return React.createElement('section', {
-    id,
-    'aria-label': ariaLabel,
-    className: `${backgroundClass} relative overflow-hidden ${className}`,
-    style: {
-      padding: responsivePadding,
-      minHeight,
-      ...style,
+  return React.createElement(
+    'section',
+    {
+      id,
+      'aria-label': ariaLabel,
+      className: `${backgroundClass} relative overflow-hidden ${className}`,
+      style: {
+        padding: responsivePadding,
+        minHeight,
+        ...style,
+      },
     },
-  }, children);
+    children
+  );
 };
 
 // Flexible grid component factory
@@ -164,16 +172,20 @@ export const createGrid = (config: GridConfig): React.ReactElement => {
   const responsiveColumns = getResponsiveValue(columns, 1);
   const responsiveGap = getResponsiveValue(gap, '1rem');
 
-  return React.createElement('div', {
-    className: `grid ${className}`,
-    style: {
-      gridTemplateColumns: `repeat(${responsiveColumns}, 1fr)`,
-      gap: responsiveGap,
-      alignItems,
-      justifyItems,
-      ...style,
+  return React.createElement(
+    'div',
+    {
+      className: `grid ${className}`,
+      style: {
+        gridTemplateColumns: `repeat(${responsiveColumns}, 1fr)`,
+        gap: responsiveGap,
+        alignItems,
+        justifyItems,
+        ...style,
+      },
     },
-  }, children);
+    children
+  );
 };
 
 // Flexible flex component factory
@@ -216,27 +228,28 @@ export const createFlex = (config: FlexConfig): React.ReactElement => {
     baseline: 'baseline',
   };
 
-  return React.createElement('div', {
-    className: `flex ${className}`,
-    style: {
-      flexDirection: direction,
-      flexWrap: wrap,
-      justifyContent: justifyMap[justify],
-      alignItems: alignMap[align],
-      gap: responsiveGap,
-      ...style,
+  return React.createElement(
+    'div',
+    {
+      className: `flex ${className}`,
+      style: {
+        flexDirection: direction,
+        flexWrap: wrap,
+        justifyContent: justifyMap[justify],
+        alignItems: alignMap[align],
+        gap: responsiveGap,
+        ...style,
+      },
     },
-  }, children);
+    children
+  );
 };
 
 // Component registry for extensibility
 export class ComponentRegistry {
   private components: Map<string, ComponentFactory<ComponentConfig>> = new Map();
 
-  register<T extends ComponentConfig>(
-    name: string,
-    factory: ComponentFactory<T>
-  ): void {
+  register<T extends ComponentConfig>(name: string, factory: ComponentFactory<T>): void {
     this.components.set(name, factory as ComponentFactory<ComponentConfig>);
   }
 
@@ -281,9 +294,7 @@ export function createComponent<T extends ComponentConfig>(
 }
 
 // Higher-order component for component factories
-export function withComponentFactory<T extends ComponentConfig>(
-  factory: ComponentFactory<T>
-) {
+export function withComponentFactory<T extends ComponentConfig>(factory: ComponentFactory<T>) {
   return function ComponentFactoryWrapper(
     config: T,
     children?: React.ReactNode

@@ -61,7 +61,7 @@ useEffect(() => {
     // Batched DOM updates
     // Single event listener
   };
-  
+
   const unregister = registerHandler('parallax', handleScroll);
   return unregister;
 }, [registerHandler]);
@@ -108,7 +108,7 @@ import { useParallax } from '@/hooks/useParallax';
 
 function ParallaxComponent() {
   const offset = useParallax(0.5); // 50% parallax speed
-  
+
   return (
     <div style={{ transform: `translateY(${offset}px)` }}>
       Parallax content
@@ -124,17 +124,17 @@ import { useScrollContext } from '@/contexts/ScrollContext';
 
 function CustomScrollComponent() {
   const { registerHandler } = useScrollContext();
-  
+
   useEffect(() => {
     const handleCustomScroll = (scrollY: number, direction: 'up' | 'down' | null) => {
       // Custom scroll logic
       console.log(`Scrolled to ${scrollY}px, direction: ${direction}`);
     };
-    
+
     const unregister = registerHandler('custom', handleCustomScroll);
     return unregister;
   }, [registerHandler]);
-  
+
   return <div>Custom scroll component</div>;
 }
 ```
@@ -154,7 +154,7 @@ function MonitoredScrollComponent() {
       monitor: true, // Enable performance monitoring
     }
   );
-  
+
   // Monitor performance metrics
   useEffect(() => {
     const interval = setInterval(() => {
@@ -163,10 +163,10 @@ function MonitoredScrollComponent() {
         console.log(`Scroll FPS: ${metrics.fps}`);
       }
     }, 1000);
-    
+
     return () => clearInterval(interval);
   }, [monitor]);
-  
+
   return <div>Monitored component</div>;
 }
 ```
@@ -220,14 +220,18 @@ Always use the unified scroll hooks instead of adding your own scroll listeners:
 ```typescript
 // ❌ Don't do this
 useEffect(() => {
-  const handleScroll = () => { /* logic */ };
+  const handleScroll = () => {
+    /* logic */
+  };
   window.addEventListener('scroll', handleScroll);
 }, []);
 
 // ✅ Do this instead
 const { registerHandler } = useScrollContext();
 useEffect(() => {
-  const handleScroll = (scrollY: number) => { /* logic */ };
+  const handleScroll = (scrollY: number) => {
+    /* logic */
+  };
   const unregister = registerHandler('custom', handleScroll);
   return unregister;
 }, [registerHandler]);
@@ -310,7 +314,7 @@ useEffect(() => {
     }
     // Your scroll logic
   };
-  
+
   const unregister = registerHandler('custom', handleScroll);
   return unregister;
 }, [registerHandler]);
@@ -329,6 +333,7 @@ useEffect(() => {
 The unified scroll optimization system provides a robust, high-performance solution for handling scroll events across the VR NEXTGEN Solutions application. By centralizing scroll management and implementing advanced performance optimizations, the system ensures smooth, consistent scroll performance while maintaining clean, maintainable code.
 
 The system is designed to be:
+
 - **Performant**: Optimized for 60fps on desktop, 30fps on mobile
 - **Scalable**: Easy to add new scroll effects
 - **Maintainable**: Centralized management reduces complexity

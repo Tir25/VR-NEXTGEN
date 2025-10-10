@@ -20,7 +20,6 @@ export interface IndustryCardProps {
   index?: number;
 }
 
-
 export interface IndustriesSectionProps {
   className?: string;
   id?: string;

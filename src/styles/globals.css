@@ -1,34 +1,34 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* VR NextGEN Design System - Design Tokens */
 :root {
   /* Core Brand Colors */
   --color-black: #000000;
-  --color-deep-charcoal: #231F20;
+  --color-deep-charcoal: #231f20;
   --color-white: #ffffff;
   --color-gold: #ffd700;
   --color-gold-dark: #ad974f;
   --color-gold-darker: #8e793e;
   --color-light-grey: #eaeaea;
-  
+
   /* New Section-Specific Colors */
-  --glory-white: #E6E6E6;
-  --sand-yellow: #FFBB01;
-  --gray-night-black: #1A1A1A;
-  
+  --glory-white: #e6e6e6;
+  --sand-yellow: #ffbb01;
+  --gray-night-black: #1a1a1a;
+
   /* Semantic Color Mappings */
   --background: var(--color-black);
   --foreground: var(--color-white);
   --accent-gold: var(--color-gold);
   --text-secondary: var(--color-deep-charcoal);
   --border-light: var(--color-light-grey);
-  
+
   /* Section Background Variables */
   --section-bg-hero: var(--color-black);
   --section-bg-services: var(--glory-white);
   --section-bg-why-choose: var(--gray-night-black);
   --section-bg-clients: var(--glory-white);
-  
+
   /* Section Text Colors */
   --text-hero: var(--color-white);
   --text-services: var(--color-black);
@@ -65,7 +65,9 @@
 }
 
 /* Base document styles */
-html { height: 100%; }
+html {
+  height: 100%;
+}
 body {
   min-height: 100%;
   background: var(--background);
@@ -74,11 +76,17 @@ body {
 }
 
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 /* Utility helpers */
-.text-gold { color: var(--accent-gold); }
-.bg-gold { background-color: var(--accent-gold); }
+.text-gold {
+  color: var(--accent-gold);
+}
+.bg-gold {
+  background-color: var(--accent-gold);
+}
 
 /* ===== Enhanced Button Micro-interactions ===== */
 .btn-enhanced {
@@ -97,9 +105,15 @@ html { scroll-behavior: smooth; }
 }
 
 /* Golden glow effects for different button variants */
-.btn-primary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-.btn-secondary:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-.btn-outline:hover { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+.btn-secondary:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+.btn-outline:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
 
 /* Ripple effect animation */
 .ripple-effect {
@@ -120,16 +134,26 @@ html { scroll-behavior: smooth; }
 
 /* Mobile and touch device optimizations */
 @media (max-width: 768px) {
-  .btn-enhanced:hover { transform: none; }
-  .btn-enhanced:active { transform: scale(0.98); }
+  .btn-enhanced:hover {
+    transform: none;
+  }
+  .btn-enhanced:active {
+    transform: scale(0.98);
+  }
   .btn-primary:hover,
   .btn-secondary:hover,
-  .btn-outline:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+  .btn-outline:hover {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .btn-enhanced:hover { transform: none; }
-  .btn-enhanced:active { transform: scale(0.95); }
+  .btn-enhanced:hover {
+    transform: none;
+  }
+  .btn-enhanced:active {
+    transform: scale(0.95);
+  }
 }
 
 /* Link-wrapped button support */
@@ -194,9 +218,11 @@ section {
   position: absolute;
   inset: -2px; /* avoid seams */
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px;
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size:
+    40px 40px,
+    40px 40px;
   filter: blur(0.3px);
   animation: bg-pan 20s linear infinite;
   will-change: background-position;
@@ -205,8 +231,16 @@ section {
 }
 
 @keyframes bg-pan {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 400px 400px, 400px 400px; }
+  0% {
+    background-position:
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      400px 400px,
+      400px 400px;
+  }
 }
 
 /* Aurora blobs with slow parallax drift - Hardware accelerated */
@@ -214,9 +248,9 @@ section {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(173,151,79,0.12), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(142,121,62,0.10), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.08), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(173, 151, 79, 0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(142, 121, 62, 0.1), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 215, 0, 0.08), transparent 65%);
   transform: translateZ(0);
   animation: aurora-drift 50s ease-in-out infinite alternate;
   will-change: transform;
@@ -225,8 +259,12 @@ section {
 }
 
 @keyframes aurora-drift {
-  0% { transform: translate3d(0,0,0); }
-  100% { transform: translate3d(0,-20px,0); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -20px, 0);
+  }
 }
 
 /* Cursor reactive shine (subtle) - Hardware accelerated */
@@ -249,20 +287,21 @@ section {
 .site-bg__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(1200px 600px at 50% 120%, rgba(0,0,0,0.6), transparent 60%),
-              radial-gradient(1200px 600px at 50% -20%, rgba(0,0,0,0.5), transparent 60%),
-              linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4));
+  background:
+    radial-gradient(1200px 600px at 50% 120%, rgba(0, 0, 0, 0.6), transparent 60%),
+    radial-gradient(1200px 600px at 50% -20%, rgba(0, 0, 0, 0.5), transparent 60%),
+    linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   transform: translateZ(0); /* Force hardware acceleration */
   backface-visibility: hidden; /* Optimize rendering */
 }
 
 /* Respect user preference to reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .site-bg__grid { 
-    animation: none !important; 
+  .site-bg__grid {
+    animation: none !important;
   }
-  .site-bg__aurora { 
-    animation: none !important; 
+  .site-bg__aurora {
+    animation: none !important;
   }
   .site-bg__shine {
     transition: none !important;
@@ -286,15 +325,15 @@ section {
 
 .site-bg.section-services .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+    linear-gradient(rgba(255, 187, 1, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 187, 1, 0.4) 1px, transparent 1px);
 }
 
 .site-bg.section-services .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255, 187, 1, 0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255, 187, 1, 0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 187, 1, 0.04), transparent 65%);
 }
 
 .site-bg.section-services .site-bg__shine {
@@ -314,15 +353,15 @@ section {
 
 .site-bg.section-industries .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 }
 
 .site-bg.section-industries .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(157, 0, 255, 0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(0, 229, 255, 0.1), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 0, 229, 0.08), transparent 65%);
 }
 
 .site-bg.section-industries .site-bg__shine {
@@ -340,12 +379,16 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(1px 1px at 25% 25%, white, transparent),
     radial-gradient(1px 1px at 50% 50%, white, transparent),
     radial-gradient(2px 2px at 75% 75%, white, transparent),
     radial-gradient(2px 2px at 100% 100%, white, transparent);
-  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-size:
+    200px 200px,
+    300px 300px,
+    400px 400px,
+    600px 600px;
   background-repeat: repeat;
   opacity: 0.3;
   animation: twinkle 10s linear infinite;
@@ -361,12 +404,16 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(1px 1px at 25% 25%, white, transparent),
     radial-gradient(1px 1px at 50% 50%, white, transparent),
     radial-gradient(2px 2px at 75% 75%, white, transparent),
     radial-gradient(2px 2px at 100% 100%, white, transparent);
-  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-size:
+    200px 200px,
+    300px 300px,
+    400px 400px,
+    600px 600px;
   background-repeat: repeat;
   opacity: 0.3;
   animation: twinkle 10s linear infinite;
@@ -381,15 +428,15 @@ section {
 
 .site-bg.section-why-choose .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
 }
 
 .site-bg.section-why-choose .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.15), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.12), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.10), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255, 215, 0, 0.15), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255, 215, 0, 0.12), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 215, 0, 0.1), transparent 65%);
 }
 
 /* Clients section - white background */
@@ -399,15 +446,15 @@ section {
 
 .site-bg.section-clients .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+    linear-gradient(rgba(255, 187, 1, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 187, 1, 0.4) 1px, transparent 1px);
 }
 
 .site-bg.section-clients .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255, 187, 1, 0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255, 187, 1, 0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 187, 1, 0.04), transparent 65%);
 }
 
 .site-bg.section-clients .site-bg__shine {
@@ -421,30 +468,36 @@ section {
 
 /* Smaller grid and subtler glow on mobile to avoid distraction */
 @media (max-width: 768px) {
-  .site-bg__grid { background-size: 32px 32px, 32px 32px; }
-  .site-bg__shine { background: radial-gradient(
+  .site-bg__grid {
+    background-size:
+      32px 32px,
+      32px 32px;
+  }
+  .site-bg__shine {
+    background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       color-mix(in oklab, var(--gold) 10%, transparent),
       transparent 60%
-    ); }
-  
+    );
+  }
+
   /* Mobile adjustments for white sections */
   .site-bg.section-services .site-bg__shine,
-  .site-bg.section-clients .site-bg__shine { 
+  .site-bg.section-clients .site-bg__shine {
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       rgba(255, 187, 1, 0.12),
       transparent 60%
-    ); 
+    );
   }
-  
+
   /* Mobile adjustments for Industries section */
-  .site-bg.section-industries .site-bg__shine { 
+  .site-bg.section-industries .site-bg__shine {
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       rgba(157, 0, 255, 0.12),
       transparent 60%
-    ); 
+    );
   }
 }
 
@@ -464,7 +517,7 @@ section {
 }
 
 .card-shadow:hover {
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 20px rgba(255, 215, 0, 0.1);
 }
@@ -483,11 +536,19 @@ section {
 
 /* Twinkle animation for Industries starfield */
 @keyframes twinkle {
-  0% { 
-    background-position: 0 0, 0 0, 0 0, 0 0; 
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
   }
-  100% { 
-    background-position: 200px 200px, 300px 300px, 400px 400px, 600px 600px; 
+  100% {
+    background-position:
+      200px 200px,
+      300px 300px,
+      400px 400px,
+      600px 600px;
   }
 }
 
@@ -549,7 +610,7 @@ html {
     width: clamp(150px, 15vw, 200px) !important;
     height: clamp(220px, 24vh, 280px) !important;
   }
-  
+
   .control-btn {
     width: 2.5rem !important;
     height: 2.5rem !important;
@@ -561,7 +622,7 @@ html {
     width: clamp(140px, 14vw, 180px) !important;
     height: clamp(200px, 22vh, 260px) !important;
   }
-  
+
   .control-btn {
     width: 2rem !important;
     height: 2rem !important;
@@ -580,11 +641,11 @@ html {
   .memory-card:hover {
     transform: none !important;
   }
-  
+
   .memory-card:hover .card-glow {
     opacity: 0 !important;
   }
-  
+
   .control-btn:hover {
     transform: none !important;
   }
@@ -595,7 +656,7 @@ html {
   html {
     scroll-behavior: auto;
   }
-  
+
   /* Disable all animations and transitions */
   *,
   *::before,
@@ -605,7 +666,7 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .card-3d,
   .card-shadow,
   .animate-fade-in-up,
@@ -616,17 +677,17 @@ html {
     transition: none !important;
     transform: none !important;
   }
-  
+
   .memory-card {
     scale: 1 !important;
     opacity: 1 !important;
   }
-  
+
   /* Ensure all elements are visible and accessible */
   .opacity-0 {
     opacity: 1 !important;
   }
-  
+
   .translate-y-8,
   .translate-x-8,
   .-translate-y-8,
@@ -650,8 +711,13 @@ html {
 
 /* Floating animation for decorative elements */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Removed unused CSS classes for optimization */
@@ -733,7 +799,9 @@ html {
 .nav-dropdown-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 300ms ease-out, transform 300ms ease-out;
+  transition:
+    opacity 300ms ease-out,
+    transform 300ms ease-out;
 }
 
 .nav-dropdown-exit {
@@ -744,7 +812,9 @@ html {
 .nav-dropdown-exit-active {
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 300ms ease-in, transform 300ms ease-in;
+  transition:
+    opacity 300ms ease-in,
+    transform 300ms ease-in;
 }
 
 /* Navigation hover effects */
@@ -814,7 +884,9 @@ html {
 .dropdown-enter-active {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 300ms ease-out, transform 300ms ease-out;
+  transition:
+    opacity 300ms ease-out,
+    transform 300ms ease-out;
 }
 
 .dropdown-exit {
@@ -825,7 +897,9 @@ html {
 .dropdown-exit-active {
   opacity: 0;
   transform: translateY(-10px) scale(0.95);
-  transition: opacity 300ms ease-in, transform 300ms ease-in;
+  transition:
+    opacity 300ms ease-in,
+    transform 300ms ease-in;
 }
 
 /* Navigation item split button styles */
@@ -879,7 +953,7 @@ html {
     -webkit-tap-highlight-color: rgba(255, 215, 0, 0.3);
     tap-highlight-color: rgba(255, 215, 0, 0.3);
   }
-  
+
   .nav-item-main:active,
   .nav-item-toggle:active {
     transform: scale(0.98);
@@ -915,7 +989,7 @@ html {
   .nav-item-toggle {
     transition: none;
   }
-  
+
   .dropdown-enter,
   .dropdown-enter-active,
   .dropdown-exit,

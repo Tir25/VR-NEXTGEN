@@ -13,7 +13,7 @@ export interface BrowserCompatibilityProps {
   className?: string;
 }
 
-export type BrowserFeature = 
+export type BrowserFeature =
   | 'intersection-observer'
   | 'css-transforms'
   | 'css-animations'
@@ -158,7 +158,7 @@ export default function BrowserCompatibility({
   useEffect(() => {
     const checkFeatures = () => {
       const unsupportedFeatures: BrowserFeature[] = [];
-      
+
       requiredFeatures.forEach(requiredFeature => {
         const featureCheck = featureChecks.find(check => check.feature === requiredFeature);
         if (featureCheck && !featureCheck.check()) {
@@ -177,17 +177,13 @@ export default function BrowserCompatibility({
 
     // Run check after a short delay to ensure DOM is ready
     const timeoutId = setTimeout(checkFeatures, 100);
-    
+
     return () => clearTimeout(timeoutId);
   }, [requiredFeatures, onUnsupported]);
 
   // Show loading state while checking
   if (isSupported === null) {
-    return (
-      <div className={`browser-compatibility-checking ${className}`}>
-        {children}
-      </div>
-    );
+    return <div className={`browser-compatibility-checking ${className}`}>{children}</div>;
   }
 
   // Show fallback if features are not supported
@@ -198,17 +194,27 @@ export default function BrowserCompatibility({
 
     return (
       <div className={`browser-compatibility-fallback ${className}`}>
-        <div className="text-center p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="text-yellow-600 mb-4">
-            <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        <div className='text-center p-6 bg-yellow-50 border border-yellow-200 rounded-lg'>
+          <div className='text-yellow-600 mb-4'>
+            <svg
+              className='w-12 h-12 mx-auto mb-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z'
+              />
             </svg>
-            <h3 className="text-lg font-semibold">Browser Compatibility</h3>
-            <p className="text-sm text-yellow-700 mt-2">
-              Some features may not work properly in your current browser. 
-              Consider updating to a modern browser for the best experience.
+            <h3 className='text-lg font-semibold'>Browser Compatibility</h3>
+            <p className='text-sm text-yellow-700 mt-2'>
+              Some features may not work properly in your current browser. Consider updating to a
+              modern browser for the best experience.
             </p>
-            <p className="text-xs text-yellow-600 mt-2">
+            <p className='text-xs text-yellow-600 mt-2'>
               Missing features: {missingFeatures.join(', ')}
             </p>
           </div>
@@ -217,17 +223,13 @@ export default function BrowserCompatibility({
     );
   }
 
-  return (
-    <div className={className}>
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 // Convenience components for specific feature requirements
-export const IntersectionObserverCompatible = (props: Omit<BrowserCompatibilityProps, 'requiredFeatures'>) => (
-  <BrowserCompatibility {...props} requiredFeatures={['intersection-observer']} />
-);
+export const IntersectionObserverCompatible = (
+  props: Omit<BrowserCompatibilityProps, 'requiredFeatures'>
+) => <BrowserCompatibility {...props} requiredFeatures={['intersection-observer']} />;
 
 export const AnimationCompatible = (props: Omit<BrowserCompatibilityProps, 'requiredFeatures'>) => (
   <BrowserCompatibility {...props} requiredFeatures={['css-transforms', 'css-animations']} />
@@ -237,9 +239,17 @@ export const StorageCompatible = (props: Omit<BrowserCompatibilityProps, 'requir
   <BrowserCompatibility {...props} requiredFeatures={['local-storage', 'session-storage']} />
 );
 
-export const ModernBrowserCompatible = (props: Omit<BrowserCompatibilityProps, 'requiredFeatures'>) => (
-  <BrowserCompatibility 
-    {...props} 
-    requiredFeatures={['intersection-observer', 'css-transforms', 'css-animations', 'fetch', 'promises']} 
+export const ModernBrowserCompatible = (
+  props: Omit<BrowserCompatibilityProps, 'requiredFeatures'>
+) => (
+  <BrowserCompatibility
+    {...props}
+    requiredFeatures={[
+      'intersection-observer',
+      'css-transforms',
+      'css-animations',
+      'fetch',
+      'promises',
+    ]}
   />
 );

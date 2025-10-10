@@ -12,12 +12,16 @@ export { ErrorBoundary, withErrorBoundary, useErrorHandler };
 // Error handling utilities
 export const ErrorHandlingUtils = {
   // Safe component wrapper
-  safeComponent: <P extends object>(Component: React.ComponentType<P>) => 
+  safeComponent: <P extends object>(Component: React.ComponentType<P>) =>
     withErrorBoundary(Component, {
       isolate: true,
-      fallback: React.createElement('div', {
-        className: 'p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400'
-      }, 'Component failed to load'),
+      fallback: React.createElement(
+        'div',
+        {
+          className: 'p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400',
+        },
+        'Component failed to load'
+      ),
     }),
 
   // Error logging utility
@@ -40,10 +44,7 @@ export const ErrorHandlingUtils = {
   },
 
   // Async error handler
-  handleAsyncError: async <T>(
-    asyncFn: () => Promise<T>,
-    fallback?: T
-  ): Promise<T | undefined> => {
+  handleAsyncError: async <T>(asyncFn: () => Promise<T>, fallback?: T): Promise<T | undefined> => {
     try {
       return await asyncFn();
     } catch (error) {

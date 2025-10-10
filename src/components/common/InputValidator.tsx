@@ -47,69 +47,84 @@ export default function InputValidator({
     sanitizedValue: value,
   });
 
-  const validateInput = useCallback((inputValue: string, validationRules: ValidationRule): ValidationState => {
-    const errors: string[] = [];
-    let sanitizedValue = inputValue;
+  const validateInput = useCallback(
+    (inputValue: string, validationRules: ValidationRule): ValidationState => {
+      const errors: string[] = [];
+      let sanitizedValue = inputValue;
 
-    try {
-      // Sanitize input if requested
-      if (validationRules.sanitize) {
-        sanitizedValue = sanitizeInput(inputValue);
-      }
-
-      // Required validation
-      if (validationRules.required && (!sanitizedValue || sanitizedValue.trim().length === 0)) {
-        errors.push('This field is required');
-      }
-
-      // Length validations
-      if (sanitizedValue && validationRules.minLength && sanitizedValue.length < validationRules.minLength) {
-        errors.push(`Must be at least ${validationRules.minLength} characters long`);
-      }
-
-      if (sanitizedValue && validationRules.maxLength && sanitizedValue.length > validationRules.maxLength) {
-        errors.push(`Must be no more than ${validationRules.maxLength} characters long`);
-      }
-
-      // Pattern validation
-      if (sanitizedValue && validationRules.pattern && !validationRules.pattern.test(sanitizedValue)) {
-        errors.push('Invalid format');
-      }
-
-      // Custom validation
-      if (sanitizedValue && validationRules.custom) {
-        const customResult = validationRules.custom(sanitizedValue);
-        if (customResult !== true) {
-          errors.push(typeof customResult === 'string' ? customResult : 'Invalid value');
+      try {
+        // Sanitize input if requested
+        if (validationRules.sanitize) {
+          sanitizedValue = sanitizeInput(inputValue);
         }
-      }
 
-      return {
-        isValid: errors.length === 0,
-        errors,
-        sanitizedValue,
-      };
-    } catch (error) {
-      const appError = errorHandler.createError(
-        (error as Error).message,
-        'VALIDATION_ERROR',
-        400,
-        {
-          component: 'InputValidator',
-          inputValue: inputValue.substring(0, 100), // Truncate for logging
-          rules: validationRules,
+        // Required validation
+        if (validationRules.required && (!sanitizedValue || sanitizedValue.trim().length === 0)) {
+          errors.push('This field is required');
         }
-      );
 
-      errorHandler.handleError(appError);
+        // Length validations
+        if (
+          sanitizedValue &&
+          validationRules.minLength &&
+          sanitizedValue.length < validationRules.minLength
+        ) {
+          errors.push(`Must be at least ${validationRules.minLength} characters long`);
+        }
 
-      return {
-        isValid: false,
-        errors: ['Validation error occurred'],
-        sanitizedValue: inputValue,
-      };
-    }
-  }, []);
+        if (
+          sanitizedValue &&
+          validationRules.maxLength &&
+          sanitizedValue.length > validationRules.maxLength
+        ) {
+          errors.push(`Must be no more than ${validationRules.maxLength} characters long`);
+        }
+
+        // Pattern validation
+        if (
+          sanitizedValue &&
+          validationRules.pattern &&
+          !validationRules.pattern.test(sanitizedValue)
+        ) {
+          errors.push('Invalid format');
+        }
+
+        // Custom validation
+        if (sanitizedValue && validationRules.custom) {
+          const customResult = validationRules.custom(sanitizedValue);
+          if (customResult !== true) {
+            errors.push(typeof customResult === 'string' ? customResult : 'Invalid value');
+          }
+        }
+
+        return {
+          isValid: errors.length === 0,
+          errors,
+          sanitizedValue,
+        };
+      } catch (error) {
+        const appError = errorHandler.createError(
+          (error as Error).message,
+          'VALIDATION_ERROR',
+          400,
+          {
+            component: 'InputValidator',
+            inputValue: inputValue.substring(0, 100), // Truncate for logging
+            rules: validationRules,
+          }
+        );
+
+        errorHandler.handleError(appError);
+
+        return {
+          isValid: false,
+          errors: ['Validation error occurred'],
+          sanitizedValue: inputValue,
+        };
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const newValidationState = validateInput(value, rules);
@@ -121,7 +136,7 @@ export default function InputValidator({
   }, [value, rules, validateInput, onValidationChange]);
 
   // Clone children and add validation props
-  const enhancedChildren = React.Children.map(children, (child) => {
+  const enhancedChildren = React.Children.map(children, child => {
     if (React.isValidElement(child)) {
       const props = Object.assign({}, child.props, {
         'data-valid': validationState.isValid,
@@ -137,7 +152,7 @@ export default function InputValidator({
     <div className={`input-validator ${className}`}>
       {enhancedChildren}
       {showErrors && validationState.errors.length > 0 && (
-        <div className="validation-errors">
+        <div className='validation-errors'>
           {validationState.errors.map((error, index) => (
             <div key={index} className={errorClassName}>
               {error}
@@ -177,12 +192,12 @@ export const commonValidationRules = {
       const hasLowerCase = /[a-z]/.test(value);
       const hasNumbers = /\d/.test(value);
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-      
+
       if (!hasUpperCase) return 'Password must contain at least one uppercase letter';
       if (!hasLowerCase) return 'Password must contain at least one lowercase letter';
       if (!hasNumbers) return 'Password must contain at least one number';
       if (!hasSpecialChar) return 'Password must contain at least one special character';
-      
+
       return true;
     },
   },

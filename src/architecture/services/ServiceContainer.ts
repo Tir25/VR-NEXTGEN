@@ -20,10 +20,7 @@ export class ServiceContainer {
   /**
    * Register a service
    */
-  register<T>(
-    name: string,
-    definition: ServiceDefinition<T>
-  ): this {
+  register<T>(name: string, definition: ServiceDefinition<T>): this {
     if (this.services.has(name)) {
       // Service already registered
       return this;
@@ -31,9 +28,7 @@ export class ServiceContainer {
 
     // Validate dependencies
     if (definition.dependencies) {
-      const missingDeps = definition.dependencies.filter(
-        dep => !this.services.has(dep)
-      );
+      const missingDeps = definition.dependencies.filter(dep => !this.services.has(dep));
       if (missingDeps.length > 0) {
         // Service has missing dependencies
         return this;
@@ -91,9 +86,7 @@ export class ServiceContainer {
     // Check for circular dependencies
     if (this.circularDependencyCheck.has(name)) {
       const cycle = Array.from(this.circularDependencyCheck).join(' -> ');
-      throw new Error(
-        `Circular dependency detected: ${cycle} -> ${name}`
-      );
+      throw new Error(`Circular dependency detected: ${cycle} -> ${name}`);
     }
 
     this.circularDependencyCheck.add(name);

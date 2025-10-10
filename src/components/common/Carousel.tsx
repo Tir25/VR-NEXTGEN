@@ -50,7 +50,7 @@ const DEFAULT_CONFIG = {
   animationDuration: 500,
   enableKeyboard: true,
   enableDrag: true,
-  enableAutoRotate: false
+  enableAutoRotate: false,
 };
 
 export default function Carousel({
@@ -59,18 +59,18 @@ export default function Carousel({
   onIndexChange,
   config = {},
   className = '',
-  children
+  children,
 }: CarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const autoRotateRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
-  
+
   const [state, setState] = useState<CarouselState>({
     isDragging: false,
     startX: 0,
     isRotating: false,
-    dragOffset: 0
+    dragOffset: 0,
   });
 
   const totalItems = items.length;
@@ -78,11 +78,11 @@ export default function Carousel({
   // Navigation functions
   const nextItem = useCallback(() => {
     if (state.isRotating) return;
-    
+
     setState(prev => ({ ...prev, isRotating: true }));
     const newIndex = (activeIndex + 1) % totalItems;
     onIndexChange(newIndex);
-    
+
     setTimeout(() => {
       setState(prev => ({ ...prev, isRotating: false }));
     }, finalConfig.animationDuration);
@@ -90,11 +90,11 @@ export default function Carousel({
 
   const prevItem = useCallback(() => {
     if (state.isRotating) return;
-    
+
     setState(prev => ({ ...prev, isRotating: true }));
     const newIndex = activeIndex === 0 ? totalItems - 1 : activeIndex - 1;
     onIndexChange(newIndex);
-    
+
     setTimeout(() => {
       setState(prev => ({ ...prev, isRotating: false }));
     }, finalConfig.animationDuration);
@@ -122,51 +122,66 @@ export default function Carousel({
     startAutoRotate();
 
     return stopAutoRotate;
-  }, [finalConfig.enableAutoRotate, finalConfig.autoRotate, state.isDragging, state.isRotating, nextItem]);
+  }, [
+    finalConfig.enableAutoRotate,
+    finalConfig.autoRotate,
+    state.isDragging,
+    state.isRotating,
+    nextItem,
+  ]);
 
   // Drag handlers
-  const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!finalConfig.enableDrag || state.isRotating) return;
-    
-    e.preventDefault();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    
-    setState(prev => ({
-      ...prev,
-      isDragging: true,
-      startX: clientX,
-      dragOffset: 0
-    }));
-  }, [finalConfig.enableDrag, state.isRotating]);
+  const handleDragStart = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      if (!finalConfig.enableDrag || state.isRotating) return;
 
-  const handleDrag = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!state.isDragging || state.isRotating) return;
-    
-    e.preventDefault();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const dragOffset = (clientX - state.startX) * finalConfig.rotationSpeed;
-    
-    setState(prev => ({ ...prev, dragOffset }));
-  }, [state.isDragging, state.isRotating, state.startX, finalConfig.rotationSpeed]);
+      e.preventDefault();
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
 
-  const handleDragEnd = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!state.isDragging) return;
-    
-    setState(prev => ({ ...prev, isDragging: false }));
-    
-    const clientX = 'changedTouches' in e ? e.changedTouches[0].clientX : e.clientX;
-    const diffX = clientX - state.startX;
-    
-    if (Math.abs(diffX) > finalConfig.swipeThreshold) {
-      if (diffX > 0) {
-        prevItem();
+      setState(prev => ({
+        ...prev,
+        isDragging: true,
+        startX: clientX,
+        dragOffset: 0,
+      }));
+    },
+    [finalConfig.enableDrag, state.isRotating]
+  );
+
+  const handleDrag = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      if (!state.isDragging || state.isRotating) return;
+
+      e.preventDefault();
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const dragOffset = (clientX - state.startX) * finalConfig.rotationSpeed;
+
+      setState(prev => ({ ...prev, dragOffset }));
+    },
+    [state.isDragging, state.isRotating, state.startX, finalConfig.rotationSpeed]
+  );
+
+  const handleDragEnd = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      if (!state.isDragging) return;
+
+      setState(prev => ({ ...prev, isDragging: false }));
+
+      const clientX = 'changedTouches' in e ? e.changedTouches[0].clientX : e.clientX;
+      const diffX = clientX - state.startX;
+
+      if (Math.abs(diffX) > finalConfig.swipeThreshold) {
+        if (diffX > 0) {
+          prevItem();
+        } else {
+          nextItem();
+        }
       } else {
-        nextItem();
+        setState(prev => ({ ...prev, dragOffset: 0 }));
       }
-    } else {
-      setState(prev => ({ ...prev, dragOffset: 0 }));
-    }
-  }, [state.isDragging, state.startX, finalConfig.swipeThreshold, prevItem, nextItem]);
+    },
+    [state.isDragging, state.startX, finalConfig.swipeThreshold, prevItem, nextItem]
+  );
 
   // Keyboard navigation
   useEffect(() => {
@@ -174,7 +189,7 @@ export default function Carousel({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (state.isRotating) return;
-      
+
       switch (e.key) {
         case 'ArrowLeft':
           e.preventDefault();
@@ -210,7 +225,9 @@ export default function Carousel({
           style={{
             transform: `translateX(${(index - activeIndex) * 100}%)`,
             opacity: isActive ? 1 : 0.7,
-            transition: state.isDragging ? 'none' : `all ${finalConfig.animationDuration}ms ease-out`
+            transition: state.isDragging
+              ? 'none'
+              : `all ${finalConfig.animationDuration}ms ease-out`,
           }}
         >
           {children(item, index, isActive)}
@@ -232,7 +249,7 @@ export default function Carousel({
       onTouchEnd={handleDragEnd}
       style={{
         transform: state.isDragging ? `translateX(${state.dragOffset}px)` : 'none',
-        transition: state.isDragging ? 'none' : 'transform 0.1s ease-out'
+        transition: state.isDragging ? 'none' : 'transform 0.1s ease-out',
       }}
     >
       {renderItems()}
@@ -256,33 +273,33 @@ export function CarouselControls({
   isRotating,
   currentIndex,
   totalItems,
-  className = ''
+  className = '',
 }: CarouselControlsProps) {
   return (
     <div className={`carousel-controls ${className}`}>
       <button
         onClick={onPrev}
         disabled={isRotating}
-        className="control-btn prev-btn"
-        aria-label="Previous item"
+        className='control-btn prev-btn'
+        aria-label='Previous item'
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
         </svg>
       </button>
-      
-      <span className="carousel-indicator">
+
+      <span className='carousel-indicator'>
         {currentIndex + 1} / {totalItems}
       </span>
-      
+
       <button
         onClick={onNext}
         disabled={isRotating}
-        className="control-btn next-btn"
-        aria-label="Next item"
+        className='control-btn next-btn'
+        aria-label='Next item'
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
         </svg>
       </button>
     </div>

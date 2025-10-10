@@ -31,36 +31,23 @@ export const messageSchema = z
   .min(10, 'Message must be at least 10 characters')
   .max(2000, 'Message is too long');
 
-export const urlSchema = z
-  .string()
-  .url('Please enter a valid URL')
-  .max(2048, 'URL is too long');
+export const urlSchema = z.string().url('Please enter a valid URL').max(2048, 'URL is too long');
 
 // Contact form schema
 export const contactFormSchema = z.object({
   name: nameSchema,
   email: emailSchema,
   phone: phoneSchema.optional(),
-  company: z
-    .string()
-    .max(100, 'Company name is too long')
-    .optional(),
-  subject: z
-    .string()
-    .min(1, 'Subject is required')
-    .max(200, 'Subject is too long'),
+  company: z.string().max(100, 'Company name is too long').optional(),
+  subject: z.string().min(1, 'Subject is required').max(200, 'Subject is too long'),
   message: messageSchema,
-  consent: z
-    .boolean()
-    .refine(val => val === true, 'You must agree to the privacy policy'),
+  consent: z.boolean().refine(val => val === true, 'You must agree to the privacy policy'),
 });
 
 // Newsletter subscription schema
 export const newsletterSchema = z.object({
   email: emailSchema,
-  consent: z
-    .boolean()
-    .refine(val => val === true, 'You must agree to receive newsletters'),
+  consent: z.boolean().refine(val => val === true, 'You must agree to receive newsletters'),
 });
 
 // User profile schema
@@ -69,24 +56,10 @@ export const userProfileSchema = z.object({
   lastName: nameSchema,
   email: emailSchema,
   phone: phoneSchema.optional(),
-  company: z
-    .string()
-    .max(100, 'Company name is too long')
-    .optional(),
-  jobTitle: z
-    .string()
-    .max(100, 'Job title is too long')
-    .optional(),
+  company: z.string().max(100, 'Company name is too long').optional(),
+  jobTitle: z.string().max(100, 'Job title is too long').optional(),
   industry: z
-    .enum([
-      'technology',
-      'healthcare',
-      'finance',
-      'manufacturing',
-      'retail',
-      'education',
-      'other'
-    ])
+    .enum(['technology', 'healthcare', 'finance', 'manufacturing', 'retail', 'education', 'other'])
     .optional(),
 });
 
@@ -119,10 +92,7 @@ export const fileUploadSchema = z.object({
       file => ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type),
       'File must be an image (JPEG, PNG, GIF, or WebP)'
     ),
-  description: z
-    .string()
-    .max(500, 'Description is too long')
-    .optional(),
+  description: z.string().max(500, 'Description is too long').optional(),
 });
 
 // Configuration validation schemas
@@ -156,7 +126,9 @@ export type ContactFormData = z.infer<typeof contactFormSchema>;
 export type NewsletterData = z.infer<typeof newsletterSchema>;
 export type UserProfileData = z.infer<typeof userProfileSchema>;
 export type ApiResponse<T = unknown> = z.infer<typeof apiResponseSchema> & { data?: T };
-export type PaginatedResponse<T = unknown> = z.infer<typeof paginatedResponseSchema> & { data: T[] };
+export type PaginatedResponse<T = unknown> = z.infer<typeof paginatedResponseSchema> & {
+  data: T[];
+};
 export type FileUploadData = z.infer<typeof fileUploadSchema>;
 export type AppConfig = z.infer<typeof appConfigSchema>;
 export type EnvConfig = z.infer<typeof envSchema>;
@@ -209,23 +181,25 @@ export const createCustomValidator = <T>(
   schema: z.ZodSchema<T>,
   customRules: Array<(data: T) => string | null>
 ) => {
-  return z.custom<T>((data) => {
+  return z.custom<T>(data => {
     const result = schema.safeParse(data);
     if (!result.success) {
       throw new z.ZodError(result.error.issues);
     }
-    
+
     for (const rule of customRules) {
       const error = rule(result.data);
       if (error) {
-        throw new z.ZodError([{
-          code: 'custom',
-          message: error,
-          path: [],
-        }]);
+        throw new z.ZodError([
+          {
+            code: 'custom',
+            message: error,
+            path: [],
+          },
+        ]);
       }
     }
-    
+
     return result.data;
   });
 };

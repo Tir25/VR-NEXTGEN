@@ -40,7 +40,7 @@ export function sanitizeHtml(html: string): string {
  */
 export function sanitizeInput(input: string): string {
   if (!input || typeof input !== 'string') return '';
-  
+
   return input
     .trim()
     .replace(/[<>]/g, '') // Remove angle brackets
@@ -55,11 +55,11 @@ export function sanitizeInput(input: string): string {
 export function sanitizeEmail(email: string): string {
   const sanitized = sanitizeInput(email);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+
   if (!emailRegex.test(sanitized)) {
     throw new Error('Invalid email format');
   }
-  
+
   return sanitized.toLowerCase();
 }
 
@@ -69,11 +69,11 @@ export function sanitizeEmail(email: string): string {
 export function sanitizePhone(phone: string): string {
   const sanitized = sanitizeInput(phone);
   const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,15}$/;
-  
+
   if (!phoneRegex.test(sanitized)) {
     throw new Error('Invalid phone number format');
   }
-  
+
   return sanitized;
 }
 
@@ -91,18 +91,18 @@ export function generateCSRFToken(): string {
  */
 export function validateCSRFToken(token: string, expectedToken: string): boolean {
   if (!token || !expectedToken) return false;
-  
+
   // Use timing-safe comparison to prevent timing attacks
   const tokenBuffer = Buffer.from(token, 'hex');
   const expectedBuffer = Buffer.from(expectedToken, 'hex');
-  
+
   if (tokenBuffer.length !== expectedBuffer.length) return false;
-  
+
   let result = 0;
   for (let i = 0; i < tokenBuffer.length; i++) {
     result |= tokenBuffer[i] ^ expectedBuffer[i];
   }
-  
+
   return result === 0;
 }
 
@@ -111,39 +111,35 @@ export function validateCSRFToken(token: string, expectedToken: string): boolean
  */
 export class RateLimiter {
   private requests: Map<string, number[]> = new Map();
-  
+
   constructor(
     private maxRequests: number = 10,
     private windowMs: number = 60000 // 1 minute
   ) {}
-  
+
   isAllowed(identifier: string): boolean {
     const now = Date.now();
     const userRequests = this.requests.get(identifier) || [];
-    
+
     // Remove old requests outside the window
-    const validRequests = userRequests.filter(
-      timestamp => now - timestamp < this.windowMs
-    );
-    
+    const validRequests = userRequests.filter(timestamp => now - timestamp < this.windowMs);
+
     if (validRequests.length >= this.maxRequests) {
       return false;
     }
-    
+
     // Add current request
     validRequests.push(now);
     this.requests.set(identifier, validRequests);
-    
+
     return true;
   }
-  
+
   getRemainingRequests(identifier: string): number {
     const now = Date.now();
     const userRequests = this.requests.get(identifier) || [];
-    const validRequests = userRequests.filter(
-      timestamp => now - timestamp < this.windowMs
-    );
-    
+    const validRequests = userRequests.filter(timestamp => now - timestamp < this.windowMs);
+
     return Math.max(0, this.maxRequests - validRequests.length);
   }
 }
@@ -174,7 +170,7 @@ export const CSP_PRODUCTION = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  "upgrade-insecure-requests",
+  'upgrade-insecure-requests',
 ].join('; ');
 
 /**
@@ -183,14 +179,14 @@ export const CSP_PRODUCTION = [
 export function validateFileUpload(file: File): { valid: boolean; error?: string } {
   const maxSize = 5 * 1024 * 1024; // 5MB
   const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-  
+
   if (file.size > maxSize) {
     return { valid: false, error: 'File size too large. Maximum 5MB allowed.' };
   }
-  
+
   if (!allowedTypes.includes(file.type)) {
     return { valid: false, error: 'Invalid file type. Only images are allowed.' };
   }
-  
+
   return { valid: true };
 }

@@ -13,19 +13,19 @@ export const colors = {
   goldDarker: '#8e793e',
   deepCharcoal: '#231F20',
   lightGrey: '#eaeaea',
-  
+
   // Section-Specific Colors
   gloryWhite: '#E6E6E6',
   sandYellow: '#FFBB01',
   grayNightBlack: '#1A1A1A',
-  
+
   // Semantic Colors
   background: '#000000',
   foreground: '#ffffff',
   accent: '#ffd700',
   textSecondary: '#231F20',
   borderLight: '#eaeaea',
-  
+
   // Section Backgrounds
   sectionBg: {
     hero: '#000000',
@@ -33,14 +33,14 @@ export const colors = {
     whyChoose: '#1A1A1A',
     clients: '#E6E6E6',
   },
-  
+
   // Section Text Colors
   sectionText: {
     hero: '#ffffff',
     services: '#000000',
     whyChoose: '#ffffff',
     clients: '#000000',
-  }
+  },
 } as const;
 
 // Typography
@@ -50,15 +50,15 @@ export const typography = {
     mono: 'var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace)',
   },
   fontSize: {
-    xs: '0.75rem',    // 12px
-    sm: '0.875rem',   // 14px
-    base: '1rem',     // 16px
-    lg: '1.125rem',   // 18px
-    xl: '1.25rem',    // 20px
-    '2xl': '1.5rem',  // 24px
+    xs: '0.75rem', // 12px
+    sm: '0.875rem', // 14px
+    base: '1rem', // 16px
+    lg: '1.125rem', // 18px
+    xl: '1.25rem', // 20px
+    '2xl': '1.5rem', // 24px
     '3xl': '1.875rem', // 30px
     '4xl': '2.25rem', // 36px
-    '5xl': '3rem',    // 48px
+    '5xl': '3rem', // 48px
   },
   fontWeight: {
     normal: '400',
@@ -71,26 +71,26 @@ export const typography = {
     tight: '1.25',
     normal: '1.5',
     relaxed: '1.75',
-  }
+  },
 } as const;
 
 // Spacing
 export const spacing = {
   px: '1px',
   0: '0',
-  1: '0.25rem',   // 4px
-  2: '0.5rem',    // 8px
-  3: '0.75rem',   // 12px
-  4: '1rem',      // 16px
-  5: '1.25rem',   // 20px
-  6: '1.5rem',    // 24px
-  8: '2rem',      // 32px
-  10: '2.5rem',   // 40px
-  12: '3rem',     // 48px
-  16: '4rem',     // 64px
-  20: '5rem',     // 80px
-  24: '6rem',     // 96px
-  32: '8rem',     // 128px
+  1: '0.25rem', // 4px
+  2: '0.5rem', // 8px
+  3: '0.75rem', // 12px
+  4: '1rem', // 16px
+  5: '1.25rem', // 20px
+  6: '1.5rem', // 24px
+  8: '2rem', // 32px
+  10: '2.5rem', // 40px
+  12: '3rem', // 48px
+  16: '4rem', // 64px
+  20: '5rem', // 80px
+  24: '6rem', // 96px
+  32: '8rem', // 128px
 } as const;
 
 // Breakpoints
@@ -106,12 +106,12 @@ export const breakpoints = {
 // Border Radius
 export const borderRadius = {
   none: '0',
-  sm: '0.125rem',   // 2px
-  base: '0.25rem',  // 4px
-  md: '0.375rem',   // 6px
-  lg: '0.5rem',     // 8px
-  xl: '0.75rem',    // 12px
-  '2xl': '1rem',    // 16px
+  sm: '0.125rem', // 2px
+  base: '0.25rem', // 4px
+  md: '0.375rem', // 6px
+  lg: '0.5rem', // 8px
+  xl: '0.75rem', // 12px
+  '2xl': '1rem', // 16px
   full: '9999px',
 } as const;
 
@@ -161,7 +161,7 @@ export const buttonVariants = {
     hover: {
       bg: `${colors.gold}90`,
       scale: '1.02',
-    }
+    },
   },
   secondary: {
     bg: `${colors.white}10`,
@@ -170,7 +170,7 @@ export const buttonVariants = {
     hover: {
       bg: `${colors.white}20`,
       border: colors.gold,
-    }
+    },
   },
   outline: {
     border: colors.gold,
@@ -178,32 +178,32 @@ export const buttonVariants = {
     hover: {
       bg: colors.gold,
       color: colors.black,
-    }
-  }
+    },
+  },
 } as const;
 
 // Animation Keyframes
 export const animations = {
   fadeIn: {
     from: { opacity: 0 },
-    to: { opacity: 1 }
+    to: { opacity: 1 },
   },
   slideUp: {
     from: { transform: 'translateY(20px)', opacity: 0 },
-    to: { transform: 'translateY(0)', opacity: 1 }
+    to: { transform: 'translateY(0)', opacity: 1 },
   },
   slideDown: {
     from: { transform: 'translateY(-20px)', opacity: 0 },
-    to: { transform: 'translateY(0)', opacity: 1 }
+    to: { transform: 'translateY(0)', opacity: 1 },
   },
   scaleIn: {
     from: { transform: 'scale(0.95)', opacity: 0 },
-    to: { transform: 'scale(1)', opacity: 1 }
+    to: { transform: 'scale(1)', opacity: 1 },
   },
   glow: {
     '0%, 100%': { boxShadow: shadows.gold },
-    '50%': { boxShadow: shadows.goldStrong }
-  }
+    '50%': { boxShadow: shadows.goldStrong },
+  },
 } as const;
 
 // Export all tokens as a single object for easy access

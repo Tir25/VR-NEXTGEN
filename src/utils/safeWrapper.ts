@@ -12,10 +12,7 @@ export interface SafeResult<T> {
 /**
  * Safely execute a function
  */
-export function safeExecute<T>(
-  fn: () => T,
-  fallback?: T
-): SafeResult<T> {
+export function safeExecute<T>(fn: () => T, fallback?: T): SafeResult<T> {
   try {
     const data = fn();
     return { success: true, data };
@@ -42,22 +39,18 @@ export async function safeExecuteAsync<T>(
 /**
  * Safely access object properties
  */
-export function safeGet<T>(
-  obj: any,
-  path: string,
-  fallback?: T
-): T | undefined {
+export function safeGet<T>(obj: any, path: string, fallback?: T): T | undefined {
   try {
     const keys = path.split('.');
     let result = obj;
-    
+
     for (const key of keys) {
       if (result == null) {
         return fallback;
       }
       result = result[key];
     }
-    
+
     return result;
   } catch (error) {
     return fallback;
@@ -67,15 +60,11 @@ export function safeGet<T>(
 /**
  * Safely set object properties
  */
-export function safeSet<T>(
-  obj: any,
-  path: string,
-  value: T
-): boolean {
+export function safeSet<T>(obj: any, path: string, value: T): boolean {
   try {
     const keys = path.split('.');
     let current = obj;
-    
+
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
       if (!(key in current) || typeof current[key] !== 'object') {
@@ -83,7 +72,7 @@ export function safeSet<T>(
       }
       current = current[key];
     }
-    
+
     current[keys[keys.length - 1]] = value;
     return true;
   } catch (error) {
@@ -94,10 +83,7 @@ export function safeSet<T>(
 /**
  * Safely parse JSON
  */
-export function safeParseJSON<T>(
-  json: string,
-  fallback?: T
-): SafeResult<T> {
+export function safeParseJSON<T>(json: string, fallback?: T): SafeResult<T> {
   try {
     const data = JSON.parse(json);
     return { success: true, data };
@@ -109,10 +95,7 @@ export function safeParseJSON<T>(
 /**
  * Safely stringify JSON
  */
-export function safeStringifyJSON(
-  obj: any,
-  fallback = '{}'
-): SafeResult<string> {
+export function safeStringifyJSON(obj: any, fallback = '{}'): SafeResult<string> {
   try {
     const data = JSON.stringify(obj);
     return { success: true, data };

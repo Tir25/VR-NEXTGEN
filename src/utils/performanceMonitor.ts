@@ -36,7 +36,7 @@ class PerformanceMonitor {
       warningThreshold: 45, // Warning below 45fps
       criticalThreshold: 30, // Critical below 30fps
       enableMemoryMonitoring: false, // Disabled by default for privacy
-      ...config
+      ...config,
     };
   }
 
@@ -45,7 +45,7 @@ class PerformanceMonitor {
    */
   start(): void {
     if (this.isMonitoring) return;
-    
+
     this.isMonitoring = true;
     this.lastTime = performance.now();
     this.monitor();
@@ -83,13 +83,13 @@ class PerformanceMonitor {
 
     const currentTime = performance.now();
     const deltaTime = currentTime - this.lastTime;
-    
+
     this.frameCount++;
-    
+
     // Calculate FPS every frame
     const fps = deltaTime > 0 ? 1000 / deltaTime : 0;
     this.fpsHistory.push(fps);
-    
+
     // Keep only recent samples
     if (this.fpsHistory.length > this.config.sampleSize) {
       this.fpsHistory.shift();
@@ -97,7 +97,7 @@ class PerformanceMonitor {
 
     // Calculate average FPS
     const averageFps = this.fpsHistory.reduce((sum, f) => sum + f, 0) / this.fpsHistory.length;
-    
+
     // Collect performance metrics
     const metrics: PerformanceMetrics = {
       fps: Math.round(averageFps * 100) / 100,
@@ -133,7 +133,7 @@ class PerformanceMonitor {
   private measureScrollPerformance(): number {
     // Simple scroll performance metric based on frame consistency
     const frameTimeVariance = this.calculateVariance(this.fpsHistory);
-    return Math.max(0, 100 - (frameTimeVariance * 10)); // Convert to 0-100 scale
+    return Math.max(0, 100 - frameTimeVariance * 10); // Convert to 0-100 scale
   }
 
   /**
@@ -150,7 +150,7 @@ class PerformanceMonitor {
    */
   private calculateVariance(values: number[]): number {
     if (values.length === 0) return 0;
-    
+
     const mean = values.reduce((sum, val) => sum + val, 0) / values.length;
     const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
     return Math.sqrt(variance);
@@ -161,9 +161,13 @@ class PerformanceMonitor {
    */
   private checkPerformanceIssues(metrics: PerformanceMetrics): void {
     if (metrics.fps < this.config.criticalThreshold) {
-      console.warn(`Critical performance issue: ${metrics.fps.toFixed(1)}fps (below ${this.config.criticalThreshold}fps)`);
+      console.warn(
+        `Critical performance issue: ${metrics.fps.toFixed(1)}fps (below ${this.config.criticalThreshold}fps)`
+      );
     } else if (metrics.fps < this.config.warningThreshold) {
-      console.warn(`Performance warning: ${metrics.fps.toFixed(1)}fps (below ${this.config.warningThreshold}fps)`);
+      console.warn(
+        `Performance warning: ${metrics.fps.toFixed(1)}fps (below ${this.config.warningThreshold}fps)`
+      );
     }
   }
 
@@ -171,9 +175,10 @@ class PerformanceMonitor {
    * Get current performance metrics
    */
   getMetrics(): PerformanceMetrics {
-    const averageFps = this.fpsHistory.length > 0 
-      ? this.fpsHistory.reduce((sum, f) => sum + f, 0) / this.fpsHistory.length 
-      : 0;
+    const averageFps =
+      this.fpsHistory.length > 0
+        ? this.fpsHistory.reduce((sum, f) => sum + f, 0) / this.fpsHistory.length
+        : 0;
 
     return {
       fps: Math.round(averageFps * 100) / 100,
@@ -203,12 +208,14 @@ export function usePerformanceMonitor(
   onMetrics?: (metrics: PerformanceMetrics) => void,
   autoStart: boolean = false
 ) {
-  const [metrics, setMetrics] = React.useState<PerformanceMetrics>(() => performanceMonitor.getMetrics());
+  const [metrics, setMetrics] = React.useState<PerformanceMetrics>(() =>
+    performanceMonitor.getMetrics()
+  );
 
   React.useEffect(() => {
     if (!onMetrics && !autoStart) return;
 
-    const unsubscribe = performanceMonitor.addObserver((newMetrics) => {
+    const unsubscribe = performanceMonitor.addObserver(newMetrics => {
       setMetrics(newMetrics);
       onMetrics?.(newMetrics);
     });
@@ -254,7 +261,7 @@ export function optimizeAnimation(
   element.style.transform = 'translateZ(0)';
   element.style.backfaceVisibility = 'hidden';
   element.style.perspective = '1000px';
-  
+
   // Set will-change for animated properties
   element.style.willChange = properties.join(', ');
 }

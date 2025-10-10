@@ -56,7 +56,7 @@ export class FeatureName {
   private initialize() {
     // Register services
     serviceContainer.singleton('featureNameService', () => new FeatureNameService());
-    
+
     // Subscribe to events
     eventBus.on('app:initialized', this.handleAppInitialized.bind(this));
   }

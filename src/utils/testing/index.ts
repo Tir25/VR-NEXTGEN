@@ -4,10 +4,10 @@
  */
 
 export * from './setup';
-export { 
+export {
   // renderWithProviders, // Commented out - requires @testing-library/react
-  testUtils, 
-  testData, 
+  testUtils,
+  testData,
   // testHelpers, // Commented out - requires jest
   // setupTests, // Commented out - requires jest
   // cleanupTests // Commented out - requires jest

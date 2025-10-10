@@ -20,7 +20,7 @@ export interface SectionProps {
 
 const paddingClasses = {
   sm: 'py-8 md:py-12',
-  md: 'py-12 md:py-16', 
+  md: 'py-12 md:py-16',
   lg: 'py-16 md:py-20',
   xl: 'py-16 md:py-24',
 };
@@ -58,21 +58,21 @@ export default function Section({
 
 // Convenience components for common section types
 export const HeroSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="hero" padding="xl" />
+  <Section {...props} background='hero' padding='xl' />
 );
 
 export const ServicesSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="services" padding="lg" />
+  <Section {...props} background='services' padding='lg' />
 );
 
 export const IndustriesSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="industries" padding="lg" />
+  <Section {...props} background='industries' padding='lg' />
 );
 
 export const WhyChooseSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="why-choose" padding="lg" />
+  <Section {...props} background='why-choose' padding='lg' />
 );
 
 export const ClientsSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="clients" padding="lg" />
+  <Section {...props} background='clients' padding='lg' />
 );

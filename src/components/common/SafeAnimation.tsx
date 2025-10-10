@@ -50,26 +50,24 @@ export default function SafeAnimation({
   const [isAnimating, setIsAnimating] = useState(false);
   // const animationRef = useRef<HTMLDivElement>(null);
 
-  const handleAnimationError = useCallback((error: Error) => {
-    const appError = errorHandler.createError(
-      error.message,
-      'ANIMATION_ERROR',
-      500,
-      {
+  const handleAnimationError = useCallback(
+    (error: Error) => {
+      const appError = errorHandler.createError(error.message, 'ANIMATION_ERROR', 500, {
         component: 'SafeAnimation',
         animation,
         delay,
         threshold,
+      });
+
+      errorHandler.handleError(appError);
+      setHasError(true);
+
+      if (onError) {
+        onError(appError);
       }
-    );
-
-    errorHandler.handleError(appError);
-    setHasError(true);
-
-    if (onError) {
-      onError(appError);
-    }
-  }, [animation, delay, threshold, onError]);
+    },
+    [animation, delay, threshold, onError]
+  );
 
   useEffect(() => {
     // Check if animations are supported
@@ -77,11 +75,15 @@ export default function SafeAnimation({
       try {
         const testEl = document.createElement('div');
         const style = testEl.style;
-        
+
         // Check for CSS animations and transforms support
-        const supportsAnimations = !!(style.animation !== undefined || style.webkitAnimation !== undefined);
-        const supportsTransforms = !!(style.transform !== undefined || style.webkitTransform !== undefined);
-        
+        const supportsAnimations = !!(
+          style.animation !== undefined || style.webkitAnimation !== undefined
+        );
+        const supportsTransforms = !!(
+          style.transform !== undefined || style.webkitTransform !== undefined
+        );
+
         return supportsAnimations && supportsTransforms;
       } catch (error) {
         handleAnimationError(error as Error);
@@ -90,7 +92,7 @@ export default function SafeAnimation({
     };
 
     const animationSupported = checkAnimationSupport();
-    
+
     if (!animationSupported && requireAnimations) {
       if (fallbackToStatic) {
         // Provide static fallback without animations
@@ -128,10 +130,8 @@ export default function SafeAnimation({
 
     return (
       <div className={`safe-animation-error ${className}`}>
-        <div className="text-center p-4 bg-gray-50 border border-gray-200 rounded-lg">
-          <p className="text-sm text-gray-600">
-            Animation unavailable - showing static content
-          </p>
+        <div className='text-center p-4 bg-gray-50 border border-gray-200 rounded-lg'>
+          <p className='text-sm text-gray-600'>Animation unavailable - showing static content</p>
           {children}
         </div>
       </div>
@@ -174,7 +174,9 @@ export default function SafeAnimation({
             <div className={className} style={style}>
               {children}
             </div>
-          ) : fallback
+          ) : (
+            fallback
+          )
         }
       >
         {AnimationContent}
@@ -187,19 +189,19 @@ export default function SafeAnimation({
 
 // Convenience components for specific animation types
 export const SafeFadeIn = (props: Omit<SafeAnimationProps, 'animation'>) => (
-  <SafeAnimation {...props} animation="fadeIn" />
+  <SafeAnimation {...props} animation='fadeIn' />
 );
 
 export const SafeSlideUp = (props: Omit<SafeAnimationProps, 'animation'>) => (
-  <SafeAnimation {...props} animation="slideUp" />
+  <SafeAnimation {...props} animation='slideUp' />
 );
 
 export const SafeSlideDown = (props: Omit<SafeAnimationProps, 'animation'>) => (
-  <SafeAnimation {...props} animation="slideDown" />
+  <SafeAnimation {...props} animation='slideDown' />
 );
 
 export const SafeScaleIn = (props: Omit<SafeAnimationProps, 'animation'>) => (
-  <SafeAnimation {...props} animation="scaleIn" />
+  <SafeAnimation {...props} animation='scaleIn' />
 );
 
 // Component for animations that should always fallback to static

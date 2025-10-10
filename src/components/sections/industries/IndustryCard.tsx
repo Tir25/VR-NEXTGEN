@@ -20,7 +20,7 @@ export default function IndustryCard({ industry, isActive, index = 0 }: Industry
     hasBackgroundImage,
     getBackgroundImagePath,
     textScaling,
-    responsivePadding
+    responsivePadding,
   } = useIndustryCard({ industry, isActive });
 
   return (
@@ -41,7 +41,7 @@ export default function IndustryCard({ industry, isActive, index = 0 }: Industry
         responsivePadding={responsivePadding}
         onLearnMore={handleLearnMore}
       />
-      
+
       <IndustryCardBack
         industry={industry}
         isFlipped={isFlipped}

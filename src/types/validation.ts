@@ -84,7 +84,10 @@ export interface UseValidationReturn<T = any> {
 }
 
 // Validation utility types
-export type ValidationFunction<T = any> = (value: T, context?: ValidationContext) => ValidationResult | Promise<ValidationResult>;
+export type ValidationFunction<T = any> = (
+  value: T,
+  context?: ValidationContext
+) => ValidationResult | Promise<ValidationResult>;
 
 export interface ValidationUtilities {
   required: ValidationFunction;

@@ -85,23 +85,24 @@ export default function AnimationWrapper({
 
 // Convenience components for common animation patterns
 export const FadeInWrapper = (props: Omit<AnimationWrapperProps, 'animation'>) => (
-  <AnimationWrapper {...props} animation="fadeIn" />
+  <AnimationWrapper {...props} animation='fadeIn' />
 );
 
 export const SlideUpWrapper = (props: Omit<AnimationWrapperProps, 'animation'>) => (
-  <AnimationWrapper {...props} animation="slideUp" />
+  <AnimationWrapper {...props} animation='slideUp' />
 );
 
 export const SlideDownWrapper = (props: Omit<AnimationWrapperProps, 'animation'>) => (
-  <AnimationWrapper {...props} animation="slideDown" />
+  <AnimationWrapper {...props} animation='slideDown' />
 );
 
 export const ScaleInWrapper = (props: Omit<AnimationWrapperProps, 'animation'>) => (
-  <AnimationWrapper {...props} animation="scaleIn" />
+  <AnimationWrapper {...props} animation='scaleIn' />
 );
 
 // Staggered animation wrapper for lists
-export interface StaggeredWrapperProps extends Omit<AnimationWrapperProps, 'stagger' | 'staggerIndex' | 'children'> {
+export interface StaggeredWrapperProps
+  extends Omit<AnimationWrapperProps, 'stagger' | 'staggerIndex' | 'children'> {
   items: ReactNode[];
   staggerDelay?: number;
 }

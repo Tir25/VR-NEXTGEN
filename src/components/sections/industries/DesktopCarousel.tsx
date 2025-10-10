@@ -4,7 +4,13 @@
  */
 
 import React, { useRef, useState, useEffect, useCallback, memo } from 'react';
-import { IndustriesSection, Container, SectionHeader, SafeAnimationComponent, SafeWrapper } from '@/components/common';
+import {
+  IndustriesSection,
+  Container,
+  SectionHeader,
+  SafeAnimationComponent,
+  SafeWrapper,
+} from '@/components/common';
 import IndustriesControls from './IndustriesControls';
 import IndustryCard from './IndustryCard';
 import { INDUSTRIES, CAROUSEL_CONFIG, RESPONSIVE_RADIUS } from './constants';
@@ -30,10 +36,7 @@ function DesktopCarouselInner() {
   // Removed unused translateXOffsetPx variable
 
   // Additional responsive left bias using margin to visually nudge container
-  const marginLeftPx = getResponsiveValue(
-    { md: 0, lg: -80, xl: -60, '2xl': -80 },
-    0
-  );
+  const marginLeftPx = getResponsiveValue({ md: 0, lg: -80, xl: -60, '2xl': -80 }, 0);
 
   // Responsive radius calculation using centralized config
   useEffect(() => {
@@ -84,39 +87,43 @@ function DesktopCarouselInner() {
   }, []);
 
   // Rotate carousel with smooth animation
-  const rotateCarousel = useCallback((newTheta: number, animate: boolean = true) => {
-    if (!carouselRef.current || isRotating) return;
-    
-    setIsRotating(true);
-    
-    // Apply transitions to individual cards, not the container
-    const cardElements = carouselRef.current.children;
-    
-    if (animate) {
-      Array.from(cardElements).forEach((cardElement) => {
-        (cardElement as HTMLElement).style.transition = `${CAROUSEL_CONFIG.transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-      });
-    } else {
-      Array.from(cardElements).forEach((cardElement) => {
-        (cardElement as HTMLElement).style.transition = 'none';
-      });
-    }
-    
-    // Keep container centered via parent flex; do not mutate container transform
-    carouselRef.current.style.transform = '';
-    setTheta(newTheta);
+  const rotateCarousel = useCallback(
+    (newTheta: number, animate: boolean = true) => {
+      if (!carouselRef.current || isRotating) return;
 
-    const newIndex = computeActiveIndex(newTheta, totalCards);
-    setCurrentIndex(newIndex);
-    
-    if (animate) {
-      setTimeout(() => {
+      setIsRotating(true);
+
+      // Apply transitions to individual cards, not the container
+      const cardElements = carouselRef.current.children;
+
+      if (animate) {
+        Array.from(cardElements).forEach(cardElement => {
+          (cardElement as HTMLElement).style.transition =
+            `${CAROUSEL_CONFIG.transitionDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        });
+      } else {
+        Array.from(cardElements).forEach(cardElement => {
+          (cardElement as HTMLElement).style.transition = 'none';
+        });
+      }
+
+      // Keep container centered via parent flex; do not mutate container transform
+      carouselRef.current.style.transform = '';
+      setTheta(newTheta);
+
+      const newIndex = computeActiveIndex(newTheta, totalCards);
+      setCurrentIndex(newIndex);
+
+      if (animate) {
+        setTimeout(() => {
+          setIsRotating(false);
+        }, CAROUSEL_CONFIG.transitionDuration);
+      } else {
         setIsRotating(false);
-      }, CAROUSEL_CONFIG.transitionDuration);
-    } else {
-      setIsRotating(false);
-    }
-  }, [isRotating, totalCards, computeActiveIndex]);
+      }
+    },
+    [isRotating, totalCards, computeActiveIndex]
+  );
 
   // Navigation functions with proper snapping
   const nextCard = useCallback(() => {
@@ -134,24 +141,24 @@ function DesktopCarouselInner() {
   // Touch and mouse event handlers
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     if (isRotating) return;
-    
+
     // Check if the click is on a card element
     const target = e.target as HTMLElement;
     const cardElement = target.closest('[data-index]');
-    
+
     // If clicking on a card, don't start drag - let the card handle the click
     if (cardElement) {
       return;
     }
-    
+
     setIsDragging(true);
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     setStartX(clientX);
-    
+
     // Disable transitions during drag on individual cards
     if (carouselRef.current) {
       const cardElements = carouselRef.current.children;
-      Array.from(cardElements).forEach((cardElement) => {
+      Array.from(cardElements).forEach(cardElement => {
         (cardElement as HTMLElement).style.transition = 'none';
       });
     }
@@ -168,11 +175,11 @@ function DesktopCarouselInner() {
     if (carouselRef.current) {
       // Container remains flex-centered; do not mutate container transform
       carouselRef.current.style.transform = '';
-      
+
       // Update individual card positions
       const angle = CAROUSEL_CONSTANTS.FULL_CIRCLE / totalCards;
       const cardElements = carouselRef.current.children;
-      
+
       Array.from(cardElements).forEach((cardElement, index) => {
         const cardAngle = angle * index;
         (cardElement as HTMLElement).style.transform = `
@@ -212,7 +219,7 @@ function DesktopCarouselInner() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isRotating) return;
-      
+
       if (e.key === 'ArrowLeft') {
         prevCard();
       } else if (e.key === 'ArrowRight') {
@@ -226,43 +233,48 @@ function DesktopCarouselInner() {
   }, [isRotating, nextCard, prevCard]);
 
   return (
-    <IndustriesSection
-      id="industries"
-      ariaLabel="Industries We Serve"
-    >
+    <IndustriesSection id='industries' ariaLabel='Industries We Serve'>
       <Container>
         <SectionHeader
           badge={{
-            text: "Industries We Serve",
-            color: "purple"
+            text: 'Industries We Serve',
+            color: 'purple',
           }}
-          title="Industries We Transform"
-          description="Explore the diverse industries where our innovative solutions drive transformation and deliver measurable results."
-          titleColor="white"
-          descriptionColor="white"
+          title='Industries We Transform'
+          description='Explore the diverse industries where our innovative solutions drive transformation and deliver measurable results.'
+          titleColor='white'
+          descriptionColor='white'
           compact
         />
 
         {/* Context heading and description between section header and carousel (desktop) */}
-        <div className="mt-3 mb-1 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+        <div className='mt-3 mb-1 text-center'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-white'>
             See How We Turn Data into Decisions, Everywhere
           </h2>
-          <p className="mt-2 text-white/80 max-w-3xl mx-auto">
-            Explore how VR NextGen Solutions empowers businesses across industries through data-driven strategies, automation, and process excellence. Select your industry to see how we turn challenges into measurable growth.
+          <p className='mt-2 text-white/80 max-w-3xl mx-auto'>
+            Explore how VR NextGen Solutions empowers businesses across industries through
+            data-driven strategies, automation, and process excellence. Select your industry to see
+            how we turn challenges into measurable growth.
           </p>
         </div>
 
         {/* 3D Carousel Container */}
         <SafeWrapper isolate={true}>
           <SafeAnimationComponent
-            animation="slideUp"
-            className="relative w-full mx-auto flex items-center justify-center"
+            animation='slideUp'
+            className='relative w-full mx-auto flex items-center justify-center'
             requireAnimations={false}
             fallbackToStatic={true}
-            style={{ 
-              minHeight: getResponsiveValue(RESPONSIVE_CAROUSEL_CONFIG.containerHeights, RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg),
-              maxHeight: getResponsiveValue(RESPONSIVE_CAROUSEL_CONFIG.containerHeights, RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg),
+            style={{
+              minHeight: getResponsiveValue(
+                RESPONSIVE_CAROUSEL_CONFIG.containerHeights,
+                RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg
+              ),
+              maxHeight: getResponsiveValue(
+                RESPONSIVE_CAROUSEL_CONFIG.containerHeights,
+                RESPONSIVE_CAROUSEL_CONFIG.containerHeights.lg
+              ),
               marginTop: 'clamp(0.75rem, 1.5vh, 2rem)',
               marginBottom: 'clamp(0.25rem, 0.5vh, 0.5rem)',
               paddingTop: 'clamp(0.5rem, 1vh, 1.25rem)',
@@ -272,12 +284,12 @@ function DesktopCarouselInner() {
               paddingRight: typeof window !== 'undefined' && window.innerWidth <= 768 ? '7%' : '0',
               // Ensure stable positioning
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
             }}
           >
             <div
               ref={carouselRef}
-              className="relative select-none mx-auto flex items-center justify-center"
+              className='relative select-none mx-auto flex items-center justify-center'
               style={{
                 width: `${radius * 2}px`,
                 height: `${radius * 2}px`,
@@ -294,7 +306,7 @@ function DesktopCarouselInner() {
                 MozUserSelect: 'none',
                 msUserSelect: 'none',
                 userSelect: 'none',
-                WebkitTapHighlightColor: 'transparent'
+                WebkitTapHighlightColor: 'transparent',
               }}
               onMouseDown={handleDragStart}
               onTouchStart={handleDragStart}
@@ -305,9 +317,9 @@ function DesktopCarouselInner() {
               onTouchEnd={handleDragEnd}
             >
               {INDUSTRIES.map((industry, index) => (
-                <IndustryCard 
-                  key={industry.id} 
-                  industry={industry} 
+                <IndustryCard
+                  key={industry.id}
+                  industry={industry}
                   isActive={index === currentIndex}
                   index={index}
                 />
@@ -316,11 +328,7 @@ function DesktopCarouselInner() {
           </SafeAnimationComponent>
         </SafeWrapper>
 
-        <IndustriesControls
-          onNext={nextCard}
-          onPrev={prevCard}
-          isRotating={isRotating}
-        />
+        <IndustriesControls onNext={nextCard} onPrev={prevCard} isRotating={isRotating} />
       </Container>
     </IndustriesSection>
   );

@@ -11,7 +11,7 @@ export function useFeature() {
 
   useEffect(() => {
     // Subscribe to feature events
-    const subscription = eventBus.on('feature:action', (data) => {
+    const subscription = eventBus.on('feature:action', data => {
       setState(`action: ${data.title}`);
     });
 

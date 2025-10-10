@@ -1,62 +1,71 @@
-import Layout from "@/components/layout/Layout";
-import dynamic from "next/dynamic";
-import LazyWrapper from "@/components/common/LazyWrapper";
+import Layout from '@/components/layout/Layout';
+import dynamic from 'next/dynamic';
+import LazyWrapper from '@/components/common/LazyWrapper';
 
 // Critical above-the-fold content - load immediately
-const Hero = dynamic(() => import("@/components/sections/hero").then(mod => ({ default: mod.Hero })), { 
-  ssr: true,
-  loading: () => (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-pulse text-gold text-xl">Loading...</div>
-    </div>
-  )
-});
+const Hero = dynamic(
+  () => import('@/components/sections/hero').then(mod => ({ default: mod.Hero })),
+  {
+    ssr: true,
+    loading: () => (
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='animate-pulse text-gold text-xl'>Loading...</div>
+      </div>
+    ),
+  }
+);
 
 // Non-critical content - lazy load when in viewport
-const Services = dynamic(() => import("@/components/sections/services").then(mod => ({ default: mod.Services })), {
-  ssr: false,
-  loading: () => (
-    <div className="py-16 md:py-24">
-      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
-        <div className="text-gray-400 text-lg">Loading Services...</div>
+const Services = dynamic(
+  () => import('@/components/sections/services').then(mod => ({ default: mod.Services })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className='py-16 md:py-24'>
+        <div className='animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center'>
+          <div className='text-gray-400 text-lg'>Loading Services...</div>
+        </div>
       </div>
-    </div>
-  )
-});
+    ),
+  }
+);
 
-const Industries = dynamic(() => import("@/components/sections/industries").then(mod => ({ default: mod.Industries })), {
-  ssr: false,
-  loading: () => (
-    <div className="py-16 md:py-24">
-      <div className="animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center">
-        <div className="text-gray-400 text-lg">Loading Industries...</div>
+const Industries = dynamic(
+  () => import('@/components/sections/industries').then(mod => ({ default: mod.Industries })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className='py-16 md:py-24'>
+        <div className='animate-pulse bg-gray-200/10 rounded-lg h-96 flex items-center justify-center'>
+          <div className='text-gray-400 text-lg'>Loading Industries...</div>
+        </div>
       </div>
-    </div>
-  )
-});
+    ),
+  }
+);
 
-const CTABanner = dynamic(() => import("@/components/sections/cta/CTABanner"), {
+const CTABanner = dynamic(() => import('@/components/sections/cta/CTABanner'), {
   ssr: false,
   loading: () => (
-    <div className="py-12 md:py-16">
-      <div className="animate-pulse bg-gray-200/10 rounded-lg h-32 flex items-center justify-center">
-        <div className="text-gray-400 text-lg">Loading CTA...</div>
+    <div className='py-12 md:py-16'>
+      <div className='animate-pulse bg-gray-200/10 rounded-lg h-32 flex items-center justify-center'>
+        <div className='text-gray-400 text-lg'>Loading CTA...</div>
       </div>
     </div>
-  )
+  ),
 });
 
 export default function Home() {
   return (
-    <Layout title="Home" description="VR NextGEN Solutions – Data-driven consultancy">
+    <Layout title='Home' description='VR NextGEN Solutions – Data-driven consultancy'>
       <Hero />
-      <LazyWrapper rootMargin="200px">
+      <LazyWrapper rootMargin='200px'>
         <Services />
       </LazyWrapper>
-      <LazyWrapper rootMargin="400px">
+      <LazyWrapper rootMargin='400px'>
         <Industries />
       </LazyWrapper>
-      <LazyWrapper rootMargin="400px">
+      <LazyWrapper rootMargin='400px'>
         <CTABanner />
       </LazyWrapper>
     </Layout>

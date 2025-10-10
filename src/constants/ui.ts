@@ -13,7 +13,7 @@ export const UI_CONSTANTS = {
     WARNING: '#f59e0b',
     ERROR: '#ef4444',
     INFO: '#3b82f6',
-    
+
     // Background colors
     BACKGROUND: {
       PRIMARY: '#000000',
@@ -22,7 +22,7 @@ export const UI_CONSTANTS = {
       SURFACE: '#ffffff',
       OVERLAY: 'rgba(0, 0, 0, 0.6)',
     },
-    
+
     // Text colors
     TEXT: {
       PRIMARY: '#ffffff',
@@ -31,7 +31,7 @@ export const UI_CONSTANTS = {
       INVERSE: '#000000',
     },
   },
-  
+
   // Border radius values
   BORDER_RADIUS: {
     SM: '0.125rem',
@@ -41,7 +41,7 @@ export const UI_CONSTANTS = {
     '2XL': '1rem',
     FULL: '9999px',
   },
-  
+
   // Shadow values
   SHADOWS: {
     SM: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -50,7 +50,7 @@ export const UI_CONSTANTS = {
     XL: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
     INNER: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
   },
-  
+
   // Spacing values
   SPACING: {
     XS: '0.25rem',
@@ -61,7 +61,7 @@ export const UI_CONSTANTS = {
     '2XL': '3rem',
     '3XL': '4rem',
   },
-  
+
   // Font sizes
   FONT_SIZES: {
     XS: '0.75rem',
@@ -74,7 +74,7 @@ export const UI_CONSTANTS = {
     '4XL': '2.25rem',
     '5XL': '3rem',
   },
-  
+
   // Font weights
   FONT_WEIGHTS: {
     LIGHT: '300',
@@ -84,7 +84,7 @@ export const UI_CONSTANTS = {
     BOLD: '700',
     EXTRABOLD: '800',
   },
-  
+
   // Line heights
   LINE_HEIGHTS: {
     TIGHT: '1.25',
@@ -92,7 +92,7 @@ export const UI_CONSTANTS = {
     RELAXED: '1.625',
     LOOSE: '2',
   },
-  
+
   // Component-specific constants
   COMPONENTS: {
     BUTTON: {
@@ -108,28 +108,28 @@ export const UI_CONSTANTS = {
         LG: '1.125rem',
       },
     },
-    
+
     CARD: {
       PADDING: '1.5rem',
       BORDER_RADIUS: '0.75rem',
       BOX_SHADOW: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
       BACKGROUND_COLOR: 'rgba(255, 255, 255, 0.05)',
     },
-    
+
     INPUT: {
       PADDING: '0.75rem 1rem',
       BORDER_RADIUS: '0.5rem',
       BORDER_WIDTH: '1px',
       FONT_SIZE: '1rem',
     },
-    
+
     MODAL: {
       BACKDROP_OPACITY: 0.5,
       MAX_WIDTH: '32rem',
       PADDING: '1.5rem',
       BORDER_RADIUS: '0.75rem',
     },
-    
+
     TOOLTIP: {
       MAX_WIDTH: '16rem',
       PADDING: '0.5rem 0.75rem',
@@ -157,31 +157,31 @@ export const UIUtils = {
     }
     return UI_CONSTANTS.COLORS.PRIMARY;
   },
-  
+
   // Get spacing value
   getSpacing: (size: keyof typeof UI_CONSTANTS.SPACING): string => {
     return UI_CONSTANTS.SPACING[size];
   },
-  
+
   // Get font size
   getFontSize: (size: keyof typeof UI_CONSTANTS.FONT_SIZES): string => {
     return UI_CONSTANTS.FONT_SIZES[size];
   },
-  
+
   // Get border radius
   getBorderRadius: (size: keyof typeof UI_CONSTANTS.BORDER_RADIUS): string => {
     return UI_CONSTANTS.BORDER_RADIUS[size];
   },
-  
+
   // Get shadow
   getShadow: (size: keyof typeof UI_CONSTANTS.SHADOWS): string => {
     return UI_CONSTANTS.SHADOWS[size];
   },
-  
+
   // Generate CSS custom properties
   generateCSSVariables: (): Record<string, string> => {
     const variables: Record<string, string> = {};
-    
+
     // Color variables
     Object.entries(UI_CONSTANTS.COLORS).forEach(([category, value]) => {
       if (typeof value === 'string') {
@@ -192,17 +192,17 @@ export const UIUtils = {
         });
       }
     });
-    
+
     // Spacing variables
     Object.entries(UI_CONSTANTS.SPACING).forEach(([key, value]) => {
       variables[`--spacing-${key.toLowerCase()}`] = value;
     });
-    
+
     // Font size variables
     Object.entries(UI_CONSTANTS.FONT_SIZES).forEach(([key, value]) => {
       variables[`--font-size-${key.toLowerCase()}`] = value;
     });
-    
+
     return variables;
   },
 } as const;

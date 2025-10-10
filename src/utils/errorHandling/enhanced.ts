@@ -45,7 +45,7 @@ export class EnhancedError extends Error {
     cause?: Error
   ) {
     super(message);
-    
+
     this.name = 'EnhancedError';
     this.code = code;
     this.status = status;
@@ -55,7 +55,7 @@ export class EnhancedError extends Error {
       ...context,
     };
     this.cause = cause;
-    
+
     // Maintain proper stack trace
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, EnhancedError);
@@ -134,18 +134,18 @@ export class ErrorRecoveryManager {
     for (let attempt = 1; attempt <= retry.maxAttempts; attempt++) {
       try {
         const result = await operation();
-        
+
         // Clear retry attempts on success
         this.retryAttempts.delete(id);
-        
+
         if (onRecovery) {
           onRecovery(result);
         }
-        
+
         return result;
       } catch (error) {
         lastError = error as Error;
-        
+
         if (onRetry) {
           onRetry(attempt, lastError);
         }
@@ -237,33 +237,28 @@ export function useErrorBoundary() {
   }, []);
 
   const captureError = useCallback((error: Error, context?: ErrorContext) => {
-    const enhancedError = error instanceof EnhancedError 
-      ? error 
-      : new EnhancedError(
-          error.message,
-          'COMPONENT_ERROR',
-          500,
-          context || {},
-          error
-        );
-    
+    const enhancedError =
+      error instanceof EnhancedError
+        ? error
+        : new EnhancedError(error.message, 'COMPONENT_ERROR', 500, context || {}, error);
+
     setError(enhancedError);
     return enhancedError;
   }, []);
 
-  const executeWithErrorBoundary = useCallback(async <T>(
-    operation: () => Promise<T>,
-    context?: ErrorContext
-  ): Promise<T | null> => {
-    try {
-      const result = await operation();
-      resetError();
-      return result;
-    } catch (error) {
-      captureError(error as Error, context);
-      return null;
-    }
-  }, [captureError, resetError]);
+  const executeWithErrorBoundary = useCallback(
+    async <T>(operation: () => Promise<T>, context?: ErrorContext): Promise<T | null> => {
+      try {
+        const result = await operation();
+        resetError();
+        return result;
+      } catch (error) {
+        captureError(error as Error, context);
+        return null;
+      }
+    },
+    [captureError, resetError]
+  );
 
   return {
     error,
@@ -296,15 +291,10 @@ export class GlobalErrorHandler {
     context: ErrorContext = {},
     recoveryOptions?: ErrorRecoveryOptions
   ): EnhancedError {
-    const enhancedError = error instanceof EnhancedError 
-      ? error 
-      : new EnhancedError(
-          error.message,
-          'GLOBAL_ERROR',
-          500,
-          context,
-          error
-        );
+    const enhancedError =
+      error instanceof EnhancedError
+        ? error
+        : new EnhancedError(error.message, 'GLOBAL_ERROR', 500, context, error);
 
     // Add to history
     this.errorHistory.push(enhancedError);
@@ -332,7 +322,7 @@ export class GlobalErrorHandler {
    */
   addErrorListener(listener: (error: EnhancedError) => void): () => void {
     this.errorListeners.push(listener);
-    
+
     // Return unsubscribe function
     return () => {
       const index = this.errorListeners.indexOf(listener);
@@ -402,10 +392,7 @@ export const ErrorUtils = {
   /**
    * Wrap async operation with error handling
    */
-  wrapAsync: <T extends unknown[], R>(
-    fn: (...args: T) => Promise<R>,
-    context?: ErrorContext
-  ) => {
+  wrapAsync: <T extends unknown[], R>(fn: (...args: T) => Promise<R>, context?: ErrorContext) => {
     return async (...args: T): Promise<R> => {
       try {
         return await fn(...args);
@@ -417,7 +404,7 @@ export const ErrorUtils = {
           context,
           error as Error
         );
-        
+
         GlobalErrorHandler.getInstance().handleError(enhancedError);
         throw enhancedError;
       }

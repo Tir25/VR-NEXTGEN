@@ -3,7 +3,14 @@
  * Enhanced version of clsx/cn for better performance and type safety
  */
 
-type ClassValue = string | number | boolean | undefined | null | ClassValue[] | Record<string, boolean | undefined | null>;
+type ClassValue =
+  | string
+  | number
+  | boolean
+  | undefined
+  | null
+  | ClassValue[]
+  | Record<string, boolean | undefined | null>;
 
 /**
  * Conditionally concatenates class names
@@ -12,10 +19,10 @@ type ClassValue = string | number | boolean | undefined | null | ClassValue[] | 
  */
 export function cn(...inputs: ClassValue[]): string {
   const classes: string[] = [];
-  
+
   for (const input of inputs) {
     if (!input) continue;
-    
+
     if (typeof input === 'string' || typeof input === 'number') {
       classes.push(String(input));
     } else if (Array.isArray(input)) {
@@ -27,7 +34,7 @@ export function cn(...inputs: ClassValue[]): string {
       }
     }
   }
-  
+
   return classes.join(' ');
 }
 
@@ -45,17 +52,21 @@ export function createVariantClass<T extends Record<string, Record<string, strin
   ): string {
     const props = { ...defaultVariants, ...variantProps };
     const classes: string[] = [];
-    
+
     for (const [variantName, variantValue] of Object.entries(props)) {
-      if (variantName in variants && variantValue && variants[variantName][variantValue as string]) {
+      if (
+        variantName in variants &&
+        variantValue &&
+        variants[variantName][variantValue as string]
+      ) {
         classes.push(variants[variantName][variantValue as string]);
       }
     }
-    
+
     if (additionalClasses) {
       classes.push(additionalClasses);
     }
-    
+
     return classes.join(' ');
   };
 }
@@ -77,7 +88,7 @@ export function responsiveClass(
   }
 ): string {
   const classes = [base];
-  
+
   if (responsive) {
     for (const [breakpoint, className] of Object.entries(responsive)) {
       if (className) {
@@ -85,7 +96,7 @@ export function responsiveClass(
       }
     }
   }
-  
+
   return classes.join(' ');
 }
 
@@ -101,7 +112,7 @@ export function conditionalClass(
   trueClass: string,
   falseClass?: string
 ): string {
-  return condition ? trueClass : (falseClass || '');
+  return condition ? trueClass : falseClass || '';
 }
 
 /**
@@ -112,7 +123,7 @@ export function mergeClasses(
   ...classObjects: Array<Record<string, boolean | undefined | null>>
 ): string {
   const merged: Record<string, boolean> = {};
-  
+
   for (const classObj of classObjects) {
     for (const [className, condition] of Object.entries(classObj)) {
       if (condition) {
@@ -120,6 +131,6 @@ export function mergeClasses(
       }
     }
   }
-  
+
   return Object.keys(merged).join(' ');
 }

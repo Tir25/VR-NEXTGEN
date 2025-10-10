@@ -94,31 +94,23 @@ export default class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="error-boundary">
-          <div className="error-boundary__content">
+        <div className='error-boundary'>
+          <div className='error-boundary__content'>
             <h2>Something went wrong</h2>
             <p>An error occurred while rendering this component.</p>
-            
+
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="error-boundary__details">
+              <details className='error-boundary__details'>
                 <summary>Error Details</summary>
-                <pre className="error-boundary__stack">
-                  {this.state.error.stack}
-                </pre>
+                <pre className='error-boundary__stack'>{this.state.error.stack}</pre>
               </details>
             )}
 
-            <div className="error-boundary__actions">
-              <button
-                onClick={this.resetErrorBoundary}
-                className="error-boundary__retry"
-              >
+            <div className='error-boundary__actions'>
+              <button onClick={this.resetErrorBoundary} className='error-boundary__retry'>
                 Try Again
               </button>
-              <button
-                onClick={() => window.location.reload()}
-                className="error-boundary__reload"
-              >
+              <button onClick={() => window.location.reload()} className='error-boundary__reload'>
                 Reload Page
               </button>
             </div>

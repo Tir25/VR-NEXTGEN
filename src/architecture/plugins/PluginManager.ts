@@ -44,9 +44,7 @@ export class PluginManager {
 
     // Validate dependencies
     if (plugin.dependencies) {
-      const missingDeps = plugin.dependencies.filter(
-        dep => !this.plugins.has(dep)
-      );
+      const missingDeps = plugin.dependencies.filter(dep => !this.plugins.has(dep));
       if (missingDeps.length > 0) {
         // Plugin has missing dependencies
         return false;
@@ -54,7 +52,7 @@ export class PluginManager {
     }
 
     this.plugins.set(plugin.id, { ...plugin, enabled: true });
-    
+
     if (this.config.autoInit) {
       this.initPlugin(plugin.id);
     }
@@ -115,10 +113,10 @@ export class PluginManager {
     }
 
     // Check if other plugins depend on this one
-    const dependents = Array.from(this.plugins.values()).filter(
-      p => p.dependencies?.includes(pluginId)
+    const dependents = Array.from(this.plugins.values()).filter(p =>
+      p.dependencies?.includes(pluginId)
     );
-    
+
     if (dependents.length > 0) {
       // Cannot unregister plugin with dependents
       return false;

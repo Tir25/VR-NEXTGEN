@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   // API rate limiting headers (basic implementation)
   if (request.nextUrl.pathname.startsWith('/api/')) {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    
+
     // Add rate limiting headers (in production, use a proper rate limiting service)
     response.headers.set('X-RateLimit-Limit', '10');
     response.headers.set('X-RateLimit-Remaining', '9');

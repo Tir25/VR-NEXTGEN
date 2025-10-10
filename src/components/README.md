@@ -45,6 +45,7 @@ components/
 **Purpose:** Enhanced button component with multiple variants, sizes, and interactive effects.
 
 **Props:**
+
 ```typescript
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline';
@@ -58,6 +59,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 ```
 
 **Features:**
+
 - ✅ Multiple variants (primary, secondary, outline)
 - ✅ Three sizes (sm, md, lg)
 - ✅ Loading state with spinner
@@ -66,6 +68,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 - ✅ TypeScript interfaces
 
 **Usage Examples:**
+
 ```typescript
 // Basic button
 <Button>Click me</Button>
@@ -87,6 +90,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 ```
 
 **Styling:**
+
 ```css
 .btn-primary {
   @apply bg-gold text-black hover:bg-gold/90 focus:ring-gold;
@@ -108,6 +112,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 **Purpose:** Catches JavaScript errors anywhere in the component tree and displays a fallback UI.
 
 **Props:**
+
 ```typescript
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -117,6 +122,7 @@ interface ErrorBoundaryProps {
 ```
 
 **Features:**
+
 - ✅ Catches component errors
 - ✅ User-friendly error messages
 - ✅ Development error details
@@ -124,6 +130,7 @@ interface ErrorBoundaryProps {
 - ✅ Centralized error handling
 
 **Usage:**
+
 ```typescript
 <ErrorBoundary onError={(error, errorInfo) => console.error(error)}>
   <RiskyComponent />
@@ -142,6 +149,7 @@ interface ErrorBoundaryProps {
 **Purpose:** Lazy loads components when they enter the viewport for performance optimization.
 
 **Props:**
+
 ```typescript
 interface LazyWrapperProps {
   children: React.ReactNode;
@@ -156,6 +164,7 @@ interface LazyWrapperProps {
 ```
 
 **Features:**
+
 - ✅ Intersection Observer API
 - ✅ Configurable thresholds
 - ✅ Performance monitoring
@@ -163,6 +172,7 @@ interface LazyWrapperProps {
 - ✅ Trigger once option
 
 **Usage:**
+
 ```typescript
 <LazyWrapper rootMargin="400px" threshold={0.1}>
   <HeavyComponent />
@@ -181,6 +191,7 @@ interface LazyWrapperProps {
 **Purpose:** Displays the company logo with responsive sizing and optimization.
 
 **Props:**
+
 ```typescript
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -190,6 +201,7 @@ interface LogoProps {
 ```
 
 **Features:**
+
 - ✅ Responsive sizing
 - ✅ WebP optimization
 - ✅ Next.js Image optimization
@@ -197,6 +209,7 @@ interface LogoProps {
 - ✅ Accessibility support
 
 **Usage:**
+
 ```typescript
 <Logo size="lg" priority={true} />
 <Logo size="sm" className="custom-logo" />
@@ -209,6 +222,7 @@ interface LogoProps {
 **Purpose:** Form input component with validation and accessibility features.
 
 **Props:**
+
 ```typescript
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -219,6 +233,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 ```
 
 **Features:**
+
 - ✅ Label and helper text
 - ✅ Error state handling
 - ✅ Multiple variants
@@ -226,6 +241,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 - ✅ Form validation support
 
 **Usage:**
+
 ```typescript
 <Input
   label="Email Address"
@@ -247,6 +263,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 **Purpose:** Responsive navigation header with dropdown menus and section navigation.
 
 **Features:**
+
 - ✅ Responsive design (hamburger menu on mobile)
 - ✅ Dropdown menus for page sections
 - ✅ Smooth scrolling navigation
@@ -255,23 +272,25 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 - ✅ Accessibility compliance
 
 **Navigation Structure:**
+
 ```typescript
 const navigationData = {
   home: {
     label: 'Home',
     href: '/',
-    sections: ['hero', 'services', 'why', 'cta']
+    sections: ['hero', 'services', 'why', 'cta'],
   },
   'what-we-do': {
     label: 'What We Do',
     href: '/what-we-do',
-    sections: ['what-we-do-hero', 'services', 'industries']
+    sections: ['what-we-do-hero', 'services', 'industries'],
   },
   // ... other pages
 };
 ```
 
 **Usage:**
+
 ```typescript
 // Automatically used in Layout component
 <Layout>
@@ -287,6 +306,7 @@ const navigationData = {
 **Purpose:** Site footer with company information and links.
 
 **Features:**
+
 - ✅ Company information
 - ✅ Social media links
 - ✅ Copyright notice
@@ -294,6 +314,7 @@ const navigationData = {
 - ✅ Accessibility support
 
 **Usage:**
+
 ```typescript
 // Automatically used in Layout component
 <Layout>
@@ -309,6 +330,7 @@ const navigationData = {
 **Purpose:** Main layout wrapper that includes header, footer, and animated background.
 
 **Props:**
+
 ```typescript
 interface LayoutProps {
   title?: string;
@@ -318,6 +340,7 @@ interface LayoutProps {
 ```
 
 **Features:**
+
 - ✅ SEO meta tags
 - ✅ Animated background
 - ✅ Error boundaries
@@ -325,6 +348,7 @@ interface LayoutProps {
 - ✅ Responsive design
 
 **Usage:**
+
 ```typescript
 <Layout title="Home" description="VR NextGEN Solutions homepage">
   <YourPageContent />
@@ -342,6 +366,7 @@ interface LayoutProps {
 **Purpose:** Main hero section with typewriter effect and call-to-action buttons.
 
 **Features:**
+
 - ✅ Typewriter animation
 - ✅ Parallax scrolling
 - ✅ Call-to-action buttons
@@ -349,6 +374,7 @@ interface LayoutProps {
 - ✅ Accessibility support
 
 **Usage:**
+
 ```typescript
 // Used on homepage
 <Hero />
@@ -361,12 +387,14 @@ interface LayoutProps {
 **Purpose:** Displays company services with interactive cards.
 
 **Features:**
+
 - ✅ Service cards with hover effects
 - ✅ Interactive animations
 - ✅ Responsive grid layout
 - ✅ Accessibility support
 
 **Usage:**
+
 ```typescript
 // Used on homepage and what-we-do page
 <Services />
@@ -379,12 +407,14 @@ interface LayoutProps {
 **Purpose:** Highlights company advantages and benefits.
 
 **Features:**
+
 - ✅ Feature highlights
 - ✅ Animated counters
 - ✅ Interactive elements
 - ✅ Responsive design
 
 **Usage:**
+
 ```typescript
 // Used on homepage
 <WhyChooseUs />
@@ -397,12 +427,14 @@ interface LayoutProps {
 **Purpose:** Call-to-action banner with contact information.
 
 **Features:**
+
 - ✅ Call-to-action buttons
 - ✅ Contact information
 - ✅ Animated elements
 - ✅ Responsive design
 
 **Usage:**
+
 ```typescript
 // Used on homepage
 <CTABanner />
@@ -415,10 +447,12 @@ interface LayoutProps {
 **Purpose:** Sections specific to the "What We Do" page.
 
 **Components:**
+
 - `ServicesSection.tsx` - Detailed services showcase
 - `IndustriesSection.tsx` - Industries served
 
 **Features:**
+
 - ✅ Detailed service information
 - ✅ Industry filtering
 - ✅ Interactive elements
@@ -431,11 +465,13 @@ interface LayoutProps {
 **Purpose:** Sections specific to the "Who We Are" page.
 
 **Components:**
+
 - `CustomerStorySection.tsx` - Customer testimonials
 - `CaseStudySection.tsx` - Project case studies
 - `EventsSection.tsx` - Company events
 
 **Features:**
+
 - ✅ Customer testimonials
 - ✅ Project showcases
 - ✅ Event listings
@@ -452,6 +488,7 @@ interface LayoutProps {
 **Purpose:** Contact form with validation and submission handling.
 
 **Features:**
+
 - ✅ Form validation
 - ✅ Error handling
 - ✅ Loading states
@@ -459,6 +496,7 @@ interface LayoutProps {
 - ✅ GDPR compliance
 
 **Usage:**
+
 ```typescript
 // Used on contact page
 <ContactForm />
@@ -474,14 +512,26 @@ All components use Tailwind CSS with custom classes:
 
 ```css
 /* Button variants */
-.btn-primary { @apply bg-gold text-black hover:bg-gold/90; }
-.btn-secondary { @apply bg-black text-gold border-gold; }
-.btn-outline { @apply border-gold text-gold hover:bg-gold; }
+.btn-primary {
+  @apply bg-gold text-black hover:bg-gold/90;
+}
+.btn-secondary {
+  @apply bg-black text-gold border-gold;
+}
+.btn-outline {
+  @apply border-gold text-gold hover:bg-gold;
+}
 
 /* Section backgrounds */
-.section-hero { @apply bg-black text-white; }
-.section-services { @apply bg-white text-black; }
-.section-why-choose { @apply bg-gray-900 text-white; }
+.section-hero {
+  @apply bg-black text-white;
+}
+.section-services {
+  @apply bg-white text-black;
+}
+.section-why-choose {
+  @apply bg-gray-900 text-white;
+}
 ```
 
 ### **Responsive Design**
@@ -628,7 +678,7 @@ export default function ComponentName({
   // Destructure props
 }: ComponentNameProps) {
   // Component implementation
-  
+
   return (
     <div>
       {/* Component JSX */}

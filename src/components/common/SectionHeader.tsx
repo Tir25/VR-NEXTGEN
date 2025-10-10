@@ -77,8 +77,10 @@ export default function SectionHeader({
     <header className={`${alignClass} ${className}`}>
       <div className={maxWidthClass} style={{ margin: align === 'center' ? '0 auto' : '0' }}>
         {badge && (
-          <div className={`inline-flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-medium ${compact ? 'mb-3' : 'mb-6'} ${badgeColorClasses[badge.color || 'gold']}`}>
-            {badge.icon && <span className="w-2 h-2 bg-current rounded-full animate-pulse" />}
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-2 border rounded-full text-sm font-medium ${compact ? 'mb-3' : 'mb-6'} ${badgeColorClasses[badge.color || 'gold']}`}
+          >
+            {badge.icon && <span className='w-2 h-2 bg-current rounded-full animate-pulse' />}
             <span>{badge.text}</span>
           </div>
         )}
@@ -99,17 +101,17 @@ export default function SectionHeader({
 
 // Convenience components for common header styles
 export const HeroHeader = (props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>) => (
-  <SectionHeader {...props} titleColor="white" descriptionColor="white" />
+  <SectionHeader {...props} titleColor='white' descriptionColor='white' />
 );
 
-export const ServicesHeader = (props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>) => (
-  <SectionHeader {...props} titleColor="black" descriptionColor="gray" />
-);
+export const ServicesHeader = (
+  props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>
+) => <SectionHeader {...props} titleColor='black' descriptionColor='gray' />;
 
-export const IndustriesHeader = (props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>) => (
-  <SectionHeader {...props} titleColor="white" descriptionColor="white" />
-);
+export const IndustriesHeader = (
+  props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>
+) => <SectionHeader {...props} titleColor='white' descriptionColor='white' />;
 
-export const WhyChooseHeader = (props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>) => (
-  <SectionHeader {...props} titleColor="gold" descriptionColor="white" />
-);
+export const WhyChooseHeader = (
+  props: Omit<SectionHeaderProps, 'titleColor' | 'descriptionColor'>
+) => <SectionHeader {...props} titleColor='gold' descriptionColor='white' />;

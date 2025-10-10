@@ -16,13 +16,13 @@ const handleScroll = useCallback(() => {
   if (!ticking.current) {
     requestAnimationFrame(() => {
       // ... existing scroll logic ...
-      
+
       // Update GSAP ScrollTrigger after all custom handlers
       const scrollTriggerManager = getScrollTriggerManager();
       if (scrollTriggerManager && scrollTriggerManager.isAvailable()) {
         scrollTriggerManager.update();
       }
-      
+
       ticking.current = false;
     });
     ticking.current = true;
@@ -47,17 +47,17 @@ class ScrollTriggerManager {
   private refreshTimeout: NodeJS.Timeout | null = null;
 
   // Safe initialization with dynamic imports
-  async initialize(): Promise<boolean>
-  
+  async initialize(): Promise<boolean>;
+
   // Update ScrollTrigger in every rAF tick
-  update(): void
-  
+  update(): void;
+
   // Refresh on resize or content changes
-  refresh(): void
-  
+  refresh(): void;
+
   // Create animations and timelines
-  createAnimation(config): ScrollTrigger
-  createTimeline(config): Timeline
+  createAnimation(config): ScrollTrigger;
+  createTimeline(config): Timeline;
 }
 ```
 
@@ -76,9 +76,9 @@ if (scrollTrigger.isAvailable) {
     start: 'top 80%',
     end: 'bottom 20%',
     scrub: true,
-    onUpdate: (self) => {
+    onUpdate: self => {
       // Animation logic
-    }
+    },
   });
 }
 ```
@@ -94,9 +94,9 @@ useScrollTriggerAnimation(elementRef, {
   end: 'bottom 20%',
   onEnter: () => console.log('Element entered'),
   onLeave: () => console.log('Element left'),
-  animation: (target) => {
+  animation: target => {
     // Custom animation logic
-  }
+  },
 });
 ```
 
@@ -174,7 +174,7 @@ ScrollTrigger is automatically refreshed when the window is resized:
 const handleResize = () => {
   // Update scroll state
   setScrollState(prev => ({ ...prev, viewportHeight: window.innerHeight }));
-  
+
   // Refresh ScrollTrigger
   const scrollTriggerManager = getScrollTriggerManager();
   if (scrollTriggerManager && scrollTriggerManager.isAvailable()) {
@@ -316,13 +316,13 @@ The existing background animation system is enhanced:
 // Background transitions now work with ScrollTrigger
 export function useUnifiedBackgroundAnimation() {
   const { registerHandler } = useScrollContext();
-  
+
   useEffect(() => {
     const handleBackground = (scrollY: number) => {
       // Section detection and background transitions
       // Works seamlessly with ScrollTrigger
     };
-    
+
     const unregister = registerHandler('background', handleBackground);
     return unregister;
   }, [registerHandler]);
@@ -357,7 +357,7 @@ if (!scrollTrigger.isAvailable) {
 // Dynamic imports prevent SSR issues
 async function initializeGSAP() {
   if (typeof window === 'undefined') return false;
-  
+
   try {
     const gsapModule = await import('gsap');
     const scrollTriggerModule = await import('gsap/ScrollTrigger');
@@ -496,6 +496,7 @@ useEffect(() => {
 The GSAP ScrollTrigger integration provides a robust, high-performance solution for scroll-driven animations while maintaining compatibility with existing systems. The unified approach ensures optimal performance and provides a solid foundation for future animation enhancements.
 
 Key benefits:
+
 - **🚀 Performance**: Optimized scroll handling with 60fps consistency
 - **🔧 Compatibility**: Works seamlessly with Framer Motion and existing animations
 - **🛡️ Reliability**: Safe fallbacks and error handling

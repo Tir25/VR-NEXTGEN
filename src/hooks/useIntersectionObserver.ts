@@ -13,7 +13,7 @@ interface UseIntersectionObserverOptions {
 export function useIntersectionObserver({
   threshold = 0.1,
   rootMargin = '50px',
-  triggerOnce = true
+  triggerOnce = true,
 }: UseIntersectionObserverOptions = {}) {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hasIntersected, setHasIntersected] = useState(false);
@@ -27,7 +27,7 @@ export function useIntersectionObserver({
       ([entry]) => {
         const isElementIntersecting = entry.isIntersecting;
         setIsIntersecting(isElementIntersecting);
-        
+
         if (isElementIntersecting && !hasIntersected) {
           setHasIntersected(true);
           if (triggerOnce) {
@@ -51,6 +51,6 @@ export function useIntersectionObserver({
   return {
     elementRef,
     isIntersecting,
-    hasIntersected
+    hasIntersected,
   };
 }

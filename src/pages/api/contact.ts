@@ -1,6 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { sanitizeInput, sanitizeEmail, generateCSRFToken, validateCSRFToken, RateLimiter, SECURE_HEADERS } from '@/utils/security';
+import {
+  sanitizeInput,
+  sanitizeEmail,
+  generateCSRFToken,
+  validateCSRFToken,
+  RateLimiter,
+  SECURE_HEADERS,
+} from '@/utils/security';
 
 // Rate limiter: 5 requests per minute per IP
 const rateLimiter = new RateLimiter(5, 60000);
@@ -9,7 +16,10 @@ const rateLimiter = new RateLimiter(5, 60000);
 const ContactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100, 'Name too long'),
   email: z.string().email('Invalid email format'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message too long'),
+  message: z
+    .string()
+    .min(10, 'Message must be at least 10 characters')
+    .max(1000, 'Message too long'),
   csrfToken: z.string().optional(),
 });
 
@@ -29,25 +39,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Get client IP for rate limiting
-    const clientIP = req.headers['x-forwarded-for'] as string || 
-                     req.headers['x-real-ip'] as string || 
-                     req.connection.remoteAddress || 
-                     'unknown';
+    const clientIP =
+      (req.headers['x-forwarded-for'] as string) ||
+      (req.headers['x-real-ip'] as string) ||
+      req.connection.remoteAddress ||
+      'unknown';
 
     // Check rate limit
     if (!rateLimiter.isAllowed(clientIP)) {
-      return res.status(429).json({ 
+      return res.status(429).json({
         error: 'Too many requests. Please try again later.',
-        retryAfter: 60 
+        retryAfter: 60,
       });
     }
 
     // Validate request body
     const validationResult = ContactSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Invalid form data',
-        details: validationResult.error.issues 
+        details: validationResult.error.issues,
       });
     }
 
@@ -78,18 +89,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await new Promise(resolve => setTimeout(resolve, 500));
 
     // Return success response
-    res.status(200).json({ 
-      success: true, 
+    res.status(200).json({
+      success: true,
       message: 'Thank you for your message. We will get back to you soon!',
-      csrfToken: generateCSRFToken() // Generate new token for next request
+      csrfToken: generateCSRFToken(), // Generate new token for next request
     });
-
   } catch (error) {
     // Contact form error occurred - handled gracefully
-    
+
     // Don't expose internal errors to client
-    res.status(500).json({ 
-      error: 'An error occurred while processing your request. Please try again later.' 
+    res.status(500).json({
+      error: 'An error occurred while processing your request. Please try again later.',
     });
   }
 }

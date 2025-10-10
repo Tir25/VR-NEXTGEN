@@ -70,24 +70,20 @@ export default class IsolatedComponent extends Component<
       }
 
       return (
-        <div className="isolated-component-error">
-          <div className="isolated-component-error__content">
+        <div className='isolated-component-error'>
+          <div className='isolated-component-error__content'>
             <h3>Component Error</h3>
             <p>This component encountered an error and has been isolated.</p>
-            
+
             {process.env.NODE_ENV === 'development' && error && (
-              <details className="isolated-component-error__details">
+              <details className='isolated-component-error__details'>
                 <summary>Error Details</summary>
-                <pre className="isolated-component-error__stack">
-                  {error.stack}
-                </pre>
+                <pre className='isolated-component-error__stack'>{error.stack}</pre>
               </details>
             )}
 
-            <div className="isolated-component-error__actions">
-              <button onClick={this.reset}>
-                Retry Component
-              </button>
+            <div className='isolated-component-error__actions'>
+              <button onClick={this.reset}>Retry Component</button>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 /**
  * Scroll Performance Monitoring and Optimization Utilities
- * 
+ *
  * This module provides utilities for monitoring and optimizing scroll performance,
  * including performance metrics, throttling, and debouncing functions.
  */
@@ -51,10 +51,13 @@ export function throttle<T extends (...args: any[]) => any>(
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-      timeoutId = setTimeout(() => {
-        func(...args);
-        lastExecTime = Date.now();
-      }, delay - (currentTime - lastExecTime));
+      timeoutId = setTimeout(
+        () => {
+          func(...args);
+          lastExecTime = Date.now();
+        },
+        delay - (currentTime - lastExecTime)
+      );
     }
   }) as T;
 }
@@ -81,15 +84,13 @@ export function debounce<T extends (...args: any[]) => any>(
  * RequestAnimationFrame-based throttling for smooth animations
  * Ensures consistent frame rate for scroll-based animations
  */
-export function rafThrottle<T extends (...args: any[]) => any>(
-  func: T
-): T {
+export function rafThrottle<T extends (...args: any[]) => any>(func: T): T {
   let rafId: number | null = null;
   let lastArgs: Parameters<T> | null = null;
 
   return ((...args: Parameters<T>) => {
     lastArgs = args;
-    
+
     if (rafId === null) {
       rafId = requestAnimationFrame(() => {
         if (lastArgs) {
@@ -136,28 +137,28 @@ export class ScrollPerformanceMonitor {
   recordFrame(scrollVelocity: number = 0): void {
     const currentTime = performance.now();
     const frameTime = currentTime - this.lastTime;
-    
+
     this.frameCount++;
     this.metrics.scrollVelocity = scrollVelocity;
-    
+
     // Check for frame drops
     if (frameTime > this.config.maxFrameTime) {
       this.frameDrops++;
     }
-    
+
     // Update FPS every 60 frames
     if (this.frameCount % 60 === 0) {
       this.metrics.fps = Math.round(1000 / (frameTime || 1));
       this.metrics.averageFrameTime = frameTime;
       this.metrics.frameDrops = this.frameDrops;
       this.metrics.totalFrames = this.frameCount;
-      
+
       // Log performance warnings in development
       if (process.env.NODE_ENV === 'development' && this.metrics.fps < this.config.targetFPS - 10) {
         // Scroll performance warning
       }
     }
-    
+
     this.lastTime = currentTime;
   }
 
@@ -206,14 +207,14 @@ export function createOptimizedScrollHandler(
 
   const performanceConfig = { ...DEFAULT_CONFIG, ...config };
   const monitorInstance = monitor ? new ScrollPerformanceMonitor(performanceConfig) : null;
-  
+
   let handler = callback;
-  
+
   // Apply throttling
   if (useThrottle) {
     handler = rafThrottle(handler);
   }
-  
+
   // Apply debouncing
   if (useDebounce) {
     handler = debounce(handler, performanceConfig.debounceDelay);
@@ -226,10 +227,10 @@ export function createOptimizedScrollHandler(
       const startTime = performance.now();
       originalHandler(scrollY, scrollX);
       const endTime = performance.now();
-      
+
       const frameTime = endTime - startTime;
       monitorInstance.recordFrame(Math.abs(scrollY - (window.scrollY || 0)));
-      
+
       if (process.env.NODE_ENV === 'development' && frameTime > performanceConfig.maxFrameTime) {
         // Slow scroll handler
       }
@@ -271,9 +272,11 @@ export function disableSmoothScrolling(): void {
  * Get optimal scroll configuration based on device capabilities
  */
 export function getOptimalScrollConfig(): PerformanceConfig {
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
   const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
-  
+
   if (isMobile || isLowEnd) {
     return {
       ...DEFAULT_CONFIG,
@@ -283,7 +286,7 @@ export function getOptimalScrollConfig(): PerformanceConfig {
       debounceDelay: 200,
     };
   }
-  
+
   return DEFAULT_CONFIG;
 }
 
@@ -295,22 +298,22 @@ export const scrollOptimizations = {
    * Use transform instead of changing layout properties
    */
   useTransforms: true,
-  
+
   /**
    * Enable hardware acceleration
    */
   enableHardwareAcceleration: true,
-  
+
   /**
    * Batch DOM reads and writes
    */
   batchDOMOperations: true,
-  
+
   /**
    * Use passive event listeners
    */
   usePassiveListeners: true,
-  
+
   /**
    * Reduce precision for better performance
    */
@@ -344,7 +347,7 @@ export function applyScrollOptimizations(): void {
       contain: layout style paint;
     }
   `;
-  
+
   document.head.appendChild(style);
 }
 

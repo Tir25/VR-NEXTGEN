@@ -25,16 +25,19 @@ interface TypographyProps extends BaseComponentProps {
 }
 
 export const Typography = forwardRef<HTMLElement, TypographyProps>(
-  ({ 
-    as: Component = 'p', 
-    variant = 'body', 
-    color = 'primary', 
-    weight = 'normal', 
-    align = 'left',
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  (
+    {
+      as: Component = 'p',
+      variant = 'body',
+      color = 'primary',
+      weight = 'normal',
+      align = 'left',
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const variantClasses = {
       heading: 'text-4xl md:text-5xl lg:text-6xl font-bold leading-tight',
       body: 'text-base md:text-lg leading-relaxed',
@@ -91,14 +94,7 @@ interface ContainerProps extends BaseComponentProps {
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  ({ 
-    size = 'lg', 
-    padding = 'md', 
-    center = true,
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  ({ size = 'lg', padding = 'md', center = true, className, children, ...props }, ref) => {
     const sizeClasses = {
       sm: 'max-w-3xl',
       md: 'max-w-4xl',
@@ -144,15 +140,18 @@ interface SectionProps extends BaseComponentProps {
 }
 
 export const Section = forwardRef<HTMLElement, SectionProps>(
-  ({ 
-    background = 'transparent',
-    padding = 'lg',
-    fullHeight = false,
-    center = false,
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  (
+    {
+      background = 'transparent',
+      padding = 'lg',
+      fullHeight = false,
+      center = false,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const backgroundClasses = {
       transparent: 'bg-transparent',
       dark: 'bg-black',
@@ -197,14 +196,7 @@ interface GridProps extends BaseComponentProps {
 }
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
-  ({ 
-    cols = 3,
-    gap = 'md',
-    responsive = true,
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  ({ cols = 3, gap = 'md', responsive = true, className, children, ...props }, ref) => {
     const colsClasses = {
       1: 'grid-cols-1',
       2: responsive ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2',
@@ -226,12 +218,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          'grid',
-          colsClasses[cols],
-          gapClasses[gap],
-          className
-        )}
+        className={cn('grid', colsClasses[cols], gapClasses[gap], className)}
         {...props}
       >
         {children}
@@ -252,16 +239,19 @@ interface FlexProps extends BaseComponentProps {
 }
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  ({ 
-    direction = 'row',
-    wrap = 'nowrap',
-    justify = 'start',
-    align = 'start',
-    gap = 'none',
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  (
+    {
+      direction = 'row',
+      wrap = 'nowrap',
+      justify = 'start',
+      align = 'start',
+      gap = 'none',
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const directionClasses = {
       row: 'flex-row',
       column: 'flex-col',
@@ -329,13 +319,7 @@ interface StackProps extends BaseComponentProps {
 }
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>(
-  ({ 
-    spacing = 'md',
-    align = 'stretch',
-    className,
-    children,
-    ...props 
-  }, ref) => {
+  ({ spacing = 'md', align = 'stretch', className, children, ...props }, ref) => {
     const spacingClasses = {
       none: 'space-y-0',
       sm: 'space-y-2',
@@ -354,12 +338,7 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          'flex flex-col',
-          spacingClasses[spacing],
-          alignClasses[align],
-          className
-        )}
+        className={cn('flex flex-col', spacingClasses[spacing], alignClasses[align], className)}
         {...props}
       >
         {children}

@@ -25,7 +25,15 @@ interface AnimationConfig {
 
 interface AnimationSystemProps {
   /** Animation type */
-  type: 'fadeIn' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scaleIn' | 'rotateIn' | 'custom';
+  type:
+    | 'fadeIn'
+    | 'slideUp'
+    | 'slideDown'
+    | 'slideLeft'
+    | 'slideRight'
+    | 'scaleIn'
+    | 'rotateIn'
+    | 'custom';
   /** Animation configuration */
   config?: AnimationConfig;
   /** Children to animate */
@@ -45,44 +53,41 @@ interface AnimationSystemProps {
 
 // Predefined animation keyframes
 const ANIMATION_KEYFRAMES = {
-  fadeIn: [
-    { opacity: 0 },
-    { opacity: 1 }
-  ],
+  fadeIn: [{ opacity: 0 }, { opacity: 1 }],
   slideUp: [
     { opacity: 0, transform: 'translateY(30px)' },
-    { opacity: 1, transform: 'translateY(0)' }
+    { opacity: 1, transform: 'translateY(0)' },
   ],
   slideDown: [
     { opacity: 0, transform: 'translateY(-30px)' },
-    { opacity: 1, transform: 'translateY(0)' }
+    { opacity: 1, transform: 'translateY(0)' },
   ],
   slideLeft: [
     { opacity: 0, transform: 'translateX(30px)' },
-    { opacity: 1, transform: 'translateX(0)' }
+    { opacity: 1, transform: 'translateX(0)' },
   ],
   slideRight: [
     { opacity: 0, transform: 'translateX(-30px)' },
-    { opacity: 1, transform: 'translateX(0)' }
+    { opacity: 1, transform: 'translateX(0)' },
   ],
   scaleIn: [
     { opacity: 0, transform: 'scale(0.9)' },
-    { opacity: 1, transform: 'scale(1)' }
+    { opacity: 1, transform: 'scale(1)' },
   ],
   rotateIn: [
     { opacity: 0, transform: 'rotate(-10deg) scale(0.9)' },
-    { opacity: 1, transform: 'rotate(0deg) scale(1)' }
-  ]
+    { opacity: 1, transform: 'rotate(0deg) scale(1)' },
+  ],
 } as const;
 
 // Easing functions
 const EASING_FUNCTIONS = {
-  'ease': 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+  ease: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
   'ease-in': 'cubic-bezier(0.42, 0, 1, 1)',
   'ease-out': 'cubic-bezier(0, 0, 0.58, 1)',
   'ease-in-out': 'cubic-bezier(0.42, 0, 0.58, 1)',
-  'linear': 'linear',
-  'cubic-bezier': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+  linear: 'linear',
+  'cubic-bezier': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 } as const;
 
 export default function AnimationSystem({
@@ -94,7 +99,7 @@ export default function AnimationSystem({
   customKeyframes,
   className = '',
   onAnimationStart,
-  onAnimationEnd
+  onAnimationEnd,
 }: AnimationSystemProps) {
   const elementRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<Animation | null>(null);
@@ -122,9 +127,9 @@ export default function AnimationSystem({
       duration: config.duration,
       delay: config.delay || 0,
       easing,
-      iterations: config.iterationCount === 'infinite' ? Infinity : (config.iterationCount || 1),
+      iterations: config.iterationCount === 'infinite' ? Infinity : config.iterationCount || 1,
       direction: config.direction || 'normal',
-      fill: config.fillMode || 'both'
+      fill: config.fillMode || 'both',
     };
 
     // Create and start animation
@@ -163,7 +168,7 @@ export default function AnimationSystem({
   // Animation trigger
   useEffect(() => {
     const shouldAnimate = (triggerOnMount && !triggerOnView) || (triggerOnView && isVisible);
-    
+
     if (shouldAnimate && !isAnimating && elementRef.current) {
       triggerAnimation();
     }
@@ -183,7 +188,7 @@ export default function AnimationSystem({
       ref={elementRef}
       className={`animation-system ${className}`}
       style={{
-        willChange: isAnimating ? 'transform, opacity' : 'auto'
+        willChange: isAnimating ? 'transform, opacity' : 'auto',
       }}
     >
       {children}
@@ -196,7 +201,14 @@ interface StaggeredAnimationProps {
   /** Array of items to animate */
   items: ReactNode[];
   /** Animation type */
-  animationType?: 'fadeIn' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scaleIn' | 'rotateIn';
+  animationType?:
+    | 'fadeIn'
+    | 'slideUp'
+    | 'slideDown'
+    | 'slideLeft'
+    | 'slideRight'
+    | 'scaleIn'
+    | 'rotateIn';
   /** Stagger delay between items */
   staggerDelay?: number;
   /** Animation configuration */
@@ -213,7 +225,7 @@ export function StaggeredAnimation({
   staggerDelay = 100,
   config = { duration: 500 },
   className = '',
-  triggerOnView = true
+  triggerOnView = true,
 }: StaggeredAnimationProps) {
   return (
     <div className={`staggered-animation ${className}`}>
@@ -223,7 +235,7 @@ export function StaggeredAnimation({
           type={animationType}
           config={{
             ...config,
-            delay: config.delay ? config.delay + (index * staggerDelay) : index * staggerDelay
+            delay: config.delay ? config.delay + index * staggerDelay : index * staggerDelay,
           }}
           triggerOnMount={false}
           triggerOnView={triggerOnView}
@@ -240,32 +252,32 @@ export const AnimationPresets = {
   // Hero animations
   heroFadeIn: {
     type: 'fadeIn' as const,
-    config: { duration: 800, easing: 'ease-out' }
+    config: { duration: 800, easing: 'ease-out' },
   },
   heroSlideUp: {
     type: 'slideUp' as const,
-    config: { duration: 600, easing: 'ease-out' }
+    config: { duration: 600, easing: 'ease-out' },
   },
-  
+
   // Card animations
   cardScaleIn: {
     type: 'scaleIn' as const,
-    config: { duration: 400, easing: 'ease-out' }
+    config: { duration: 400, easing: 'ease-out' },
   },
   cardSlideUp: {
     type: 'slideUp' as const,
-    config: { duration: 500, easing: 'ease-out' }
+    config: { duration: 500, easing: 'ease-out' },
   },
-  
+
   // Navigation animations
   navSlideDown: {
     type: 'slideDown' as const,
-    config: { duration: 300, easing: 'ease-out' }
+    config: { duration: 300, easing: 'ease-out' },
   },
-  
+
   // Button animations
   buttonScaleIn: {
     type: 'scaleIn' as const,
-    config: { duration: 200, easing: 'ease-out' }
-  }
+    config: { duration: 200, easing: 'ease-out' },
+  },
 } as const;

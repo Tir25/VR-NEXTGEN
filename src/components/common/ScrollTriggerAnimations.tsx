@@ -3,7 +3,7 @@ import { useScrollTrigger, ScrollTriggerUtils } from '@/utils/gsapScrollTrigger'
 
 /**
  * ScrollTriggerAnimations Component
- * 
+ *
  * This component provides GSAP ScrollTrigger animations for enhanced scroll-driven effects.
  * It integrates with the unified scroll system and provides safe fallbacks.
  */
@@ -20,10 +20,10 @@ interface ScrollTriggerAnimationsProps {
   };
 }
 
-export default function ScrollTriggerAnimations({ 
-  children, 
-  className = '', 
-  animations = {} 
+export default function ScrollTriggerAnimations({
+  children,
+  className = '',
+  animations = {},
 }: ScrollTriggerAnimationsProps) {
   const elementRef = useRef<HTMLDivElement>(null);
   const scrollTrigger = useScrollTrigger();
@@ -76,11 +76,15 @@ export default function ScrollTriggerAnimations({
 
     // Parallax animation
     if (animations.parallax) {
-      const parallaxAnimation = ScrollTriggerUtils.parallax(element, animations.parallaxSpeed || 0.5, {
-        trigger: element,
-        start: 'top bottom',
-        end: 'bottom top',
-      });
+      const parallaxAnimation = ScrollTriggerUtils.parallax(
+        element,
+        animations.parallaxSpeed || 0.5,
+        {
+          trigger: element,
+          start: 'top bottom',
+          end: 'bottom top',
+        }
+      );
       if (parallaxAnimation) {
         animationRefs.current.push(parallaxAnimation);
         cleanupFunctions.push(() => parallaxAnimation.kill());
@@ -91,7 +95,14 @@ export default function ScrollTriggerAnimations({
       cleanupFunctions.forEach(cleanup => cleanup());
       animationRefs.current = [];
     };
-  }, [scrollTrigger.isAvailable, animations.fadeIn, animations.slideIn, animations.scaleIn, animations.parallax, animations.parallaxSpeed]);
+  }, [
+    scrollTrigger.isAvailable,
+    animations.fadeIn,
+    animations.slideIn,
+    animations.scaleIn,
+    animations.parallax,
+    animations.parallaxSpeed,
+  ]);
 
   return (
     <div ref={elementRef} className={className}>
@@ -145,7 +156,20 @@ export function useScrollTriggerAnimation(
         animationRef.current = null;
       }
     };
-  }, [scrollTrigger.isAvailable, elementRef, config.trigger, config.start, config.end, config.scrub, config.onUpdate, config.onEnter, config.onLeave, config.onEnterBack, config.onLeaveBack, config.animation]);
+  }, [
+    scrollTrigger.isAvailable,
+    elementRef,
+    config.trigger,
+    config.start,
+    config.end,
+    config.scrub,
+    config.onUpdate,
+    config.onEnter,
+    config.onLeave,
+    config.onEnterBack,
+    config.onLeaveBack,
+    config.animation,
+  ]);
 
   return animationRef.current;
 }
@@ -193,7 +217,19 @@ export function useScrollTriggerTimeline(
         timelineRef.current = null;
       }
     };
-  }, [scrollTrigger.isAvailable, elementRef, config.trigger, config.start, config.end, config.scrub, config.onUpdate, config.onEnter, config.onLeave, config.onEnterBack, config.onLeaveBack]);
+  }, [
+    scrollTrigger.isAvailable,
+    elementRef,
+    config.trigger,
+    config.start,
+    config.end,
+    config.scrub,
+    config.onUpdate,
+    config.onEnter,
+    config.onLeave,
+    config.onEnterBack,
+    config.onLeaveBack,
+  ]);
 
   return timelineRef.current;
 }

@@ -7,7 +7,12 @@ export { default as Services } from './Services';
 export { default as ServiceCard } from './ServiceCard';
 
 // Types
-export type { Service, ServiceCardProps, ServiceCardWrapperProps, ServicesSectionProps } from './types';
+export type {
+  Service,
+  ServiceCardProps,
+  ServiceCardWrapperProps,
+  ServicesSectionProps,
+} from './types';
 
 // Constants
 export { SERVICES, SERVICE_CATEGORIES, SERVICE_ANIMATION_DELAYS } from './constants';

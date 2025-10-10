@@ -12,7 +12,7 @@ export const FEATURE_FLAGS = {
     hoverEffects: true,
     parallaxEffects: true,
   },
-  
+
   // Performance features
   performance: {
     lazyLoading: true,
@@ -20,7 +20,7 @@ export const FEATURE_FLAGS = {
     codeSplitting: true,
     preloading: true,
   },
-  
+
   // UI features
   ui: {
     darkMode: true,
@@ -28,7 +28,7 @@ export const FEATURE_FLAGS = {
     accessibility: true,
     keyboardNavigation: true,
   },
-  
+
   // Analytics and tracking
   analytics: {
     enabled: false, // Set to true when analytics service is configured
@@ -36,7 +36,7 @@ export const FEATURE_FLAGS = {
     performanceMonitoring: true,
     userInteractionTracking: false,
   },
-  
+
   // Security features
   security: {
     csrfProtection: true,
@@ -44,7 +44,7 @@ export const FEATURE_FLAGS = {
     inputSanitization: true,
     securityHeaders: true,
   },
-  
+
   // Development features
   development: {
     debugMode: process.env.NODE_ENV === 'development',
@@ -61,7 +61,7 @@ export const FEATURE_CONFIG = {
     slow: 500,
     verySlow: 1000,
   },
-  
+
   // Performance thresholds
   performance: {
     targetFPS: 60,
@@ -70,7 +70,7 @@ export const FEATURE_CONFIG = {
     throttleDelay: 16, // ~60fps
     debounceDelay: 250,
   },
-  
+
   // Breakpoints (in pixels)
   breakpoints: {
     xs: 320,
@@ -80,7 +80,7 @@ export const FEATURE_CONFIG = {
     xl: 1280,
     '2xl': 1536,
   },
-  
+
   // Z-index layers
   zIndex: {
     dropdown: 1000,
@@ -92,7 +92,7 @@ export const FEATURE_CONFIG = {
     tooltip: 1070,
     toast: 1080,
   },
-  
+
   // API configuration
   api: {
     timeout: 10000,
@@ -109,7 +109,7 @@ export const FEATURE_CONFIG = {
 export function isFeatureEnabled(feature: string): boolean {
   const keys = feature.split('.');
   let value: any = FEATURE_FLAGS;
-  
+
   for (const key of keys) {
     if (value && typeof value === 'object' && key in value) {
       value = value[key];
@@ -117,7 +117,7 @@ export function isFeatureEnabled(feature: string): boolean {
       return false;
     }
   }
-  
+
   return Boolean(value);
 }
 
@@ -125,7 +125,7 @@ export function isFeatureEnabled(feature: string): boolean {
 export function getFeatureConfig(config: string): any {
   const keys = config.split('.');
   let value: any = FEATURE_CONFIG;
-  
+
   for (const key of keys) {
     if (value && typeof value === 'object' && key in value) {
       value = value[key];
@@ -133,7 +133,7 @@ export function getFeatureConfig(config: string): any {
       return undefined;
     }
   }
-  
+
   return value;
 }
 
@@ -142,13 +142,13 @@ export const ENV_CONFIG = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',
   isTest: process.env.NODE_ENV === 'test',
-  
+
   // API endpoints
   apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || '/api',
-  
+
   // Analytics
   analyticsId: process.env.NEXT_PUBLIC_ANALYTICS_ID,
-  
+
   // Feature flags from environment
   enableAnalytics: process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true',
   enableDebugMode: process.env.NEXT_PUBLIC_DEBUG_MODE === 'true',

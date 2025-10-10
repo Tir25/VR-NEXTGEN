@@ -7,7 +7,7 @@
 // Animation Hooks
 export * from './animations';
 
-// Navigation Hooks  
+// Navigation Hooks
 export * from './navigation';
 
 // Visibility Hooks

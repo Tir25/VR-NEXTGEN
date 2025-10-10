@@ -37,7 +37,14 @@ export interface ResponsiveProps {
 }
 
 // Color variants
-export type ColorVariant = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'info';
+export type ColorVariant =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'info';
 export type SizeVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type ThemeVariant = 'light' | 'dark' | 'auto';
 

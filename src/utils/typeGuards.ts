@@ -76,7 +76,9 @@ export function isRefObject<T>(value: unknown): value is React.RefObject<T> {
 }
 
 // API type guards
-export function isApiResponse(value: unknown): value is { success: boolean; data?: any; error?: string } {
+export function isApiResponse(
+  value: unknown
+): value is { success: boolean; data?: any; error?: string } {
   return isObject(value) && 'success' in value && isBoolean(value.success);
 }
 
@@ -89,23 +91,31 @@ export function isSuccessResponse(value: unknown): value is { success: true; dat
 }
 
 // Form type guards
-export function isFormField(value: unknown): value is { name: string; value: any; error?: string; touched: boolean } {
-  return isObject(value) && 
-         'name' in value && 
-         'value' in value && 
-         'touched' in value &&
-         isString(value.name) &&
-         isBoolean(value.touched);
+export function isFormField(
+  value: unknown
+): value is { name: string; value: any; error?: string; touched: boolean } {
+  return (
+    isObject(value) &&
+    'name' in value &&
+    'value' in value &&
+    'touched' in value &&
+    isString(value.name) &&
+    isBoolean(value.touched)
+  );
 }
 
-export function isFormState(value: unknown): value is { fields: Record<string, any>; isValid: boolean; isSubmitting: boolean } {
-  return isObject(value) &&
-         'fields' in value &&
-         'isValid' in value &&
-         'isSubmitting' in value &&
-         isObject(value.fields) &&
-         isBoolean(value.isValid) &&
-         isBoolean(value.isSubmitting);
+export function isFormState(
+  value: unknown
+): value is { fields: Record<string, any>; isValid: boolean; isSubmitting: boolean } {
+  return (
+    isObject(value) &&
+    'fields' in value &&
+    'isValid' in value &&
+    'isSubmitting' in value &&
+    isObject(value.fields) &&
+    isBoolean(value.isValid) &&
+    isBoolean(value.isSubmitting)
+  );
 }
 
 // Event type guards
@@ -126,22 +136,28 @@ export function isTouchEvent(value: unknown): value is TouchEvent {
 }
 
 // Validation type guards
-export function isValidationError(value: unknown): value is { field: string; message: string; code: string } {
-  return isObject(value) &&
-         'field' in value &&
-         'message' in value &&
-         'code' in value &&
-         isString(value.field) &&
-         isString(value.message) &&
-         isString(value.code);
+export function isValidationError(
+  value: unknown
+): value is { field: string; message: string; code: string } {
+  return (
+    isObject(value) &&
+    'field' in value &&
+    'message' in value &&
+    'code' in value &&
+    isString(value.field) &&
+    isString(value.message) &&
+    isString(value.code)
+  );
 }
 
 export function isValidationResult(value: unknown): value is { isValid: boolean; errors: any[] } {
-  return isObject(value) &&
-         'isValid' in value &&
-         'errors' in value &&
-         isBoolean(value.isValid) &&
-         isArray(value.errors);
+  return (
+    isObject(value) &&
+    'isValid' in value &&
+    'errors' in value &&
+    isBoolean(value.isValid) &&
+    isArray(value.errors)
+  );
 }
 
 // Utility type guards

@@ -7,22 +7,22 @@ import { HeroImageProps } from './types';
 
 // Banner image removed - using animated text content instead
 export const HERO_IMAGE_CONFIG: HeroImageProps = {
-  src: "/images/Hero.png",
-  alt: "VR NextGEN Solutions - Modern business consultancy and data analytics platform",
+  src: '/images/Hero.png',
+  alt: 'VR NextGEN Solutions - Modern business consultancy and data analytics platform',
   priority: true,
   quality: 85,
 };
 
 export const HERO_BUTTONS = {
   primary: {
-    text: "Get Started",
-    action: "scrollToServices",
-    variant: "primary" as const,
+    text: 'Get Started',
+    action: 'scrollToServices',
+    variant: 'primary' as const,
   },
   secondary: {
-    text: "Learn More", 
-    action: "scrollToIndustries",
-    variant: "outline" as const,
+    text: 'Learn More',
+    action: 'scrollToIndustries',
+    variant: 'outline' as const,
   },
 } as const;
 

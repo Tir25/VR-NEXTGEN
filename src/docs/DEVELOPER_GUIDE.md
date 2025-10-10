@@ -3,11 +3,13 @@
 ## 📋 **Quick Start**
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Git
 
 ### Setup
+
 ```bash
 # Clone repository
 git clone <repository-url>
@@ -28,6 +30,7 @@ npm run build
 ## 🏗️ **Architecture Overview**
 
 ### **Folder Structure**
+
 ```
 src/
 ├── components/          # Reusable UI components
@@ -53,17 +56,20 @@ src/
 ### **Design Patterns**
 
 #### **1. Component Architecture**
+
 - **Atomic Design**: Components follow atomic design principles
 - **Composition**: Use composition over inheritance
 - **Single Responsibility**: Each component has one clear purpose
 - **Props Interface**: All components have well-defined TypeScript interfaces
 
 #### **2. State Management**
+
 - **Local State**: Use `useState` for component-specific state
 - **Global State**: Use React Context for shared state
 - **Performance**: Use `useMemo` and `useCallback` for expensive operations
 
 #### **3. Error Handling**
+
 - **Error Boundaries**: Catch and handle React errors gracefully
 - **Enhanced Errors**: Use `EnhancedError` class for structured error handling
 - **Recovery**: Implement retry logic and fallback mechanisms
@@ -73,6 +79,7 @@ src/
 ## 🎨 **Design System**
 
 ### **Theme Configuration**
+
 ```typescript
 import { theme } from '@/design-system/theme';
 
@@ -83,6 +90,7 @@ const spacing = theme.spacing.md;
 ```
 
 ### **Component Usage**
+
 ```typescript
 import { Container, Typography, Flex } from '@/design-system/components';
 
@@ -107,6 +115,7 @@ function MyComponent() {
 ## ⚡ **Performance Optimization**
 
 ### **Rendering Optimization**
+
 ```typescript
 import { useOptimizedMemo, useStableCallback } from '@/hooks/performance';
 
@@ -125,6 +134,7 @@ function ExpensiveComponent({ data, onUpdate }) {
 ```
 
 ### **Scroll Performance**
+
 ```typescript
 import { useOptimizedScroll, useScrollParallax } from '@/hooks/performance';
 
@@ -146,6 +156,7 @@ function ScrollComponent() {
 ```
 
 ### **Animation Performance**
+
 - Use CSS transforms and opacity for animations
 - Enable hardware acceleration with `will-change` and `transform3d`
 - Throttle scroll events to 60fps
@@ -156,6 +167,7 @@ function ScrollComponent() {
 ## 🔧 **Form Handling**
 
 ### **Validation**
+
 ```typescript
 import { contactFormSchema, validateData } from '@/utils/validation';
 
@@ -165,7 +177,7 @@ function ContactForm() {
 
   const handleSubmit = async (data) => {
     const validation = validateData(contactFormSchema, data);
-    
+
     if (!validation.success) {
       setErrors(validation.errors);
       return;
@@ -184,6 +196,7 @@ function ContactForm() {
 ```
 
 ### **Error Handling**
+
 ```typescript
 import { useErrorBoundary, ErrorUtils } from '@/utils/errorHandling';
 
@@ -216,6 +229,7 @@ function MyComponent() {
 ## 🎭 **Animations**
 
 ### **GSAP ScrollTrigger**
+
 ```typescript
 import { useScrollTriggerAnimation } from '@/utils/gsapScrollTrigger';
 
@@ -227,7 +241,7 @@ function AnimatedComponent() {
     start: 'top 80%',
     end: 'bottom 20%',
     animation: (tl) => {
-      tl.fromTo(ref.current, 
+      tl.fromTo(ref.current,
         { opacity: 0, y: 50 },
         { opacity: 1, y: 0, duration: 1 }
       );
@@ -239,6 +253,7 @@ function AnimatedComponent() {
 ```
 
 ### **Framer Motion**
+
 ```typescript
 import { motion } from 'framer-motion';
 
@@ -260,6 +275,7 @@ function MotionComponent() {
 ## 🧪 **Testing**
 
 ### **Component Testing**
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import { MyComponent } from './MyComponent';
@@ -271,6 +287,7 @@ test('renders component correctly', () => {
 ```
 
 ### **Performance Testing**
+
 ```typescript
 import { useRenderPerformance } from '@/hooks/performance';
 
@@ -289,6 +306,7 @@ function TestComponent() {
 ## 🚀 **Deployment**
 
 ### **Build Process**
+
 ```bash
 # Development build
 npm run dev
@@ -304,6 +322,7 @@ npm run build:analyze
 ```
 
 ### **Environment Configuration**
+
 ```bash
 # .env.local
 NEXT_PUBLIC_APP_NAME="VR NextGEN Solutions"
@@ -316,24 +335,28 @@ NEXT_PUBLIC_APP_URL="https://your-domain.com"
 ## 📚 **Best Practices**
 
 ### **Code Quality**
+
 1. **TypeScript**: Use strict typing throughout
 2. **ESLint**: Follow configured linting rules
 3. **Prettier**: Maintain consistent code formatting
 4. **Comments**: Document complex logic and business rules
 
 ### **Performance**
+
 1. **Memoization**: Use `React.memo`, `useMemo`, `useCallback` appropriately
 2. **Lazy Loading**: Load components and assets on demand
 3. **Bundle Optimization**: Use dynamic imports for code splitting
 4. **Image Optimization**: Use Next.js Image component with WebP/AVIF
 
 ### **Accessibility**
+
 1. **Semantic HTML**: Use proper HTML elements
 2. **ARIA Labels**: Provide accessible labels and descriptions
 3. **Keyboard Navigation**: Ensure all interactions are keyboard accessible
 4. **Color Contrast**: Maintain WCAG AA compliance
 
 ### **Security**
+
 1. **Input Validation**: Validate all user inputs
 2. **XSS Prevention**: Sanitize user-generated content
 3. **CSRF Protection**: Implement CSRF tokens for forms
@@ -346,6 +369,7 @@ NEXT_PUBLIC_APP_URL="https://your-domain.com"
 ### **Common Issues**
 
 #### **Build Errors**
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -356,16 +380,19 @@ npm install
 ```
 
 #### **Performance Issues**
+
 - Check bundle size with `npm run build:analyze`
 - Use React DevTools Profiler to identify slow components
 - Monitor Core Web Vitals in production
 
 #### **Animation Issues**
+
 - Ensure GSAP ScrollTrigger is properly initialized
 - Check for conflicting CSS animations
 - Verify hardware acceleration is enabled
 
 ### **Debug Tools**
+
 - React DevTools
 - Next.js DevTools
 - Chrome DevTools Performance tab
@@ -376,6 +403,7 @@ npm install
 ## 📞 **Support**
 
 For questions or issues:
+
 1. Check this documentation first
 2. Review existing issues in the repository
 3. Create a new issue with detailed information

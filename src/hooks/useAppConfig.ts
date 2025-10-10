@@ -10,5 +10,3 @@ export function useAppConfig() {
 }
 
 export type UseAppConfigReturn = typeof appConfig;
-
-

@@ -13,40 +13,67 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_NAME: z.string().default('VR NextGEN Solutions'),
   NEXT_PUBLIC_APP_VERSION: z.string().default('1.2.0'),
   NEXT_PUBLIC_APP_URL: z.string().url().optional(),
-  
+
   // API Configuration
   API_BASE_URL: z.string().url().optional(),
   API_TIMEOUT: z.string().transform(Number).default(10000),
-  
+
   // Contact Form
   CONTACT_EMAIL: z.string().email().optional(),
-  CONTACT_FORM_ENABLED: z.string().transform(val => val === 'true').default(true),
+  CONTACT_FORM_ENABLED: z
+    .string()
+    .transform(val => val === 'true')
+    .default(true),
   CONTACT_FORM_RATE_LIMIT: z.string().transform(Number).default(10),
-  
+
   // Analytics (Optional)
   NEXT_PUBLIC_GA_TRACKING_ID: z.string().optional(),
   NEXT_PUBLIC_GTM_ID: z.string().optional(),
-  
+
   // Monitoring (Optional)
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_HOTJAR_ID: z.string().optional(),
-  
+
   // Security
-  SECURITY_HEADERS_ENABLED: z.string().transform(val => val !== 'false').default(true),
+  SECURITY_HEADERS_ENABLED: z
+    .string()
+    .transform(val => val !== 'false')
+    .default(true),
   NEXT_PUBLIC_CSP_REPORT_URI: z.string().url().optional(),
-  
+
   // Performance
-  NEXT_TELEMETRY_DISABLED: z.string().transform(val => val !== 'false').default(true),
-  
+  NEXT_TELEMETRY_DISABLED: z
+    .string()
+    .transform(val => val !== 'false')
+    .default(true),
+
   // Feature Flags
-  NEXT_PUBLIC_ENABLE_ANALYTICS: z.string().transform(val => val === 'true').default(false),
-  NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING: z.string().transform(val => val === 'true').default(false),
-  NEXT_PUBLIC_ENABLE_ERROR_REPORTING: z.string().transform(val => val === 'true').default(false),
-  NEXT_PUBLIC_ENABLE_DEBUG_MODE: z.string().transform(val => val === 'true').default(false),
-  
+  NEXT_PUBLIC_ENABLE_ANALYTICS: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
+  NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
+  NEXT_PUBLIC_ENABLE_ERROR_REPORTING: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
+  NEXT_PUBLIC_ENABLE_DEBUG_MODE: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
+
   // Development
-  NEXT_PUBLIC_DEBUG_MODE: z.string().transform(val => val === 'true').default(false),
-  NEXT_PUBLIC_SHOW_PERFORMANCE_METRICS: z.string().transform(val => val === 'true').default(false),
+  NEXT_PUBLIC_DEBUG_MODE: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
+  NEXT_PUBLIC_SHOW_PERFORMANCE_METRICS: z
+    .string()
+    .transform(val => val === 'true')
+    .default(false),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;
@@ -64,12 +91,12 @@ class EnvironmentConfig {
     try {
       const rawEnv = process.env;
       const validation = validateData(envSchema, rawEnv);
-      
+
       if (!validation.success) {
         // Use defaults for missing/invalid values
         return this.getDefaultConfig();
       }
-      
+
       return validation.data;
     } catch (error) {
       // Fallback to default configuration on error
@@ -116,12 +143,15 @@ class EnvironmentConfig {
     return this.config.NODE_ENV === 'test';
   }
 
-  public isFeatureEnabled(feature: keyof Pick<EnvConfig, 
-    'NEXT_PUBLIC_ENABLE_ANALYTICS' | 
-    'NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING' | 
-    'NEXT_PUBLIC_ENABLE_ERROR_REPORTING' | 
-    'NEXT_PUBLIC_ENABLE_DEBUG_MODE'
-  >): boolean {
+  public isFeatureEnabled(
+    feature: keyof Pick<
+      EnvConfig,
+      | 'NEXT_PUBLIC_ENABLE_ANALYTICS'
+      | 'NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING'
+      | 'NEXT_PUBLIC_ENABLE_ERROR_REPORTING'
+      | 'NEXT_PUBLIC_ENABLE_DEBUG_MODE'
+    >
+  ): boolean {
     return this.config[feature];
   }
 
@@ -170,13 +200,10 @@ class EnvironmentConfig {
   }
 
   public validateRequired(): { isValid: boolean; missing: string[] } {
-    const required = [
-      'NEXT_PUBLIC_APP_NAME',
-      'NEXT_PUBLIC_APP_VERSION',
-    ] as const;
+    const required = ['NEXT_PUBLIC_APP_NAME', 'NEXT_PUBLIC_APP_VERSION'] as const;
 
     const missing: string[] = [];
-    
+
     for (const key of required) {
       if (!this.config[key]) {
         missing.push(key);
@@ -224,7 +251,7 @@ export const testConfig = {
 // Get current environment config
 export function getEnvironmentConfig() {
   const env = config.get('NODE_ENV');
-  
+
   switch (env) {
     case 'development':
       return developmentConfig;

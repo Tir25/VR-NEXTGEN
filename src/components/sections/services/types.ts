@@ -9,7 +9,13 @@ export interface Service {
   description: string;
   icon: React.ReactNode;
   features: string[];
-  category: 'strategy' | 'optimization' | 'analytics' | 'visualization' | 'automation' | 'solutions';
+  category:
+    | 'strategy'
+    | 'optimization'
+    | 'analytics'
+    | 'visualization'
+    | 'automation'
+    | 'solutions';
   bgUrl?: string;
 }
 

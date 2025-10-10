@@ -9,16 +9,19 @@ This document outlines the key architectural decisions made for the VR NextGEN S
 ## 🎯 **Core Principles**
 
 ### **1. Performance First**
+
 - **Decision**: Optimize for 60fps animations and sub-2s load times
 - **Rationale**: User experience is paramount for a modern consultancy website
 - **Implementation**: Unified scroll handling, hardware-accelerated animations, optimized bundle splitting
 
 ### **2. Developer Experience**
+
 - **Decision**: Comprehensive TypeScript coverage and clear component architecture
 - **Rationale**: Maintainability and team productivity are crucial for long-term success
 - **Implementation**: Strict TypeScript, atomic design system, comprehensive documentation
 
 ### **3. Scalability**
+
 - **Decision**: Modular architecture with clear separation of concerns
 - **Rationale**: Easy to extend and modify without breaking existing functionality
 - **Implementation**: Feature-based organization, plugin system, service container pattern
@@ -30,11 +33,12 @@ This document outlines the key architectural decisions made for the VR NextGEN S
 ### **1. Component Architecture**
 
 #### **Decision**: Atomic Design System
+
 ```typescript
 // Atomic components
 Typography, Container, Button
 
-// Molecular components  
+// Molecular components
 Card, FormField, Navigation
 
 // Organism components
@@ -47,35 +51,40 @@ Page Layout, Section Layout
 HomePage, ContactPage
 ```
 
-**Rationale**: 
+**Rationale**:
+
 - Clear hierarchy and reusability
 - Consistent design language
 - Easy to maintain and extend
 
 **Alternatives Considered**:
+
 - Monolithic components (rejected - poor reusability)
 - Utility-first approach (rejected - inconsistent design)
 
 ### **2. State Management**
 
 #### **Decision**: React Context + Local State
+
 ```typescript
 // Global state via Context
-ScrollContext, ThemeContext
+(ScrollContext, ThemeContext);
 
 // Local state via hooks
-useState, useReducer
+(useState, useReducer);
 
 // Performance optimization
-useMemo, useCallback, React.memo
+(useMemo, useCallback, React.memo);
 ```
 
 **Rationale**:
+
 - Built-in React patterns
 - No external dependencies
 - Sufficient for current needs
 
 **Alternatives Considered**:
+
 - Redux (rejected - overkill for current scope)
 - Zustand (considered - may adopt in future)
 - Jotai (considered - may adopt for complex state)
@@ -83,6 +92,7 @@ useMemo, useCallback, React.memo
 ### **3. Error Handling**
 
 #### **Decision**: Enhanced Error System with Recovery
+
 ```typescript
 // Structured error handling
 class EnhancedError extends Error {
@@ -92,18 +102,20 @@ class EnhancedError extends Error {
 }
 
 // Recovery mechanisms
-ErrorRecoveryManager.executeWithRecovery()
+ErrorRecoveryManager.executeWithRecovery();
 
 // Global error boundary
-GlobalErrorHandler.handleError()
+GlobalErrorHandler.handleError();
 ```
 
 **Rationale**:
+
 - Graceful degradation
 - Better debugging experience
 - User-friendly error messages
 
 **Alternatives Considered**:
+
 - Basic try/catch (rejected - insufficient context)
 - Third-party error monitoring only (rejected - need custom recovery)
 
@@ -114,6 +126,7 @@ GlobalErrorHandler.handleError()
 ### **1. Scroll Performance**
 
 #### **Decision**: Unified Scroll Controller
+
 ```typescript
 // Single scroll listener with RAF batching
 const scrollController = useScrollContext();
@@ -126,11 +139,13 @@ ScrollTrigger.update() in RAF loop
 ```
 
 **Rationale**:
+
 - Eliminates multiple scroll listeners
 - Consistent 60fps performance
 - Proper GSAP integration
 
 **Implementation Details**:
+
 - Single `window.addEventListener('scroll')` with passive listeners
 - `requestAnimationFrame` batching for all scroll-based updates
 - GSAP ScrollTrigger integration for animation triggers
@@ -138,6 +153,7 @@ ScrollTrigger.update() in RAF loop
 ### **2. Animation Performance**
 
 #### **Decision**: Hardware-Accelerated CSS + GSAP
+
 ```css
 /* Hardware acceleration */
 .element {
@@ -148,11 +164,13 @@ ScrollTrigger.update() in RAF loop
 ```
 
 **Rationale**:
+
 - GPU acceleration for smooth 60fps
 - Reduced main thread blocking
 - Better mobile performance
 
 **Implementation**:
+
 - CSS transforms and opacity for simple animations
 - GSAP for complex timeline animations
 - ScrollTrigger for scroll-based animations
@@ -160,6 +178,7 @@ ScrollTrigger.update() in RAF loop
 ### **3. Bundle Optimization**
 
 #### **Decision**: Code Splitting + Dynamic Imports
+
 ```typescript
 // Dynamic imports for routes
 const ContactPage = dynamic(() => import('./ContactPage'));
@@ -168,10 +187,11 @@ const ContactPage = dynamic(() => import('./ContactPage'));
 const HeavyComponent = lazy(() => import('./HeavyComponent'));
 
 // Vendor chunk splitting
-webpack.optimization.splitChunks
+webpack.optimization.splitChunks;
 ```
 
 **Rationale**:
+
 - Faster initial load
 - Better caching strategies
 - Improved Core Web Vitals
@@ -183,6 +203,7 @@ webpack.optimization.splitChunks
 ### **1. Theme System**
 
 #### **Decision**: CSS Custom Properties + TypeScript
+
 ```typescript
 // Type-safe theme configuration
 export const theme = {
@@ -200,11 +221,13 @@ export const theme = {
 ```
 
 **Rationale**:
+
 - Runtime theme switching capability
 - Type safety for design tokens
 - Easy maintenance and updates
 
 **Future Enhancements**:
+
 - Dark/light mode support
 - Brand customization
 - Accessibility improvements
@@ -212,6 +235,7 @@ export const theme = {
 ### **2. Component API Design**
 
 #### **Decision**: Composition Over Configuration
+
 ```typescript
 // Flexible component composition
 <Container size="lg" padding="md">
@@ -223,6 +247,7 @@ export const theme = {
 ```
 
 **Rationale**:
+
 - Maximum flexibility
 - Consistent API patterns
 - Easy to extend and customize
@@ -234,6 +259,7 @@ export const theme = {
 ### **1. Build System**
 
 #### **Decision**: Next.js with Custom Webpack Configuration
+
 ```typescript
 // next.config.ts
 const nextConfig: NextConfig = {
@@ -241,13 +267,16 @@ const nextConfig: NextConfig = {
   compress: true,
   webpack: (config, { dev, isServer }) => {
     // Custom optimizations
-    config.optimization.splitChunks = { /* ... */ };
+    config.optimization.splitChunks = {
+      /* ... */
+    };
     return config;
-  }
+  },
 };
 ```
 
 **Rationale**:
+
 - Excellent developer experience
 - Built-in optimizations
 - Easy deployment
@@ -255,6 +284,7 @@ const nextConfig: NextConfig = {
 ### **2. Type Safety**
 
 #### **Decision**: Strict TypeScript Configuration
+
 ```json
 // tsconfig.json
 {
@@ -268,6 +298,7 @@ const nextConfig: NextConfig = {
 ```
 
 **Rationale**:
+
 - Catch errors at compile time
 - Better IDE support
 - Self-documenting code
@@ -275,6 +306,7 @@ const nextConfig: NextConfig = {
 ### **3. Code Quality**
 
 #### **Decision**: ESLint + Prettier + Husky
+
 ```json
 // eslint.config.mjs
 export default [
@@ -288,6 +320,7 @@ export default [
 ```
 
 **Rationale**:
+
 - Consistent code style
 - Automated quality checks
 - Team collaboration
@@ -299,6 +332,7 @@ export default [
 ### **1. Static Generation**
 
 #### **Decision**: Next.js Static Site Generation
+
 ```typescript
 // pages/_app.tsx
 export default function App({ Component, pageProps }) {
@@ -315,6 +349,7 @@ export default function App({ Component, pageProps }) {
 ```
 
 **Rationale**:
+
 - Fast loading times
 - CDN-friendly
 - SEO optimized
@@ -322,6 +357,7 @@ export default function App({ Component, pageProps }) {
 ### **2. Asset Optimization**
 
 #### **Decision**: Next.js Image Optimization + WebP/AVIF
+
 ```typescript
 // Automatic image optimization
 <Image
@@ -334,6 +370,7 @@ export default function App({ Component, pageProps }) {
 ```
 
 **Rationale**:
+
 - Automatic format selection
 - Responsive images
 - Lazy loading
@@ -343,21 +380,25 @@ export default function App({ Component, pageProps }) {
 ## 🔮 **Future Considerations**
 
 ### **1. State Management Evolution**
+
 - **Current**: React Context + Local State
 - **Future**: Consider Zustand for complex state
 - **Migration Path**: Gradual adoption for new features
 
 ### **2. Testing Strategy**
+
 - **Current**: Manual testing
 - **Future**: Unit tests with Jest + React Testing Library
 - **Implementation**: Start with critical user flows
 
 ### **3. Performance Monitoring**
+
 - **Current**: Build-time analysis
 - **Future**: Real User Monitoring (RUM)
 - **Tools**: Web Vitals, Core Web Vitals
 
 ### **4. Internationalization**
+
 - **Current**: English only
 - **Future**: Multi-language support
 - **Implementation**: Next.js i18n routing
@@ -367,17 +408,20 @@ export default function App({ Component, pageProps }) {
 ## 📊 **Metrics & Monitoring**
 
 ### **Performance Targets**
+
 - **First Contentful Paint**: < 1.8s
 - **Largest Contentful Paint**: < 2.5s
 - **First Input Delay**: < 100ms
 - **Cumulative Layout Shift**: < 0.1
 
 ### **Bundle Size Targets**
+
 - **Initial JS Bundle**: < 250kB
 - **Total Bundle Size**: < 1MB
 - **Image Assets**: WebP/AVIF optimized
 
 ### **Accessibility Standards**
+
 - **WCAG AA Compliance**: 100%
 - **Keyboard Navigation**: Full support
 - **Screen Reader**: Compatible
@@ -389,6 +433,7 @@ export default function App({ Component, pageProps }) {
 The architecture decisions outlined above create a solid foundation for a high-performance, maintainable, and scalable website. The focus on performance, developer experience, and future-proofing ensures that the VR NextGEN Solutions website can evolve and grow with changing requirements.
 
 **Key Success Factors**:
+
 1. **Performance-first approach** ensures excellent user experience
 2. **Modular architecture** enables easy maintenance and extension
 3. **Type safety** reduces bugs and improves developer productivity

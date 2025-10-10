@@ -41,15 +41,15 @@
 
 .siteBackgroundServices .grid {
   background-image:
-    linear-gradient(rgba(255,187,1,0.40) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,187,1,0.40) 1px, transparent 1px);
+    linear-gradient(rgba(255, 187, 1, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 187, 1, 0.4) 1px, transparent 1px);
 }
 
 .siteBackgroundServices .aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,187,1,0.08), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,187,1,0.06), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,187,1,0.04), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255, 187, 1, 0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255, 187, 1, 0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 187, 1, 0.04), transparent 65%);
 }
 
 .siteBackgroundServices .shine {
@@ -68,15 +68,15 @@
 
 .siteBackgroundIndustries .grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 }
 
 .siteBackgroundIndustries .aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(157, 0, 255, 0.12), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(0, 229, 255, 0.1), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 0, 229, 0.08), transparent 65%);
 }
 
 .siteBackgroundIndustries .shine {
@@ -95,12 +95,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(1px 1px at 25% 25%, white, transparent),
     radial-gradient(1px 1px at 50% 50%, white, transparent),
     radial-gradient(2px 2px at 75% 75%, white, transparent),
     radial-gradient(2px 2px at 100% 100%, white, transparent);
-  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
+  background-size:
+    200px 200px,
+    300px 300px,
+    400px 400px,
+    600px 600px;
   background-repeat: repeat;
   opacity: 0.3;
   animation: twinkle 10s linear infinite;
@@ -114,8 +118,8 @@
   inset: 0;
   background-size: 60px 60px;
   background-image:
-    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
   animation: grid-move 20s linear infinite;
 }
 
@@ -123,9 +127,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.15), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.12), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.10), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255, 215, 0, 0.15), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255, 215, 0, 0.12), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255, 215, 0, 0.1), transparent 65%);
   animation: aurora-drift 30s ease-in-out infinite;
 }
 
@@ -143,47 +147,66 @@
 .vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 100%);
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
   pointer-events: none;
 }
 
 /* Animations */
 @keyframes twinkle {
-  0% { 
-    background-position: 0 0, 0 0, 0 0, 0 0; 
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
   }
-  100% { 
-    background-position: 200px 200px, 300px 300px, 400px 400px, 600px 600px; 
+  100% {
+    background-position:
+      200px 200px,
+      300px 300px,
+      400px 400px,
+      600px 600px;
   }
 }
 
 @keyframes grid-move {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
 }
 
 @keyframes aurora-drift {
-  0%, 100% { transform: translateX(0) translateY(0); }
-  33% { transform: translateX(-20px) translateY(-10px); }
-  66% { transform: translateX(20px) translateY(10px); }
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  33% {
+    transform: translateX(-20px) translateY(-10px);
+  }
+  66% {
+    transform: translateX(20px) translateY(10px);
+  }
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .siteBackgroundServices .shine,
-  .siteBackgroundIndustries .shine { 
+  .siteBackgroundIndustries .shine {
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       rgba(255, 187, 1, 0.12),
       transparent 60%
-    ); 
+    );
   }
-  
-  .siteBackgroundIndustries .shine { 
+
+  .siteBackgroundIndustries .shine {
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
       rgba(157, 0, 255, 0.12),
       transparent 60%
-    ); 
+    );
   }
 }

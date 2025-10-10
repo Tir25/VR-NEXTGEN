@@ -20,5 +20,3 @@ export const hasIndustryBackgroundImage = (id: string): boolean =>
 
 export const getIndustryBackgroundImage = (id: string): string | null =>
   INDUSTRY_BACKGROUND_IMAGE_MAP[id] || null;
-
-

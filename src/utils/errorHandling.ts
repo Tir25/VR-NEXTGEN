@@ -81,10 +81,7 @@ export class ErrorHandler {
   /**
    * Handle async errors
    */
-  async handleAsyncError<T>(
-    asyncFn: () => Promise<T>,
-    context?: string
-  ): Promise<T | null> {
+  async handleAsyncError<T>(asyncFn: () => Promise<T>, context?: string): Promise<T | null> {
     try {
       return await asyncFn();
     } catch (error) {

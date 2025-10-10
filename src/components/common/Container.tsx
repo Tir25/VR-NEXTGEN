@@ -16,7 +16,7 @@ export interface ContainerProps {
 
 const sizeClasses = {
   sm: 'max-w-4xl',
-  md: 'max-w-5xl', 
+  md: 'max-w-5xl',
   lg: 'max-w-6xl',
   xl: 'max-w-7xl',
   '2xl': 'max-w-[1536px]',
@@ -42,9 +42,7 @@ export default function Container({
   const paddingClass = paddingClasses[padding];
 
   return (
-    <Component
-      className={`${sizeClass} mx-auto ${paddingClass} ${className}`}
-    >
+    <Component className={`${sizeClass} mx-auto ${paddingClass} ${className}`}>
       {children}
     </Component>
   );
@@ -52,21 +50,21 @@ export default function Container({
 
 // Convenience components for common container sizes
 export const SmallContainer = (props: Omit<ContainerProps, 'size'>) => (
-  <Container {...props} size="sm" />
+  <Container {...props} size='sm' />
 );
 
 export const MediumContainer = (props: Omit<ContainerProps, 'size'>) => (
-  <Container {...props} size="md" />
+  <Container {...props} size='md' />
 );
 
 export const LargeContainer = (props: Omit<ContainerProps, 'size'>) => (
-  <Container {...props} size="lg" />
+  <Container {...props} size='lg' />
 );
 
 export const ExtraLargeContainer = (props: Omit<ContainerProps, 'size'>) => (
-  <Container {...props} size="xl" />
+  <Container {...props} size='xl' />
 );
 
 export const FullWidthContainer = (props: Omit<ContainerProps, 'size'>) => (
-  <Container {...props} size="full" />
+  <Container {...props} size='full' />
 );

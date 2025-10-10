@@ -52,7 +52,7 @@ class NavigationOptimizer {
    */
   async analyzeProject(projectRoot: string): Promise<NavigationMap> {
     const srcPath = path.join(projectRoot, 'src');
-    
+
     if (!fs.existsSync(srcPath)) {
       throw new Error('src directory not found');
     }
@@ -60,7 +60,7 @@ class NavigationOptimizer {
     await this.scanDirectory(srcPath);
     this.buildNavigationMap();
     this.analyzeDependencies();
-    
+
     return this.navigationMap;
   }
 
@@ -72,7 +72,7 @@ class NavigationOptimizer {
 
     for (const item of items) {
       const fullPath = path.join(dirPath, item.name);
-      
+
       if (item.isDirectory() && !this.shouldSkipDirectory(item.name)) {
         await this.scanDirectory(fullPath);
       } else if (item.isFile() && this.shouldAnalyzeFile(item.name)) {
@@ -104,7 +104,7 @@ class NavigationOptimizer {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       const stats = fs.statSync(filePath);
-      
+
       const fileInfo: FileInfo = {
         path: filePath,
         name: path.basename(filePath),
@@ -128,7 +128,7 @@ class NavigationOptimizer {
    */
   private determineFileType(filePath: string): FileInfo['type'] {
     const relativePath = path.relative(process.cwd(), filePath);
-    
+
     if (relativePath.includes('/components/')) return 'component';
     if (relativePath.includes('/hooks/')) return 'hook';
     if (relativePath.includes('/utils/')) return 'utility';
@@ -136,7 +136,7 @@ class NavigationOptimizer {
     if (relativePath.includes('/config/')) return 'config';
     if (relativePath.includes('/pages/')) return 'page';
     if (relativePath.includes('/styles/')) return 'style';
-    
+
     return 'other';
   }
 
@@ -150,7 +150,11 @@ class NavigationOptimizer {
 
     while ((match = importRegex.exec(content)) !== null) {
       const importPath = match[1];
-      if (importPath.startsWith('@/') || importPath.startsWith('./') || importPath.startsWith('../')) {
+      if (
+        importPath.startsWith('@/') ||
+        importPath.startsWith('./') ||
+        importPath.startsWith('../')
+      ) {
         dependencies.push(importPath);
       }
     }
@@ -163,7 +167,7 @@ class NavigationOptimizer {
    */
   private extractExports(content: string): string[] {
     const exports: string[] = [];
-    
+
     // Named exports
     const namedExportRegex = /export\s+(?:const|function|class|interface|type)\s+(\w+)/g;
     let match;
@@ -186,7 +190,7 @@ class NavigationOptimizer {
    */
   private extractImports(content: string): string[] {
     const imports: string[] = [];
-    
+
     const importRegex = /import\s+(?:{[^}]+}|\w+|\*\s+as\s+\w+)\s+from\s+['"]([^'"]+)['"]/g;
     let match;
     while ((match = importRegex.exec(content)) !== null) {
@@ -204,7 +208,7 @@ class NavigationOptimizer {
     const functions = (content.match(/function|=>/g) || []).length;
     const classes = (content.match(/class/g) || []).length;
     const conditionals = (content.match(/if|else|switch|case/g) || []).length;
-    
+
     return lines + functions + classes + conditionals;
   }
 
@@ -215,7 +219,7 @@ class NavigationOptimizer {
     for (const [filePath, fileInfo] of this.fileMap) {
       const category = fileInfo.type;
       const key = path.basename(filePath, path.extname(filePath));
-      
+
       if (category in this.navigationMap) {
         (this.navigationMap as any)[category][key] = fileInfo;
       }
@@ -235,7 +239,7 @@ class NavigationOptimizer {
    */
   generateNavigationDocs(): string {
     let docs = '# Project Navigation Guide\n\n';
-    
+
     docs += '## Component Structure\n\n';
     for (const [name, info] of Object.entries(this.navigationMap.components)) {
       docs += `### ${name}\n`;
@@ -267,12 +271,12 @@ class NavigationOptimizer {
    */
   findUnusedFiles(): string[] {
     const unusedFiles: string[] = [];
-    
+
     for (const [filePath, fileInfo] of this.fileMap) {
-      const isUsed = Array.from(this.fileMap.values()).some(otherFile => 
+      const isUsed = Array.from(this.fileMap.values()).some(otherFile =>
         otherFile.dependencies.some(dep => dep.includes(fileInfo.name))
       );
-      
+
       if (!isUsed && fileInfo.type !== 'page') {
         unusedFiles.push(filePath);
       }
@@ -336,14 +340,14 @@ class NavigationOptimizer {
         `${relativePath}/index.ts`,
         `${relativePath}/index.tsx`,
       ];
-      
+
       for (const possiblePath of possiblePaths) {
         if (this.fileMap.has(possiblePath)) {
           return possiblePath;
         }
       }
     }
-    
+
     return null;
   }
 
@@ -364,7 +368,7 @@ class NavigationOptimizer {
     for (const fileInfo of this.fileMap.values()) {
       stats.byType[fileInfo.type] = (stats.byType[fileInfo.type] || 0) + 1;
       stats.totalSize += fileInfo.size;
-      
+
       if (fileInfo.complexity) {
         totalComplexity += fileInfo.complexity;
       }

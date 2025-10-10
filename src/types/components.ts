@@ -162,8 +162,12 @@ export interface ScrollContextType {
     isScrolling: boolean;
     scrollVelocity: number;
   };
-  registerHandler: (handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => () => void;
-  unregisterHandler: (handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => void;
+  registerHandler: (
+    handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void
+  ) => () => void;
+  unregisterHandler: (
+    handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void
+  ) => void;
 }
 
 // Performance Types

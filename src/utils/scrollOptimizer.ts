@@ -9,11 +9,11 @@ import React from 'react';
 const throttle = <T extends (...args: any[]) => any>(func: T, wait: number): T => {
   let timeout: NodeJS.Timeout | null = null;
   let previous = 0;
-  
+
   return ((...args: any[]) => {
     const now = Date.now();
     const remaining = wait - (now - previous);
-    
+
     if (remaining <= 0 || remaining > wait) {
       if (timeout) {
         clearTimeout(timeout);
@@ -33,7 +33,7 @@ const throttle = <T extends (...args: any[]) => any>(func: T, wait: number): T =
 
 const debounce = <T extends (...args: any[]) => any>(func: T, wait: number): T => {
   let timeout: NodeJS.Timeout | null = null;
-  
+
   return ((...args: any[]) => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -172,13 +172,13 @@ class ScrollOptimizer {
     this.lastTimestamp = performance.now();
 
     // Use passive listeners for better performance
-    window.addEventListener('scroll', this.handleScroll, { 
-      passive: true, 
-      capture: false 
+    window.addEventListener('scroll', this.handleScroll, {
+      passive: true,
+      capture: false,
     });
-    
-    window.addEventListener('resize', this.handleResize, { 
-      passive: true 
+
+    window.addEventListener('resize', this.handleResize, {
+      passive: true,
     });
 
     if (this.config.enableRaf) {
@@ -260,7 +260,7 @@ class ScrollOptimizer {
     if (this.resizeDebounceTimer) {
       clearTimeout(this.resizeDebounceTimer);
     }
-    
+
     this.resizeDebounceTimer = setTimeout(() => {
       this.notifyResize();
     }, 150);
@@ -324,8 +324,9 @@ class ScrollOptimizer {
    */
   private executeHandlers(scrollEvent: ScrollEvent): void {
     // Sort handlers by priority (higher priority first)
-    const sortedHandlers = Array.from(this.handlers.values())
-      .sort((a, b) => b.priority - a.priority);
+    const sortedHandlers = Array.from(this.handlers.values()).sort(
+      (a, b) => b.priority - a.priority
+    );
 
     // Execute handlers
     sortedHandlers.forEach(({ handler }) => {
@@ -404,7 +405,7 @@ class ScrollOptimizer {
   destroy(): void {
     this.stop();
     this.handlers.clear();
-    
+
     if (this.resizeDebounceTimer) {
       clearTimeout(this.resizeDebounceTimer);
     }
@@ -427,11 +428,11 @@ export function useOptimizedScroll(
   } = {}
 ) {
   const { deps = [], ...scrollOptions } = options;
-  
+
   React.useEffect(() => {
     const id = `scroll-handler-${Math.random().toString(36).substr(2, 9)}`;
     const unregister = scrollOptimizer.register(id, handler, scrollOptions);
-    
+
     return unregister;
   }, deps);
 }
@@ -449,12 +450,7 @@ export function createScrollAnimation(
     once?: boolean;
   } = {}
 ) {
-  const {
-    start = 'top bottom',
-    end = 'bottom top',
-    scrub = true,
-    once = false,
-  } = options;
+  const { start = 'top bottom', end = 'bottom top', scrub = true, once = false } = options;
 
   // This would integrate with GSAP ScrollTrigger or similar
   // For now, return a cleanup function
