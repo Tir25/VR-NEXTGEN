@@ -61,7 +61,9 @@ export default function ScrollPerformanceMonitor({
       // Initial update
       updateMetrics();
     }).catch((error) => {
-      console.warn('Failed to load scroll performance monitor:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to load scroll performance monitor:', error);
+      }
     });
 
     return () => {
@@ -85,12 +87,16 @@ export default function ScrollPerformanceMonitor({
       
       if (rec.includes('passive event listeners')) {
         // Already handled by UnifiedScrollManager
-        console.log('✅ Passive event listeners already enabled');
+        if (process.env.NODE_ENV === 'development') {
+          console.log('✅ Passive event listeners already enabled');
+        }
       }
       
       if (rec.includes('debounce scroll handlers')) {
         // Already handled by UnifiedScrollManager
-        console.log('✅ Scroll handlers already debounced');
+        if (process.env.NODE_ENV === 'development') {
+          console.log('✅ Scroll handlers already debounced');
+        }
       }
       
       if (rec.includes('reduce visual effects') && capabilities?.isLowEnd) {

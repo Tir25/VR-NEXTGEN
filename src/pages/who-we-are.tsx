@@ -52,7 +52,7 @@ export default function WhoWeArePage() {
                   </p>
                   
                   <p className="text-lg md:text-xl text-white leading-relaxed">
-                    Our approach combines strategy, technology, and transformation — turning vision into value and insight into action. As your trusted transformation partner, we're not just solving today's problems — we're shaping tomorrow's possibilities.
+                    Our approach combines strategy, technology, and transformation — turning vision into value and insight into action. As your trusted transformation partner, we&apos;re not just solving today&apos;s problems — we&apos;re shaping tomorrow&apos;s possibilities.
                   </p>
                 </div>
               </div>

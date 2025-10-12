@@ -16,8 +16,8 @@ export default function AnimatedBackground() {
   
   // Use unified background animation hook only if effects are enabled
   // Always call the hook to satisfy React Hook rules, but conditionally use its result
-  const animationResult = useUnifiedBackgroundAnimation();
-  // Note: animationResult is used by the BackgroundEffects component internally
+  useUnifiedBackgroundAnimation();
+  // Note: Animation result is used by the BackgroundEffects component internally
 
   function getSectionClass(sectionId: string): string {
     const sectionMapping: Record<string, string> = {

@@ -110,14 +110,14 @@ export default function CareersPage() {
                     <div className="border-t border-white/10 pt-4">
                       <h4 className="text-lg font-medium text-gold mb-3">Future Opportunities</h4>
                       <p className="text-white/80 leading-relaxed">
-                        If you'd like to be considered for future roles, please send your resume to{" "}
+                        If you&apos;d like to be considered for future roles, please send your resume to{" "}
                         <a 
                           href="mailto:info@vrnextgensolutions.com" 
                           className="text-gold hover:text-gold/80 transition-colors duration-200 font-medium"
                         >
                           info@vrnextgensolutions.com
                         </a>
-                        . We'll be in touch when a suitable opportunity arises.
+                        . We&apos;ll be in touch when a suitable opportunity arises.
                       </p>
                     </div>
                   </div>
