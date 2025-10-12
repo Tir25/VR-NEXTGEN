@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUnifiedScrollManager } from "@/utils/UnifiedScrollManager";
+import { getOptimizedScrollManager } from "@/utils/UnifiedScrollManager";
 
 /**
  * useViewport
@@ -14,7 +14,7 @@ export function useViewport() {
   }));
 
   useEffect(() => {
-    const manager = getUnifiedScrollManager();
+    const manager = getOptimizedScrollManager();
     // Immediate sync in case values changed before subscription
     setSize({ width: window.innerWidth, height: window.innerHeight });
 
@@ -26,7 +26,7 @@ export function useViewport() {
           return { width: evt.viewportWidth, height: evt.viewportHeight };
         });
       },
-      { type: "custom", priority: 5 }
+      16 // throttle in ms
     );
 
     return () => unregister();

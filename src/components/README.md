@@ -17,8 +17,7 @@ components/
 │   ├── ErrorBoundary.tsx # Error handling wrapper
 │   ├── Input.tsx        # Form input component
 │   ├── LazyWrapper.tsx  # Lazy loading wrapper
-│   ├── Logo.tsx         # Company logo component
-│   └── SocialIcons.tsx  # Social media icons
+│   └── Logo.tsx         # Company logo component
 ├── layout/              # Layout components
 │   ├── Header.tsx       # Navigation header
 │   ├── Footer.tsx       # Site footer
@@ -390,23 +389,6 @@ interface LayoutProps {
 <WhyChooseUs />
 ```
 
-### **CTA Banner**
-
-**File:** `src/components/sections/cta/CTABanner.tsx`
-
-**Purpose:** Call-to-action banner with contact information.
-
-**Features:**
-- ✅ Call-to-action buttons
-- ✅ Contact information
-- ✅ Animated elements
-- ✅ Responsive design
-
-**Usage:**
-```typescript
-// Used on homepage
-<CTABanner />
-```
 
 ### **What We Do Sections**
 

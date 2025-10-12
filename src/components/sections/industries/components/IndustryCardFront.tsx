@@ -6,7 +6,7 @@ interface IndustryCardFrontProps {
   isFlipped: boolean;
   hasBackgroundImage: (cardId: string) => boolean;
   getBackgroundImagePath: (cardId: string) => string | null;
-  textScaling: any;
+  textScaling: Record<string, string>;
   responsivePadding: string;
   onLearnMore: (e: React.MouseEvent) => void;
 }

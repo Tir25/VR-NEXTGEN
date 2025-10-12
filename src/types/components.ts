@@ -111,11 +111,6 @@ export interface HeaderProps extends BaseComponentProps {
   isMenuOpen?: boolean;
 }
 
-export interface FooterProps extends BaseComponentProps {
-  showSocialIcons?: boolean;
-  showNewsletter?: boolean;
-  showBackToTop?: boolean;
-}
 
 // Section Types
 export interface SectionHeaderProps extends BaseComponentProps {
@@ -132,19 +127,9 @@ export interface SectionHeaderProps extends BaseComponentProps {
 }
 
 // Animation Wrapper Types
-export interface AnimationWrapperProps extends BaseComponentProps, AnimationProps {
-  items?: ReactNode[];
-  as?: JSXElement;
-  wrapper?: JSXElement;
-}
+// AnimationWrapper types removed as component was unused
 
-// Safe Wrapper Types
-export interface SafeWrapperProps extends BaseComponentProps {
-  isolate?: boolean;
-  fallback?: ReactNode;
-  onError?: (error: Error) => void;
-  resetOnError?: boolean;
-}
+// SafeWrapper types removed as component was unused
 
 // Background Types
 export interface BackgroundEffectsProps extends BaseComponentProps {

@@ -1,0 +1,984 @@
+/**
+ * Unified Carousel Styles
+ * Comprehensive styling for the unified carousel system
+ * Includes accessibility, responsive design, and performance optimizations
+ */
+
+.unified-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.carousel-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.carousel-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  outline: none;
+  position: relative;
+}
+
+.carousel-item:not(.active) {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.carousel-item.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.carousel-item:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+.carousel-item:hover:not(.active) {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+/* Navigation indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px;
+}
+
+.carousel-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-gold, #d4af37);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+}
+
+.carousel-indicator:hover {
+  background: rgba(212, 175, 55, 0.3);
+  transform: scale(1.1);
+}
+
+.carousel-indicator.active {
+  background: var(--accent-gold, #d4af37);
+  transform: scale(1.2);
+}
+
+.carousel-indicator:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+.carousel-indicator:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Navigation buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-gold, #d4af37);
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--accent-gold, #d4af37);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  outline: none;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.carousel-nav:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--accent-gold, #d4af37);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-nav:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+.carousel-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.carousel-nav-prev {
+  left: 16px;
+}
+
+.carousel-nav-next {
+  right: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-nav-prev {
+    left: 8px;
+  }
+  
+  .carousel-nav-next {
+    right: 8px;
+  }
+  
+  .carousel-indicators {
+    margin-top: 12px;
+    gap: 6px;
+  }
+  
+  .carousel-indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-nav {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .carousel-nav svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .carousel-nav {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-gold, #d4af37);
+  }
+  
+  .carousel-indicator {
+    border-color: var(--accent-gold, #d4af37);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-container {
+    transition: none;
+  }
+  
+  .carousel-item {
+    transition: opacity 0.3s ease;
+  }
+  
+  .carousel-nav,
+  .carousel-indicator {
+    transition: opacity 0.3s ease;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .carousel-nav {
+    border-width: 3px;
+    background: var(--background-color, #000);
+  }
+  
+  .carousel-indicator {
+    border-width: 3px;
+  }
+}
+
+/* Focus management for keyboard navigation */
+.carousel-item:focus,
+.carousel-indicator:focus,
+.carousel-nav:focus {
+  z-index: 20;
+}
+
+/* Loading states */
+.carousel-item.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.carousel-item.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--accent-gold, #d4af37);
+  border-radius: 50%;
+  animation: carousel-spin 1s linear infinite;
+}
+
+@keyframes carousel-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error states */
+.carousel-item.error {
+  opacity: 0.5;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Performance optimizations */
+.unified-carousel * {
+  will-change: auto;
+}
+
+.unified-carousel .carousel-container {
+  will-change: transform;
+}
+
+.unified-carousel .carousel-item.active {
+  will-change: transform, opacity;
+}
+
+/* Touch improvements */
+.unified-carousel {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Mobile optimizations */
+.mobile-optimized-carousel {
+  touch-action: pan-y pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-device .carousel-nav {
+  display: none; /* Hide navigation buttons on mobile */
+}
+
+.mobile-device .carousel-indicators {
+  margin-top: 8px;
+  gap: 4px;
+}
+
+.mobile-device .carousel-indicator {
+  width: 8px;
+  height: 8px;
+  border-width: 1px;
+}
+
+.tablet-device .carousel-nav {
+  width: 44px;
+  height: 44px;
+}
+
+.low-end-device .carousel-item {
+  transform: none !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.low-end-device .carousel-container {
+  transition: none !important;
+}
+
+.small-screen .carousel-item {
+  min-height: 150px;
+  padding: 16px;
+}
+
+.small-screen .carousel-indicators {
+  margin-top: 6px;
+}
+
+/* Battery optimization for mobile */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-optimized-carousel .carousel-item {
+    transition: opacity 0.2s ease;
+  }
+  
+  .mobile-optimized-carousel .carousel-container {
+    transition: none;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .mobile-optimized-carousel .carousel-item {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Simple Carousel Configuration Styles */
+.simple-carousel-config {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  backdrop-filter: blur(8px);
+}
+
+.config-header {
+  margin-bottom: 24px;
+}
+
+.config-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-gold, #d4af37);
+  margin: 0 0 8px 0;
+}
+
+.config-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.config-section {
+  margin-bottom: 20px;
+}
+
+.config-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  margin: 0 0 12px 0;
+}
+
+.config-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 6px;
+}
+
+.config-row {
+  margin-bottom: 12px;
+}
+
+.config-input,
+.config-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.config-input:focus,
+.config-select:focus {
+  outline: none;
+  border-color: var(--accent-gold, #d4af37);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.config-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+.config-checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-gold, #d4af37);
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset-button {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preset-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.preset-button.active {
+  background: var(--accent-gold, #d4af37);
+  border-color: var(--accent-gold, #d4af37);
+  color: black;
+  font-weight: 500;
+}
+
+.advanced-toggle {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: var(--accent-gold, #d4af37);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.advanced-toggle:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--accent-gold, #d4af37);
+}
+
+.advanced-settings {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+}
+
+.reset-button {
+  padding: 10px 20px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.5);
+}
+
+/* Industry Carousel Specific Styles */
+.industry-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.industry-carousel .carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  min-height: 500px;
+}
+
+.industry-carousel .carousel-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: grab;
+}
+
+.industry-carousel .carousel-item:active {
+  cursor: grabbing;
+}
+
+.industry-carousel .carousel-item.isActive {
+  z-index: 10;
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.industry-carousel .carousel-item:not(.isActive) {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+/* Industry Carousel Navigation */
+.industry-carousel .navigation-arrows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.industry-carousel .nav-arrow {
+  padding: 0.75rem;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--accent-gold, #d4af37);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.industry-carousel .nav-arrow:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: scale(1.05);
+}
+
+.industry-carousel .nav-arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.industry-carousel .nav-arrow:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+.industry-carousel .nav-indicators {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.industry-carousel .nav-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.industry-carousel .nav-indicator:hover {
+  background: rgba(212, 175, 55, 0.5);
+  transform: scale(1.1);
+}
+
+.industry-carousel .nav-indicator.active {
+  background: var(--accent-gold, #d4af37);
+  transform: scale(1.25);
+}
+
+.industry-carousel .nav-indicator:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+/* Industry Carousel Info */
+.industry-carousel .carousel-info {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+}
+
+/* Responsive Design for Industry Carousel */
+@media (max-width: 768px) {
+  .industry-carousel .carousel-item {
+    width: 350px !important;
+  }
+  
+  .industry-carousel .navigation-arrows {
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+  }
+  
+  .industry-carousel .nav-arrow {
+    padding: 0.625rem;
+  }
+  
+  .industry-carousel .nav-indicators {
+    gap: 0.375rem;
+  }
+  
+  .industry-carousel .nav-indicator {
+    width: 0.625rem;
+    height: 0.625rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .industry-carousel .carousel-item {
+    width: 300px !important;
+    padding: 0.5rem;
+  }
+  
+  .industry-carousel .navigation-arrows {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .industry-carousel .nav-arrow {
+    padding: 0.5rem;
+  }
+  
+  .industry-carousel .nav-arrow svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* Circular Industry Carousel Styles */
+.circular-industry-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.circular-industry-carousel .carousel-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+}
+
+.circular-industry-carousel .carousel {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.circular-industry-carousel .memory-card {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.circular-industry-carousel .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.circular-industry-carousel .memory-card:hover .card-inner {
+  transform: translateZ(20px);
+}
+
+.circular-industry-carousel .card-front,
+.circular-industry-carousel .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+.circular-industry-carousel .card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.95), rgba(30, 30, 60, 0.95));
+}
+
+.circular-industry-carousel .card-front {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 60, 0.8),
+    rgba(20, 20, 40, 0.9)
+  );
+  border: 1px solid rgba(157, 0, 255, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+/* Ensure crisp rendering and prevent blurriness */
+.circular-industry-carousel .card-front,
+.circular-industry-carousel .card-back {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Prevent blurriness on hover */
+.circular-industry-carousel .card-front:hover,
+.circular-industry-carousel .card-back:hover {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+
+.circular-industry-carousel .card-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.circular-industry-carousel .card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(157, 0, 255, 0.1),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.circular-industry-carousel .memory-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* Custom Scrollbar for Card Back */
+.circular-industry-carousel .scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.3) transparent;
+}
+
+.circular-industry-carousel .scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.circular-industry-carousel .scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.circular-industry-carousel .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(34, 211, 238, 0.3);
+  border-radius: 2px;
+}
+
+.circular-industry-carousel .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(34, 211, 238, 0.5);
+}
+
+.circular-industry-carousel .carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.circular-industry-carousel .control-btn {
+  background: rgba(20, 20, 40, 0.7);
+  border: 1px solid var(--accent-gold, #d4af37);
+  color: var(--accent-gold, #d4af37);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.circular-industry-carousel .control-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--accent-gold, #d4af37);
+  transform: scale(1.05);
+}
+
+.circular-industry-carousel .control-btn:active {
+  transform: scale(0.95);
+}
+
+.circular-industry-carousel .control-btn:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+.circular-industry-carousel .nav-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-gold, #d4af37);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+}
+
+.circular-industry-carousel .nav-indicator:hover {
+  background: rgba(212, 175, 55, 0.3);
+  transform: scale(1.1);
+}
+
+.circular-industry-carousel .nav-indicator.active {
+  background: var(--accent-gold, #d4af37);
+  transform: scale(1.2);
+}
+
+.circular-industry-carousel .nav-indicator:focus-visible {
+  outline: 2px solid var(--accent-gold, #d4af37);
+  outline-offset: 2px;
+}
+
+/* Responsive Design for Circular Carousel */
+@media (max-width: 768px) {
+  .circular-industry-carousel .carousel-container {
+    height: 480px;
+  }
+  
+  .circular-industry-carousel .memory-card {
+    width: 180px !important;
+    height: 240px !important;
+    margin-left: -90px !important;
+    margin-top: -120px !important;
+  }
+  
+  .circular-industry-carousel .carousel-controls {
+    gap: 15px;
+  }
+  
+  .circular-industry-carousel .control-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .circular-industry-carousel .nav-indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circular-industry-carousel .carousel-container {
+    height: 420px;
+  }
+  
+  .circular-industry-carousel .memory-card {
+    width: 160px !important;
+    height: 200px !important;
+    margin-left: -80px !important;
+    margin-top: -100px !important;
+  }
+  
+  .circular-industry-carousel .carousel-controls {
+    gap: 10px;
+  }
+  
+  .circular-industry-carousel .control-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .circular-industry-carousel .control-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .circular-industry-carousel .nav-indicator {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .carousel-nav,
+  .carousel-indicators {
+    display: none;
+  }
+  
+  .carousel-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .simple-carousel-config {
+    display: none;
+  }
+  
+  .industry-carousel .navigation-arrows,
+  .industry-carousel .carousel-info {
+    display: none;
+  }
+  
+  .circular-industry-carousel .carousel-controls,
+  .circular-industry-carousel .instructions {
+    display: none;
+  }
+}

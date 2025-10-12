@@ -1,11 +1,12 @@
 /**
  * OptimizedImage Component
- * Automatically serves the best image format (AVIF > WebP > fallback)
- * with responsive sizing and lazy loading
+ * Automatically serves optimal format based on device capabilities
+ * with responsive sizing, lazy loading, and performance optimization
  */
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import performanceDetector from '@/utils/performanceDetection';
 
 interface OptimizedImageProps {
   src: string;
@@ -20,10 +21,12 @@ interface OptimizedImageProps {
   style?: React.CSSProperties;
   onLoad?: () => void;
   onError?: () => void;
+  placeholder?: 'blur' | 'empty';
+  blurDataURL?: string;
 }
 
 /**
- * Get optimized image path based on browser support
+ * Get optimized image path based on device capabilities and browser support
  */
 function getOptimizedImagePath(originalPath: string): string {
   // If it's already an optimized path, return as is
@@ -38,12 +41,28 @@ function getOptimizedImagePath(originalPath: string): string {
   
   const basename = filename.replace(/\.[^/.]+$/, '');
   
+  // Determine optimal format based on device capabilities
+  const settings = performanceDetector.getSettings();
+  const capabilities = performanceDetector.getCapabilities();
+  
+  let format = 'webp'; // Default fallback
+  
+  if (settings?.imageQuality === 'high' && capabilities?.supportsAVIF) {
+    format = 'avif';
+  } else if (settings?.imageQuality === 'medium' || settings?.imageQuality === 'low') {
+    format = 'webp';
+  } else if (capabilities?.supportsWebP) {
+    format = 'webp';
+  } else {
+    format = 'png'; // Ultimate fallback
+  }
+  
   if (dir === '/images') {
-    return `/images-optimized/${basename}.webp`;
+    return `/images-optimized/${basename}.${format}`;
   } else if (dir === '/images/Industries') {
-    return `/images-optimized/Industries/${basename}.webp`;
+    return `/images-optimized/Industries/${basename}.${format}`;
   } else if (dir === '/images/Our Services') {
-    return `/images-optimized/Our Services/${basename}.webp`;
+    return `/images-optimized/Our Services/${basename}.${format}`;
   } else if (dir === '/images/logo-Final-png.svg') {
     return '/icons-optimized/vr-logo-md.webp';
   }
@@ -52,16 +71,60 @@ function getOptimizedImagePath(originalPath: string): string {
 }
 
 /**
- * Get AVIF version of image path
+ * Generate responsive srcSet based on device capabilities
  */
-function getAvifImagePath(originalPath: string): string {
-  const webpPath = getOptimizedImagePath(originalPath);
-  return webpPath.replace('.webp', '.avif');
+function generateResponsiveSrcSet(basePath: string, basename: string): string {
+  const capabilities = performanceDetector.getCapabilities();
+  const settings = performanceDetector.getSettings();
+  
+  if (!capabilities) return '';
+  
+  // Determine optimal format
+  let format = 'webp';
+  if (settings?.imageQuality === 'high' && capabilities.supportsAVIF) {
+    format = 'avif';
+  } else if (capabilities.supportsWebP) {
+    format = 'webp';
+  } else {
+    format = 'png';
+  }
+  
+  // Generate responsive sizes
+  const sizes = [640, 768, 1024, 1280, 1536, 1920];
+  const srcSetEntries = sizes.map(size => {
+    const path = basePath.replace(`${basename}.${format}`, `${basename}-${size}.${format}`);
+    return `${path} ${size}w`;
+  });
+  
+  return srcSetEntries.join(', ');
 }
+
 
 /**
  * OptimizedImage Component
  */
+/**
+ * Generate a simple blur placeholder
+ */
+function generateBlurDataURL(width: number = 10, height: number = 10): string {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  
+  if (ctx) {
+    // Create a simple gradient blur placeholder
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#1a1a1a');
+    gradient.addColorStop(0.5, '#2a2a2a');
+    gradient.addColorStop(1, '#1a1a1a');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+  }
+  
+  return canvas.toDataURL('image/jpeg', 0.1);
+}
+
 export default function OptimizedImage({
   src,
   alt,
@@ -75,48 +138,36 @@ export default function OptimizedImage({
   style,
   onLoad,
   onError,
+  placeholder = 'blur',
+  blurDataURL,
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState<string>(src);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [srcSet, setSrcSet] = useState<string>('');
   const imgRef = useRef<HTMLImageElement>(null);
 
   // Get optimized image paths
-  const webpSrc = getOptimizedImagePath(src);
-  const avifSrc = getAvifImagePath(src);
+  const optimizedSrc = getOptimizedImagePath(src);
 
-  // Check for AVIF support
+  // Generate blur placeholder if not provided
+  const defaultBlurDataURL = blurDataURL || (typeof window !== 'undefined' ? generateBlurDataURL(width || 10, height || 10) : '');
+
+  // Set optimized source and srcSet
   useEffect(() => {
-    const checkAvifSupport = async () => {
-      if (typeof window === 'undefined') return;
+    setImageSrc(optimizedSrc);
+    
+    // Generate responsive srcSet for better performance
+    if (typeof window !== 'undefined' && !fill) {
+      const pathParts = optimizedSrc.split('/');
+      const filename = pathParts[pathParts.length - 1];
+      const basename = filename.replace(/\.[^/.]+$/, '');
+      const basePath = pathParts.slice(0, -1).join('/') + '/';
       
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d');
-        
-        if (ctx) {
-          const avifDataURL = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEAwgMgkfAAAADHEAAAAA';
-          
-          const img = new window.Image();
-          img.onload = () => {
-            setImageSrc(avifSrc);
-          };
-          img.onerror = () => {
-            setImageSrc(webpSrc);
-          };
-          img.src = avifDataURL;
-        } else {
-          setImageSrc(webpSrc);
-        }
-      } catch (error) {
-        setImageSrc(webpSrc);
-      }
-    };
-
-    checkAvifSupport();
-  }, [avifSrc, webpSrc]);
+      const responsiveSrcSet = generateResponsiveSrcSet(basePath, basename);
+      setSrcSet(responsiveSrcSet);
+    }
+  }, [optimizedSrc, fill, width, height]);
 
   const handleLoad = () => {
     setIsLoading(false);
@@ -153,8 +204,8 @@ export default function OptimizedImage({
 
   return (
     <div className={`relative ${className || ''}`} style={style}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
+      {isLoading && placeholder === 'blur' && (
+        <div className="absolute inset-0 bg-gray-800 animate-pulse rounded" />
       )}
       
       <Image
@@ -164,14 +215,18 @@ export default function OptimizedImage({
         width={width}
         height={height}
         priority={priority}
-        sizes={sizes}
+        sizes={sizes || (fill ? '100vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw')}
         quality={quality}
         fill={fill}
+        placeholder={placeholder}
+        blurDataURL={placeholder === 'blur' ? defaultBlurDataURL : undefined}
         onLoad={handleLoad}
         onError={handleError}
         className={`transition-opacity duration-300 ${
           isLoading ? 'opacity-0' : 'opacity-100'
         }`}
+        // Add srcSet for responsive images
+        {...(srcSet && !fill ? { srcSet } : {})}
       />
     </div>
   );
@@ -196,38 +251,8 @@ export function OptimizedBackgroundImage({
   const [imageSrc, setImageSrc] = useState<string>(src);
 
   useEffect(() => {
-    const webpSrc = getOptimizedImagePath(src);
-    const avifSrc = getAvifImagePath(src);
-
-    // Check for AVIF support
-    const checkAvifSupport = async () => {
-      if (typeof window === 'undefined') {
-        setImageSrc(webpSrc);
-        return;
-      }
-      
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1;
-        canvas.height = 1;
-        const ctx = canvas.getContext('2d');
-        
-        if (ctx) {
-          const avifDataURL = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEAwgMgkfAAAADHEAAAAA';
-          
-          const img = new window.Image();
-          img.onload = () => setImageSrc(avifSrc);
-          img.onerror = () => setImageSrc(webpSrc);
-          img.src = avifDataURL;
-        } else {
-          setImageSrc(webpSrc);
-        }
-      } catch (error) {
-        setImageSrc(webpSrc);
-      }
-    };
-
-    checkAvifSupport();
+    const optimizedSrc = getOptimizedImagePath(src);
+    setImageSrc(optimizedSrc);
   }, [src]);
 
   return (

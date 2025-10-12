@@ -1,0 +1,49 @@
+/**
+ * Performance Optimizations CSS
+ * Contains only the CSS optimizations that are actually used
+ */
+
+/* Hardware acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optimize rendering for animated elements */
+.animated-element {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Smooth scrolling optimization */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-element,
+  .gpu-accelerated {
+    will-change: auto;
+    transition: none;
+    animation: none;
+  }
+  
+  .smooth-scroll {
+    scroll-behavior: auto;
+  }
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  .gpu-accelerated,
+  .animated-element {
+    transform: none;
+    will-change: auto;
+  }
+}

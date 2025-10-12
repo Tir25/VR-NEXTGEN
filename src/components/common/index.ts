@@ -10,24 +10,29 @@ export { default as ImportErrorBoundary } from './ImportErrorBoundary';
 export { default as Input } from './Input';
 export { default as LazyWrapper } from './LazyWrapper';
 export { default as Logo } from './Logo';
-export { default as SocialIcons } from './SocialIcons';
 
 // New reusable layout components
 export { default as Section, HeroSection, ServicesSection, IndustriesSection, WhyChooseSection, ClientsSection } from './Section';
 export { default as Container, SmallContainer, MediumContainer, LargeContainer, ExtraLargeContainer, FullWidthContainer } from './Container';
 export { default as SectionHeader, HeroHeader, ServicesHeader, IndustriesHeader, WhyChooseHeader } from './SectionHeader';
 export { default as ButtonGroup, CTAButtonGroup, NavigationButtonGroup, ActionButtonGroup } from './ButtonGroup';
-export { default as AnimationWrapper, FadeInWrapper, SlideUpWrapper, SlideDownWrapper, ScaleInWrapper, StaggeredWrapper } from './AnimationWrapper';
+// AnimationWrapper removed as it was unused
 
 // Error isolation and safety components
-export { default as SafeWrapper, SafeSection } from './SafeWrapper';
-export { default as BrowserCompatibility, IntersectionObserverCompatible, AnimationCompatible, StorageCompatible, ModernBrowserCompatible } from './BrowserCompatibility';
-export { default as SafeAnimation, SafeFadeIn, SafeSlideUp, SafeSlideDown, SafeScaleIn, SafeStaticAnimation } from './SafeAnimation';
-export { default as InputValidator, EmailValidator, PhoneValidator, NameValidator, PasswordValidator, commonValidationRules } from './InputValidator';
+// SafeWrapper, BrowserCompatibility, and SafeAnimation components removed as they were unused
+// InputValidator moved to utils/validation - import from there if needed
 
 // New modular and sustainable components
 export { BackgroundEffects } from './background';
 export { default as Carousel, CarouselControls } from './Carousel';
-export { default as AnimationSystem, StaggeredAnimation, AnimationPresets } from './AnimationSystem';
+// AnimationSystem removed as it was unused
 export { default as AnimatedBackground } from './AnimatedBackground';
 export { default as SectionBoundary } from './SectionBoundary';
+
+// Skeleton loading components
+export { default as SkeletonLoader, ServiceCardSkeleton, IndustryCardSkeleton, GridSkeleton, HeroSkeleton } from './SkeletonLoader';
+
+// Optimized image components
+export { default as OptimizedValuesImage } from './OptimizedValuesImage';
+export { default as OptimizedVisionImage } from './OptimizedVisionImage';
+export { default as OptimizedCareersImage } from './OptimizedCareersImage';

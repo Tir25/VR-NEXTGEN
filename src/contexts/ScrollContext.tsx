@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useCallback, ReactNode } from 'react';
-import { getUnifiedScrollManager, ScrollEvent } from '@/utils/UnifiedScrollManager';
+import { getOptimizedScrollManager, ScrollEvent } from '@/utils/UnifiedScrollManager';
 
 /**
  * Global scroll state and handlers
@@ -52,7 +52,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     viewportWidth: 0,
   });
 
-  const unifiedScrollManager = getUnifiedScrollManager();
+  const unifiedScrollManager = getOptimizedScrollManager();
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   /**
@@ -67,7 +67,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     const unregister = unifiedScrollManager.register(
       `context-${type}-${Date.now()}`,
       unifiedHandler,
-      { type, priority: getPriorityForType(type) }
+      16 // throttle in ms
     );
     
     return unregister;
@@ -76,7 +76,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
   /**
    * Unregister a scroll handler
    */
-  const unregisterHandler = useCallback((type: keyof ScrollHandlers, handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
+  const unregisterHandler = useCallback((_type: keyof ScrollHandlers, handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
     // Note: This is a simplified implementation since the unified manager handles cleanup automatically
     // In practice, components should use the returned unregister function from registerHandler
   }, []);
@@ -129,7 +129,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
           setScrollState(prev => ({ ...prev, isScrolling: false, scrollVelocity: 0 }));
         }, 150);
       },
-      { type: 'custom', priority: 0 } // Highest priority for state updates
+      8 // Higher priority for state updates (lower throttle = higher priority)
     );
 
     return () => {
@@ -334,7 +334,10 @@ export function useUnifiedBackgroundAnimation() {
       const backgroundElement = document.querySelector('.site-bg');
       if (backgroundElement) {
         const sectionClass = getSectionClass(mostVisibleSection);
-        backgroundElement.className = backgroundElement.className.replace(/section-\w+/g, '');
+        // Remove any existing section-* classes safely (supports hyphens)
+        backgroundElement.classList.forEach(cls => {
+          if (cls.startsWith('section-')) backgroundElement.classList.remove(cls);
+        });
         backgroundElement.classList.add(`section-${sectionClass}`);
       }
     };

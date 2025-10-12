@@ -15,11 +15,10 @@ export * from './visibility';
 
 // Individual hooks (for backward compatibility)
 export { use3DTilt } from './use3DTilt';
-export { useCountUp } from './useCountUp';
+// useCountUp removed as it was unused
 export { useInView } from './useInView';
 export { useIntersectionObserver } from './useIntersectionObserver';
-export { useNavigation } from './useNavigation';
-export { useEnhancedNavigation } from './useEnhancedNavigation';
+// useNavigation and useEnhancedNavigation removed as they were unused
 export { useParallax } from './useParallax';
 export { useScrollFade } from './useScrollFade';
 export { useScrollToTop } from './useScrollToTop';

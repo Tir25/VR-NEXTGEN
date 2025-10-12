@@ -9,7 +9,7 @@ export interface SectionHeaderProps {
   badge?: {
     text: string;
     icon?: React.ReactNode;
-    color?: 'gold' | 'sand-yellow' | 'purple' | 'custom';
+    color?: 'gold' | 'sand-yellow' | 'purple' | 'black' | 'custom';
     size?: 'sm' | 'md' | 'lg' | 'xl'; // new prop for badge size
   };
   title?: string; // made optional
@@ -17,7 +17,7 @@ export interface SectionHeaderProps {
   className?: string;
   align?: 'left' | 'center' | 'right';
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  titleColor?: 'white' | 'black' | 'gold' | 'sand-yellow' | 'purple' | 'custom';
+  titleColor?: 'white' | 'black' | 'gold' | 'gold-title' | 'sand-yellow' | 'purple' | 'custom';
   descriptionColor?: 'white' | 'black' | 'gray' | 'custom';
   compact?: boolean; // reduces vertical spacing
   titleSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'; // new prop for title size
@@ -29,13 +29,15 @@ const badgeColorClasses = {
   gold: 'bg-gold/25 border-gold/60 text-gold',
   'sand-yellow': 'bg-sand-yellow/25 border-sand-yellow/60 text-sand-yellow',
   purple: 'bg-purple-500/25 border-purple-400/60 text-purple-300',
+  black: 'bg-black/10 border-black/30 text-black',
   custom: '',
 };
 
 const titleColorClasses = {
   white: 'text-white',
   black: 'text-black',
-  gold: 'text-gold',
+  gold: 'text-gold-darker',
+  'gold-title': 'text-gold-darker',
   'sand-yellow': 'text-sand-yellow',
   purple: 'text-purple-400',
   custom: '',
@@ -102,14 +104,14 @@ export default function SectionHeader({
     <header className={`${alignClass} ${className}`}>
       <div className={maxWidthClass} style={{ margin: align === 'center' ? '0 auto' : '0' }}>
         {badge && (
-          <div className={`inline-flex items-center gap-3 border rounded-full font-medium shadow-md shadow-black/30 ${compact ? 'mb-3' : 'mb-6'} ${badgeSizeClass} ${badgeColorClasses[badge.color || 'gold']}`}>
+          <div className={`inline-flex items-center gap-3 border rounded-full font-medium shadow-md shadow-black/30 ${compact ? 'mb-1' : 'mb-6'} ${badgeSizeClass} ${badgeColorClasses[badge.color || 'gold']}`}>
             {badge.icon && <span className="w-2 h-2 bg-current rounded-full animate-pulse" />}
             <span>{badge.text}</span>
           </div>
         )}
 
         {showTitle && title && (
-          <h2 className={`${titleSizeClass} font-bold ${compact ? 'mb-3' : 'mb-6'} ${titleClass}`}>
+          <h2 className={`${titleSizeClass} font-bold ${compact ? 'mb-1' : 'mb-6'} ${titleClass}`}>
             {title}
           </h2>
         )}

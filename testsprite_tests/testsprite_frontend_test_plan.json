@@ -1,0 +1,450 @@
+[
+  {
+    "id": "TC001",
+    "title": "Homepage Hero Section Animation and Interaction",
+    "description": "Verify the animated hero section displays typed headline correctly, parallax effect functions smoothly, and call-to-action buttons respond properly on desktop and mobile.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the homepage"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the typed headline animation starts and completes correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify parallax and scroll-fading hero image overlay animates smoothly on desktop"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm call-to-action buttons are visible and clickable"
+      },
+      {
+        "type": "action",
+        "description": "Resize viewport to mobile dimensions"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify animations are disabled or adapted for mobile"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm call-to-action buttons respond to touch input"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Header Navigation Accessibility and Functionality",
+    "description": "Ensure the global responsive header navigation supports dual-action menu, smooth scroll to page sections, keyboard navigation, and dropdown expansions.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load any page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify header navigation displays correctly on desktop"
+      },
+      {
+        "type": "action",
+        "description": "Activate dual-action menu and verify smooth scroll to 'About' section"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm correct page section is visible after scroll"
+      },
+      {
+        "type": "action",
+        "description": "Use keyboard (Tab and Enter keys) to open navigation menu and expand dropdowns"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify keyboard focus states on menu items and dropdowns"
+      },
+      {
+        "type": "action",
+        "description": "Resize viewport to mobile and open menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify mobile menu toggles and scroll navigation work as expected"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "About Page Content and Animations",
+    "description": "Validate the About page renders mission, vision, team profiles, and that animated counters increment correctly.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the About page"
+      },
+      {
+        "type": "assertion",
+        "description": "Check mission and vision text content matches specifications"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all team profiles are displayed with images and roles"
+      },
+      {
+        "type": "assertion",
+        "description": "Observe counters animate from zero to target numbers correctly"
+      },
+      {
+        "type": "action",
+        "description": "Resize viewport to mobile"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm all content and animations adapt responsively without overlap"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Clients Page Carousel Desktop and Mobile",
+    "description": "Test the interactive 3D circular carousel on desktop and vertical scroll carousel on mobile, ensuring smooth animations and correct client data display.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to Clients page on desktop"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm 3D circular carousel renders with client logos and case snippets"
+      },
+      {
+        "type": "action",
+        "description": "Interact with carousel controls or drag to rotate clients"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify smooth rotation and client data updates accordingly"
+      },
+      {
+        "type": "action",
+        "description": "Switch to mobile viewport and reload Clients page"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm vertical scroll carousel is visible with correct client logos and animations"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through carousel items on mobile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify animations trigger on scroll and client info displays properly"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Services Page Animation and Navigation",
+    "description": "Verify animated service tiles display correctly and link to detailed service descriptions.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Services page"
+      },
+      {
+        "type": "assertion",
+        "description": "Check all service tiles are displayed with animations triggering on page load and scroll"
+      },
+      {
+        "type": "action",
+        "description": "Click on multiple service tiles"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm navigation to respective detailed service description pages"
+      },
+      {
+        "type": "action",
+        "description": "Use keyboard navigation to focus and activate service tiles"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify accessible focus states and activation works properly"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Contact Form Validation and API Integration",
+    "description": "Test the contact form inputs for real-time validation feedback, error handling, and successful submission via API.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Contact page"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit the form with empty required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify real-time validation error messages appear for missing inputs"
+      },
+      {
+        "type": "action",
+        "description": "Enter invalid data formats (e.g., invalid email, too short message)"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm validation feedback updates dynamically"
+      },
+      {
+        "type": "action",
+        "description": "Fill form with valid data"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "assertion",
+        "description": "Check form submission triggers API call"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify display of confirmation message on successful submission"
+      },
+      {
+        "type": "action",
+        "description": "Simulate API failure response"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm proper error message is displayed and user can retry"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Footer Reveal Animation on Hover and Tap",
+    "description": "Ensure footer magic brick reveal animation triggers on hover (desktop) and tap (mobile) revealing contact and social content, and resets appropriately.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Scroll to the page footer on desktop"
+      },
+      {
+        "type": "action",
+        "description": "Hover over the footer area"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify reveal animation runs smoothly and contact/social content is visible"
+      },
+      {
+        "type": "action",
+        "description": "Move cursor away from footer"
+      },
+      {
+        "type": "assertion",
+        "description": "Check animation resets and content hides"
+      },
+      {
+        "type": "action",
+        "description": "Switch to mobile viewport"
+      },
+      {
+        "type": "action",
+        "description": "Tap footer area"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm reveal animation triggers and content is shown"
+      },
+      {
+        "type": "action",
+        "description": "Tap outside footer"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify reveal resets and content hides"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Site-wide Animation Performance and Responsiveness",
+    "description": "Validate that all animations including layered background effects, header, hero, and carousels run at 60 FPS on desktop and adapt or disable appropriately on mobile.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage and other main pages on desktop"
+      },
+      {
+        "type": "assertion",
+        "description": "Measure FPS to confirm animations maintain smooth 60 FPS"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify ScrollManager batches scroll event listeners reducing performance load"
+      },
+      {
+        "type": "action",
+        "description": "Resize or switch device to mobile viewport"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that heavy animations (hero, background layers) are disabled or optimized for mobile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no dropped frames or janky animations on mobile"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Accessibility Compliance Across Site",
+    "description": "Ensure semantic HTML, keyboard navigation support, visible focus states, ARIA attributes, and WCAG AA contrast levels are met throughout the website.",
+    "category": "accessibility",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through the entire site using only keyboard (Tab, Shift+Tab, Enter, Space)"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm all interactive elements are reachable and operable via keyboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Check focus indication is visible and logical on all interactive controls"
+      },
+      {
+        "type": "assertion",
+        "description": "Use accessibility tools to verify presence and correctness of ARIA roles and attributes"
+      },
+      {
+        "type": "assertion",
+        "description": "Test color contrast of text and interactive elements meet WCAG AA standards"
+      },
+      {
+        "type": "action",
+        "description": "Validate semantic correctness of HTML tags for main content, navigation, forms, and landmarks"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Cross-Browser and Responsive Layout Consistency",
+    "description": "Confirm the website layout and functionality remain consistent without visual overlap or broken elements across popular browsers and device screen sizes.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open all major pages in latest versions of Chrome, Firefox, Safari, and Edge on desktop"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify correct layout rendering, no overlap or clipping of content"
+      },
+      {
+        "type": "action",
+        "description": "Test main interactive components (navigation, carousels, forms) on each browser"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm consistent behavior and styles"
+      },
+      {
+        "type": "action",
+        "description": "Repeat testing on mobile browsers (iOS Safari, Chrome on Android)"
+      },
+      {
+        "type": "assertion",
+        "description": "Check responsive layout adapts properly and no content overflow or hidden elements"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Performance and Load Time Validation",
+    "description": "Verify that the website meets performance targets including main thread JS load time ≤ 500ms and optimized Largest Contentful Paint (LCP) and First Contentful Paint (FCP).",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load homepage and other critical pages"
+      },
+      {
+        "type": "assertion",
+        "description": "Measure main thread JavaScript load time and confirm it is less than or equal to 500ms"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure LCP and FCP metrics meet the defined acceptable thresholds"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate lazy loading of images and code splitting occur as expected"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "CI/CD Pipeline Validation",
+    "description": "Confirm that linting, testing, build, and deployment processes complete successfully in the CI/CD pipeline for staging and production environments.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Trigger a change and push to repository"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify linting passes with no errors"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate all automated tests run and pass"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm successful build of the project artifacts"
+      },
+      {
+        "type": "assertion",
+        "description": "Check automated deployment completes to staging environment"
+      },
+      {
+        "type": "action",
+        "description": "Promote build to production"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm successful production deployment without errors"
+      }
+    ]
+  }
+]

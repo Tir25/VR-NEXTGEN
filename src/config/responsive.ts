@@ -55,9 +55,9 @@ export const RESPONSIVE_CAROUSEL_CONFIG = {
     xs: 'clamp(280px, 45vh, 360px)',  // Mobile: Smaller container
     sm: 'clamp(320px, 50vh, 420px)',  // Small mobile: Slightly larger
     md: 'clamp(400px, 55vh, 500px)',  // Tablet: Medium container
-    lg: 'clamp(680px, 78vh, 820px)',  // Desktop: Increased for larger cards
-    xl: 'clamp(780px, 82vh, 920px)',  // Large desktop: Increased
-    '2xl': 'clamp(880px, 86vh, 1040px)', // XL desktop: Increased
+    lg: 'clamp(400px, 40vh, 500px)',  // Desktop: Minimal height for tight spacing
+    xl: 'clamp(420px, 42vh, 520px)',  // Large desktop: Minimal height
+    '2xl': 'clamp(440px, 44vh, 540px)', // XL desktop: Minimal height
   },
   textScaling: {
     xs: { category: '0.7rem', title: '0.9rem', icon: '1.2rem', description: '0.75rem' }, // Mobile: Smaller text

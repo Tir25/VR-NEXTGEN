@@ -57,7 +57,6 @@ module.exports = {
         'memory-card',
         'control-btn',
         'carousel-container',
-        'animate-float',
         'animate-fade-in-up'
       ]
     }

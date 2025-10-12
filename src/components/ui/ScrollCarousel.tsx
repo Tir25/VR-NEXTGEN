@@ -103,7 +103,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
           style={{
             width: '100%',
             minHeight: 'clamp(400px, 85vh, 500px)',
-            marginBottom: '1.5rem',
+            marginBottom: '0.5rem',
             maxWidth: '100%',
             perspective: '1000px',
             willChange: 'transform, opacity',
@@ -319,12 +319,14 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
         ref={ref}
         style={{
           width: '100%',
-          minHeight: '100vh',
-          padding: '2rem 0'
+          minHeight: 'auto',
+          padding: '0',
+          marginTop: '0',
+          marginBottom: '0'
         }}
       >
-        <div className="relative w-full max-w-full mx-auto px-4 sm:px-6">
-          <div className="flex flex-col items-center space-y-6 w-full">
+        <div className="relative w-full max-w-full mx-auto px-4 sm:px-6 pb-8">
+          <div className="flex flex-col items-center space-y-2 w-full">
             {cards}
           </div>
         </div>

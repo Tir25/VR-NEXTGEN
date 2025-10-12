@@ -5,12 +5,10 @@
 
 // Export all features
 export * from './core';
-export * from './template';
 
 // Feature registry for dynamic loading
 export const FEATURE_REGISTRY = {
   core: () => import('./core'),
-  template: () => import('./template'),
 } as const;
 
 // Feature loader utility

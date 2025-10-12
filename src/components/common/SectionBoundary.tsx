@@ -1,21 +1,20 @@
 import React from "react";
 import ErrorBoundary from "./ErrorBoundary";
-import SafeWrapper from "./SafeWrapper";
 
 /**
  * SectionBoundary
- * A thin, reusable wrapper that combines SafeWrapper isolation with
- * ErrorBoundary to prevent ripple effects between sibling sections.
+ * A thin, reusable wrapper that provides error boundary isolation
+ * to prevent ripple effects between sibling sections.
  */
 type SectionBoundaryProps = {
   children: React.ReactNode;
-  isolate?: boolean;
+  isolate?: boolean; // Kept for backward compatibility but not used
 };
 
-export default function SectionBoundary({ children, isolate = true }: SectionBoundaryProps) {
+export default function SectionBoundary({ children }: SectionBoundaryProps) {
   return (
     <ErrorBoundary>
-      <SafeWrapper isolate={isolate}>{children}</SafeWrapper>
+      {children}
     </ErrorBoundary>
   );
 }

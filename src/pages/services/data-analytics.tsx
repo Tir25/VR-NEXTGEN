@@ -31,7 +31,7 @@ export default function DataAnalytics() {
                   "Prescriptive Analytics: Recommending what actions to take to achieve optimal business outcomes."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}

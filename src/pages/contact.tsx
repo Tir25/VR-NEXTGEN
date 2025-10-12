@@ -1,7 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import dynamic from "next/dynamic";
 import LazyWrapper from "@/components/common/LazyWrapper";
-import SocialIcon from "@/components/common/SocialIcons";
 import { COMPANY_INFO } from "@/utils/constants";
 
 // Lazy load the contact form since it's not critical for initial page load
@@ -96,14 +95,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Social Links */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
-                <div className="flex gap-4">
-                  <SocialIcon type="gmail" href={`mailto:${COMPANY_INFO.email}`} size="lg" />
-                  <SocialIcon type="instagram" href={COMPANY_INFO.socialMedia.instagram} size="lg" />
-                </div>
-              </div>
 
               {/* Response Time */}
               <div className="bg-gold/5 border border-gold/20 rounded-lg p-6">

@@ -6,8 +6,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Container, DropdownMenu } from '@/components/common';
+import dynamic from 'next/dynamic';
+import { Container } from '@/components/common';
 import { navigationConfig } from '@/config';
+
+// Dynamic import for heavy DropdownMenu component with optimized loading
+const DropdownMenu = dynamic(() => import('@/components/common/DropdownMenu'), {
+  ssr: false,
+  loading: () => <span className="text-white animate-pulse">...</span>
+});
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

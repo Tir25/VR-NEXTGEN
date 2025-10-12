@@ -10,6 +10,8 @@ export interface DropdownItem {
   label: string;
   href: string;
   description?: string;
+  hoverContent?: string;
+  showOnHover?: boolean;
 }
 
 export interface DropdownMenuProps {
@@ -26,19 +28,26 @@ export default function DropdownMenu({
   className = '' 
 }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        setHoveredItem(null);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      // Clean up timeout on unmount
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -50,6 +59,33 @@ export default function DropdownMenu({
 
   const handleItemClick = () => {
     setIsOpen(false);
+    setHoveredItem(null);
+  };
+
+  const handleItemHover = (itemLabel: string, hasHoverContent: boolean) => {
+    // Clear any pending timeout when hovering
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    
+    if (hasHoverContent) {
+      setHoveredItem(itemLabel);
+    }
+  };
+
+  const handleItemLeave = () => {
+    // Add a small delay to prevent flickering when moving between item and hover panel
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredItem(null);
+    }, 100);
+  };
+
+  const handleHoverPanelLeave = () => {
+    setHoveredItem(null);
   };
 
   const handleTabClick = (e: React.MouseEvent) => {
@@ -127,14 +163,16 @@ export default function DropdownMenu({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-72 bg-black/95 backdrop-blur-sm border border-white/10 rounded-lg shadow-xl z-50">
+        <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-sm border border-white/10 rounded-lg shadow-xl z-50">
           <div className="py-2 max-h-80 overflow-y-auto">
             {items.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}
-                className="block px-4 py-3 text-white hover:bg-gold/10 hover:text-gold transition-colors duration-200 group border-b border-white/5 last:border-b-0"
+                className="block px-4 py-3 text-white hover:bg-gold/10 hover:text-gold transition-colors duration-200 group border-b border-white/5 last:border-b-0 min-w-[200px]"
                 onClick={handleItemClick}
+                onMouseEnter={() => handleItemHover(item.label, !!item.showOnHover)}
+                onMouseLeave={handleItemLeave}
               >
                 <div className="flex flex-col">
                   <span className="font-medium group-hover:text-gold transition-colors">
@@ -148,6 +186,27 @@ export default function DropdownMenu({
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Hover Content Panel - Positioned to the right of dropdown */}
+      {hoveredItem && (
+        <div 
+          className="absolute top-full left-full mt-2 ml-2 bg-black/98 backdrop-blur-sm border border-white/10 rounded-lg shadow-xl z-50 min-w-[300px] max-w-[400px]"
+          onMouseLeave={handleHoverPanelLeave}
+        >
+          <div className="p-6">
+            {items.find(item => item.label === hoveredItem)?.hoverContent && (
+              <div className="text-white space-y-3">
+                <h4 className="text-lg font-semibold text-gold mb-3">
+                  {hoveredItem}
+                </h4>
+                <div className="text-sm leading-relaxed whitespace-pre-line">
+                  {items.find(item => item.label === hoveredItem)?.hoverContent}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

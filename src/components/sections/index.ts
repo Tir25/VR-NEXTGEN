@@ -7,7 +7,6 @@
 // Hero section
 export { Hero } from './hero';
 
-// Services and CTA
+// Services
 export { Services } from './services';
 export { Industries } from './industries';
-export { default as CTABanner } from './cta/CTABanner';

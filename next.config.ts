@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
+// Bundle analyzer configuration - only load when needed
+let withBundleAnalyzer: any = null;
+if (process.env.ANALYZE === 'true') {
+  withBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+}
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
@@ -7,8 +13,11 @@ const nextConfig: NextConfig = {
   generateEtags: false,
   // Optimize bundle size
   experimental: {
-    optimizePackageImports: ['react-hook-form', '@hookform/resolvers'],
+    scrollRestoration: true,
+    optimizeCss: true,
+    optimizePackageImports: ['framer-motion'],
   },
+  serverExternalPackages: [],
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -20,29 +29,41 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
-  // Webpack optimization
+  // Minimal webpack configuration to prevent memory issues
   webpack: (config, { dev, isServer }) => {
-    // Production optimizations
+    // Only apply minimal optimizations in production
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
+        usedExports: true,
+        minimize: true,
+        // Minimal chunk splitting
         splitChunks: {
           chunks: 'all',
+          minSize: 30000,
           cacheGroups: {
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendors',
               chunks: 'all',
-            },
-            react: {
-              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-              name: 'react',
-              chunks: 'all',
+              priority: 10,
             },
           },
         },
       };
     }
+
+    // Bundle analyzer configuration - only when explicitly requested
+    if (process.env.ANALYZE === 'true' && withBundleAnalyzer) {
+      config.plugins.push(
+        new withBundleAnalyzer({
+          analyzerMode: 'server',
+          analyzerPort: process.env.BUNDLE_ANALYZE_PORT || 8888,
+          openAnalyzer: true,
+        })
+      );
+    }
+
     return config;
   },
   async headers() {

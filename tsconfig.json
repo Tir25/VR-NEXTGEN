@@ -30,6 +30,11 @@
     "**/.*/**",
     "**/tmp/**",
     "**/User/**",
-    "**/History/**"
+    "**/History/**",
+    "**/AppData/**",
+    "**/Roaming/**",
+    "**/Cursor/**",
+    "**/AppData/Roaming/Cursor/User/History/**",
+    "**/AppData/Roaming/Trae/User/History/**"
   ]
 }

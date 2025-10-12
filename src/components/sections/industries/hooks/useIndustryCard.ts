@@ -55,7 +55,7 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   // Get responsive text scaling
   const getTextScaling = () => {
     return getResponsiveValue(
-      RESPONSIVE_CAROUSEL_CONFIG.textScaling as any,
+      RESPONSIVE_CAROUSEL_CONFIG.textScaling as Record<string, Record<string, string>>,
       RESPONSIVE_CAROUSEL_CONFIG.textScaling.lg
     );
   };
@@ -63,7 +63,7 @@ export function useIndustryCard({ industry, isActive }: UseIndustryCardProps) {
   // Get responsive padding
   const getResponsivePadding = () => {
     return getResponsiveValue(
-      RESPONSIVE_CAROUSEL_CONFIG.mobilePadding as any,
+      RESPONSIVE_CAROUSEL_CONFIG.mobilePadding as Record<string, string>,
       RESPONSIVE_CAROUSEL_CONFIG.mobilePadding.lg
     );
   };

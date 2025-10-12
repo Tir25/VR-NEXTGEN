@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "./components/carousel.css";
+@import "./performance.css";
+@import "./performance-optimized.css";
 
 /* VR NextGEN Design System - Design Tokens */
 :root {
@@ -37,11 +40,6 @@
 }
 
 @theme inline {
-  /* Colors */
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-gold: #ffd700;
-
   /* Fonts (kept generic; can be wired to Google Fonts later) */
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
@@ -358,26 +356,7 @@ section {
   z-index: 1;
 }
 
-/* Industries section - Animated Starfield (legacy support) */
-.site-bg.section-industries::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(1px 1px at 25% 25%, white, transparent),
-    radial-gradient(1px 1px at 50% 50%, white, transparent),
-    radial-gradient(2px 2px at 75% 75%, white, transparent),
-    radial-gradient(2px 2px at 100% 100%, white, transparent);
-  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
-  background-repeat: repeat;
-  opacity: 0.3;
-  animation: twinkle 10s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
+/* Industries section uses the modular starfield above */
 
 /* Why Choose Us section - dark background */
 .site-bg.section-why-choose {
@@ -654,10 +633,6 @@ html {
 /* ===== Enhanced Visual Elements ===== */
 
 /* Floating animation for decorative elements */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
 
 /* Removed unused CSS classes for optimization */
 
@@ -930,3 +905,28 @@ html {
 }
 
 /* Mobile menu animations - consolidated */
+
+/* ===== Footer Styles ===== */
+footer {
+  background-color: #000000 !important;
+  position: relative;
+  z-index: 20;
+  min-height: auto;
+}
+
+/* Ensure footer is always visible and not affected by animated background */
+footer.bg-black {
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* Remove any potential interference from animated background */
+.site-bg {
+  z-index: 0 !important;
+}
+
+/* Ensure footer content is visible */
+footer * {
+  position: relative;
+  z-index: 1;
+}

@@ -35,16 +35,6 @@ const Industries = dynamic(() => import("@/components/sections/industries").then
   )
 });
 
-const CTABanner = dynamic(() => import("@/components/sections/cta/CTABanner"), {
-  ssr: false,
-  loading: () => (
-    <div className="py-12 md:py-16">
-      <div className="animate-pulse bg-gray-200/10 rounded-lg h-32 flex items-center justify-center">
-        <div className="text-gray-400 text-lg">Loading CTA...</div>
-      </div>
-    </div>
-  )
-});
 
 export default function Home() {
   return (
@@ -55,9 +45,6 @@ export default function Home() {
       </LazyWrapper>
       <LazyWrapper rootMargin="400px">
         <Industries />
-      </LazyWrapper>
-      <LazyWrapper rootMargin="400px">
-        <CTABanner />
       </LazyWrapper>
     </Layout>
   );

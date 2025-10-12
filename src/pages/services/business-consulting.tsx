@@ -31,7 +31,7 @@ export default function BusinessConsulting() {
                   "Decision-Support Frameworks: Build systems that connect operational realities with strategic intent."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -44,11 +44,7 @@ export default function BusinessConsulting() {
                 </p>
               </div>
 
-              <div className="mt-8 text-center">
-                <button className="px-6 py-3 md:px-8 md:py-4 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition-colors duration-300 btn-enhanced">
-                  Speak with an Expert
-                </button>
-              </div>
+              {/* Removed call-to-action per request */}
             </section>
       </ServicePageShell>
     </Layout>

@@ -1,0 +1,257 @@
+/**
+ * Performance-Optimized CSS
+ * Lightweight styles for low-end devices and reduced motion preferences
+ */
+
+/* Simplified background for low-end devices */
+.low-end-device {
+  --animation-duration: 0.1s;
+  --transition-duration: 0.1s;
+}
+
+.low-end-device .site-bg {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+/* Performance-optimized background */
+.performance-optimized-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.performance-optimized-bg.enhanced .bg-effects-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.performance-optimized-bg .gradient-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+              linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  animation: subtlePulse 8s ease-in-out infinite;
+}
+
+.performance-optimized-bg .particle-effects {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.3), transparent);
+  background-repeat: repeat;
+  background-size: 150px 100px;
+  animation: particleFloat 12s linear infinite;
+  opacity: 0.6;
+}
+
+.performance-optimized-bg .grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  opacity: 0.5;
+}
+
+/* Simplified background for low-end devices */
+.performance-optimized-bg:not(.enhanced) {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+/* Animations with reduced motion support */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-100px); }
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .performance-optimized-bg .gradient-bg,
+  .performance-optimized-bg .particle-effects,
+  .performance-optimized-bg .grid-overlay {
+    animation: none;
+  }
+  
+  .performance-optimized-bg {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  }
+}
+
+/* Optimized transitions for low-end devices */
+.low-end-device * {
+  transition-duration: 0.1s !important;
+  animation-duration: 0.1s !important;
+}
+
+/* Simplified hover effects for low-end devices */
+.low-end-device .hover\:scale-105:hover {
+  transform: scale(1.02);
+}
+
+.low-end-device .hover\:scale-110:hover {
+  transform: scale(1.05);
+}
+
+/* Performance-optimized image loading */
+.optimized-image {
+  will-change: auto;
+  transform: translateZ(0); /* Force GPU acceleration when needed */
+}
+
+/* Reduced complexity for low-end devices */
+.low-end-device .optimized-image {
+  will-change: auto;
+  transform: none;
+}
+
+/* Optimized blur placeholder */
+.blur-placeholder {
+  background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Disable animations for low-end devices */
+.low-end-device .animate-pulse {
+  animation: none;
+}
+
+.low-end-device .animate-bounce {
+  animation: none;
+}
+
+.low-end-device .animate-spin {
+  animation: none;
+}
+
+/* Optimized scroll behavior */
+.performance-optimized-bg {
+  contain: layout style paint;
+}
+
+/* Critical CSS for above-the-fold content */
+.hero-section {
+  contain: layout style paint;
+  will-change: auto;
+}
+
+.hero-section.low-end-device {
+  will-change: auto;
+}
+
+/* Mobile-specific optimizations */
+.mobile-device {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mobile-device input,
+.mobile-device textarea {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Touch optimizations */
+[data-touch-optimized] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+[data-touch-optimized].touch-active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease-out;
+}
+
+/* Optimized scrolling for mobile */
+[data-scroll-optimized] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Low-end mobile optimizations */
+.low-end-mobile * {
+  animation-duration: 0.1s !important;
+  transition-duration: 0.1s !important;
+}
+
+.low-end-mobile .animate-pulse,
+.low-end-mobile .animate-bounce,
+.low-end-mobile .animate-spin {
+  animation: none !important;
+}
+
+/* Mobile carousel optimizations */
+.mobile-device .carousel-container {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.mobile-device .carousel-item {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+/* Mobile image optimizations */
+.mobile-device img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.low-end-mobile img {
+  image-rendering: auto;
+}
+
+/* Mobile form optimizations */
+.mobile-device input,
+.mobile-device textarea,
+.mobile-device select {
+  font-size: 16px; /* Prevents zoom on iOS */
+  border-radius: 0; /* Removes iOS styling */
+}
+
+/* Mobile button optimizations */
+.mobile-device button {
+  min-height: 44px; /* iOS recommended touch target */
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+/* Mobile performance optimizations */
+.mobile-device .performance-optimized-bg {
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden;
+}
+
+.low-end-mobile .performance-optimized-bg {
+  transform: none;
+  backface-visibility: visible;
+}

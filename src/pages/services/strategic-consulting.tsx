@@ -9,7 +9,7 @@ export default function StrategicConsulting() {
       <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 py-16">
         <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full text-gold text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-full text-black text-sm font-medium mb-6">
               <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               Strategic Consulting
             </div>
@@ -59,11 +59,7 @@ export default function StrategicConsulting() {
                 </p>
               </div>
 
-              <div className="text-center">
-                <button className="px-8 py-4 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition-colors duration-300 btn-enhanced">
-                  Get Started Today
-                </button>
-              </div>
+              {/* Removed call-to-action per request */}
             </div>
           </div>
         </div>

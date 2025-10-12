@@ -82,13 +82,8 @@ export const seoConfig = {
 // Contact configuration
 export const contactConfig = {
   email: 'info@vrnextgensolutions.com',
-  phone: '9426722001',
-  address: 'Business District, City Center, State 12345',
-  socialMedia: {
-    instagram: 'https://www.instagram.com/vr_nextgen_solutions',
-    linkedin: 'https://linkedin.com/company/vr-nextgen-solutions',
-    twitter: 'https://twitter.com/vrnextgen',
-  },
+  phone: '+91 94267 22001',
+  address: 'Gandhinagar, Gujarat (382721), India',
 } as const;
 
 // Form configuration
