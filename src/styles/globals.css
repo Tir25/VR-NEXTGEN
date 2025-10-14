@@ -309,29 +309,29 @@ section {
   mix-blend-mode: multiply;
 }
 
-/* Industries section - dark cosmic background */
+/* Industries section - black background with gold accents */
 .site-bg.section-industries {
-  background-color: var(--section-bg-hero);
+  background-color: #000000; /* Pure black background */
   transition: background-color 0.8s ease-in-out;
 }
 
 .site-bg.section-industries .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255,215,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,215,0,0.15) 1px, transparent 1px);
 }
 
 .site-bg.section-industries .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.04), transparent 65%);
 }
 
 .site-bg.section-industries .site-bg__shine {
   background: radial-gradient(
     600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
-    rgba(157, 0, 255, 0.15),
+    rgba(255, 215, 0, 0.12),
     transparent 60%
   );
 }
@@ -426,7 +426,7 @@ section {
   .site-bg.section-industries .site-bg__shine { 
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
-      rgba(157, 0, 255, 0.12),
+      rgba(255, 215, 0, 0.10),
       transparent 60%
     ); 
   }

@@ -85,10 +85,10 @@ function IndustryCard({
       >
           {/* Card Front */}
           <div
-            className={`card-front absolute w-full h-full rounded-2xl overflow-hidden group/card-front ${
+            className={`card-front absolute w-full h-full rounded-xl overflow-hidden group/card-front border border-gray-700 hover:border-gold/50 ${
               hasBackground 
-                ? 'border border-purple-500/30 hover:border-purple-400/50' 
-                : 'bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100'
+                ? '' 
+                : 'bg-gradient-to-br from-gray-800/80 to-gray-900/90'
             }`}
             style={{
               backgroundImage: hasBackground && backgroundImage ? `url('${backgroundImage}')` : undefined,
@@ -99,80 +99,63 @@ function IndustryCard({
               WebkitBackfaceVisibility: 'hidden'
             }}
           >
-            {/* Background overlay for better text readability */}
-            {hasBackground && (
-              <div className="absolute inset-0 bg-black/60 rounded-2xl group-hover/card-front:bg-black/40 transition-all duration-300" />
-            )}
-            
-            {/* Animated gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 rounded-2xl opacity-0 group-hover/card-front:opacity-100 transition-opacity duration-300" />
+            {/* Readability overlay with hover easing - matching Our Services */}
+            <div className="absolute inset-0 bg-black/60 rounded-xl group-hover/card-front:bg-black/40 transition-colors duration-300" />
           
           <div className={`card-content p-4 h-full flex flex-col items-center justify-center relative z-10 ${
             hasBackground ? 'text-white' : 'text-black'
           }`}>
-            {/* Icon */}
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 group-hover/card-front:scale-105 transition-all duration-300 ${
-              hasBackground 
-                ? 'bg-sand-yellow/20 text-sand-yellow group-hover/card-front:bg-sand-yellow/30' 
-                : 'bg-sand-yellow/10 text-sand-yellow group-hover/card-front:bg-sand-yellow/20'
-            }`}>
-              <i className={`${industry.icon} text-xs`} />
+            {/* Icon - matching Our Services styling */}
+            <div className="flex justify-center mb-1.5">
+              <div
+                className="relative w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/30 text-gold transition-all duration-300 group-hover/card-front:scale-110 group-hover/card-front:shadow-lg group-hover/card-front:from-gold/30 group-hover/card-front:to-gold/40 shadow-[0_0_18px_rgba(255,215,0,0.45)] ring-2 ring-gold/30 md:ring-gold/20 animate-pulse md:animate-none"
+                aria-hidden
+              >
+                {/* Subtle shimmer overlay for mobile visibility */}
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,215,0,0.35),transparent_60%)] opacity-80 md:opacity-0"
+                />
+                <i className={`${industry.icon} text-xs`} />
+              </div>
             </div>
 
             {/* Title */}
-            <h3 className={`text-xs font-bold mb-1.5 text-center transition-colors duration-300 ${
-              hasBackground 
-                ? 'text-white group-hover/card-front:text-sand-yellow' 
-                : 'text-black group-hover/card-front:text-sand-yellow'
-            }`}>
+            <h3 className="text-xs font-semibold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)] mb-1.5 text-center transition-colors duration-300 group-hover/card-front:text-gold">
               {industry.title}
             </h3>
 
             {/* Preview */}
-            <p className={`text-xs leading-relaxed text-center mb-2 ${
-              hasBackground ? 'text-white/90' : 'text-black/70'
-            }`}>
+            <p className="text-xs leading-relaxed text-center mb-2 italic text-white/90 drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]">
               {industry.preview}
             </p>
 
-            {/* Learn More Button */}
+            {/* Learn More Button - matching Our Services styling */}
             <button 
               onClick={handleExploreSolutions}
-              className={`w-full px-1.5 py-1 text-xs font-medium rounded transition-all duration-300 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden ${
-                hasBackground 
-                  ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50' 
-                  : 'bg-gradient-to-r from-sand-yellow/20 to-gold/20 border border-sand-yellow/30 text-black hover:from-sand-yellow/30 hover:to-gold/30 hover:border-sand-yellow/50'
-              }`}
+              className="w-full px-1.5 py-1 text-xs font-medium bg-transparent border border-gold/50 text-gold rounded transition-all duration-300 hover:bg-gold hover:text-black hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
               aria-label={`Learn more about ${industry.title}`}
             >
               <span className="relative z-10 flex items-center justify-center gap-1">
                 Learn More
-                <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </span>
-              <div className={`absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 ${
-                hasBackground 
-                  ? 'bg-gradient-to-r from-purple-500/10 to-cyan-500/10' 
-                  : 'bg-gradient-to-r from-sand-yellow/10 to-gold/10'
-              }`} />
+              {/* Button background effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
             </button>
 
-            {/* Card Glow Effect */}
-            <div 
-              className="card-glow absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/card-front:opacity-100 transition-opacity duration-300"
-              style={{
-                background: hasBackground 
-                  ? 'radial-gradient(circle at 50% 50%, rgba(157, 0, 255, 0.1), transparent 70%)'
-                  : 'radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1), transparent 70%)'
-              }}
-            />
+            {/* Premium Feel: Gradient overlays and shadows - matching Our Services */}
+            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gold opacity-0 group-hover/card-front:opacity-5 active:opacity-5 transition-opacity duration-300" />
+            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-to-br from-gold/10 to-transparent opacity-0 transition-opacity duration-300 group-hover/card-front:opacity-100" />
+            {/* Glow effect on hover */}
+            <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover/card-front:opacity-100 transition-opacity duration-300 shadow-[0_0_30px_rgba(255,215,0,0.35)]" />
           </div>
         </div>
 
         {/* Card Back - Detailed View */}
         <div
-          className="card-back absolute w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-cyan-400/30"
+          className="card-back absolute w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
@@ -188,16 +171,16 @@ function IndustryCard({
             </div>
             
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-400/30 scrollbar-track-transparent">
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent">
               {/* Focus Areas */}
               <div className="mb-2">
-                <h4 className="text-xs font-semibold uppercase tracking-wider mb-1.5 text-cyan-400 text-center">
+                <h4 className="text-xs font-semibold uppercase tracking-wider mb-1.5 text-gold text-center">
                   Focus Areas
                 </h4>
                 <ul className="space-y-1">
                   {industry.description.split('\n').slice(0, 4).map((line, idx) => (
                     <li key={idx} className="flex items-start gap-1 text-gray-300">
-                      <div className="w-1 h-1 bg-cyan-400 rounded-full flex-shrink-0 mt-1"></div>
+                      <div className="w-1 h-1 bg-gold rounded-full flex-shrink-0 mt-1"></div>
                       <span className="text-xs leading-relaxed">{line.replace('• ', '').trim()}</span>
                     </li>
                   ))}

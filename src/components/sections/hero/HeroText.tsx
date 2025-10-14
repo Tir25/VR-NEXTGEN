@@ -5,7 +5,6 @@
 
 import React from 'react';
 import { Container } from '@/components/common';
-import TypewriterText from '@/components/common/TypewriterText';
 import FloatingElements from '@/components/common/FloatingElements';
 
 export default function HeroText() {
@@ -16,16 +15,10 @@ export default function HeroText() {
     <div className="relative z-10 flex items-center justify-center min-h-screen">
       <Container size="lg">
         <div className="text-center space-y-8">
-          {/* Main Hero Title with Typewriter Effect */}
-          <div className="animate-fade-in-up">
-            <TypewriterText
-              text={heroText}
-              speed={80}
-              startDelay={500}
-              as="h1"
-              className="hero-title text-3xl md:text-5xl lg:text-6xl font-bold text-gold leading-tight"
-            />
-          </div>
+          {/* Main Hero Title - static (no animation) */}
+          <h1 className="hero-title text-3xl md:text-5xl lg:text-6xl font-bold text-gold leading-tight">
+            {heroText}
+          </h1>
 
           {/* Subtitle / Description */}
           <div className="animate-fade-in-up delay-1000">

@@ -22,7 +22,7 @@ function Industries() {
         <SectionHeader
           badge={{
             text: "Industries We Serve",
-            color: "purple",
+            color: "gold",
             size: "xl"
           }}
           showTitle={false}

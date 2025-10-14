@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { useParallax } from "@/hooks/useParallax";
-import { OptimizedValuesImage, OptimizedVisionImage } from "@/components/common";
+import { OptimizedValuesImage, OptimizedVisionImage, OptimizedMissionImage } from "@/components/common";
 
 export default function WhoWeArePage() {
   const parallax = useParallax(0.25);
@@ -174,6 +174,62 @@ export default function WhoWeArePage() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mission Section */}
+      <section
+        id="our-mission"
+        className="relative py-16 md:py-24"
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          {/* Centered Title */}
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
+              Our Mission
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Content on the left */}
+            <div className="space-y-8 order-2 lg:order-1">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <p className="text-lg md:text-xl text-white leading-relaxed">
+                    To deliver end-to-end business solutions and strategic insights that transform data into actionable intelligence, enabling organizations to streamline processes, enhance efficiency, and maximize profitability.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Image on the right */}
+            <div className="relative order-1 lg:order-2">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
+                <OptimizedMissionImage
+                  alt="VR NextGen Solutions Mission - Delivering End-to-End Business Solutions"
+                  width={600}
+                  height={600}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={false}
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-medium">Click to explore our mission</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/20 rounded-full blur-xl group-hover:bg-gold/30 transition-colors duration-300"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-colors duration-300"></div>
             </div>
           </div>
         </div>

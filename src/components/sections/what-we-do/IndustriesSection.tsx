@@ -35,10 +35,10 @@ function IndustryCard({ industry }: { industry: typeof industries[0] }) {
       ref={cardRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className={`group relative rounded-2xl p-8 transition-all duration-500 card-3d overflow-hidden min-h-[400px] ${
+      className={`group relative rounded-xl p-6 transition-all duration-500 card-3d overflow-hidden min-h-[400px] border border-gray-700 focus-within:ring-2 focus-within:ring-gold/50 focus-within:ring-offset-2 ${
         hasBackground 
-          ? 'border border-purple-500/30 hover:border-purple-400/50' 
-          : 'bg-gradient-to-br from-white/90 to-gray-50 border border-gray-200 hover:border-sand-yellow/50 hover:from-white hover:to-gray-100'
+          ? 'border border-gray-700 hover:border-gold/50' 
+          : 'bg-gradient-to-br from-gray-800/80 to-gray-900/90 border border-gray-700 hover:border-gold/50'
       }`}
       style={{
         ...(hasBackground && backgroundImage && {
@@ -49,81 +49,75 @@ function IndustryCard({ industry }: { industry: typeof industries[0] }) {
         })
       }}
     >
-      {/* Background overlay for better text readability */}
-      {hasBackground && (
-        <div className="absolute inset-0 bg-black/60 rounded-2xl group-hover:bg-black/40 transition-all duration-300" />
-      )}
+      {/* Readability overlay with hover easing - matching Our Services */}
+      <div className="absolute inset-0 bg-black/60 rounded-xl group-hover:bg-black/40 transition-colors duration-300" />
       
       <div className={`relative z-10 flex flex-col items-center justify-center h-full ${hasBackground ? 'text-white' : ''}`}>
-        {/* Icon - Centered */}
-        <div className={`w-20 h-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 mb-6 ${
-          hasBackground 
-            ? 'bg-sand-yellow/20 text-sand-yellow group-hover:bg-sand-yellow/30' 
-            : 'bg-sand-yellow/10 text-sand-yellow group-hover:bg-sand-yellow/20'
-        }`}>
-          {industry.icon}
+        {/* Icon - Centered - matching Our Services styling */}
+        <div className="flex justify-center mb-6">
+          <div
+            className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/30 text-gold transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:from-gold/30 group-hover:to-gold/40 shadow-[0_0_18px_rgba(255,215,0,0.45)] ring-2 ring-gold/30 md:ring-gold/20 animate-pulse md:animate-none"
+            aria-hidden
+          >
+            {/* Subtle shimmer overlay for mobile visibility */}
+            <span
+              className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,215,0,0.35),transparent_60%)] opacity-80 md:opacity-0"
+            />
+            {industry.icon}
+          </div>
         </div>
 
         {/* Content - Centered */}
         <div className="text-center space-y-4">
-          <h3 className={`text-xl font-bold transition-colors duration-300 ${
-            hasBackground 
-              ? 'text-white group-hover:text-sand-yellow' 
-              : 'text-black group-hover:text-sand-yellow'
-          }`}>
+          <h3 className="text-xl font-semibold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)] transition-colors duration-300 group-hover:text-gold">
             {industry.title}
           </h3>
-          <p className={`leading-relaxed text-center ${
-            hasBackground ? 'text-white/90' : 'text-black/70'
-          }`}>
+          <p className="text-white/90 leading-relaxed text-sm md:text-base italic drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]">
             {industry.description}
           </p>
         </div>
 
-        {/* Focus Areas - Centered */}
+        {/* Focus Areas - Centered - matching Our Services styling */}
         <div className="text-center space-y-3">
-          <h4 className={`text-sm font-semibold uppercase tracking-wider ${
-            hasBackground ? 'text-sand-yellow/80' : 'text-black/60'
-          }`}>
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold/80">
             Focus Areas
           </h4>
           <ul className="space-y-2">
             {industry.focus.map((area, index) => (
-              <li key={index} className={`flex items-center justify-center gap-3 ${
-                hasBackground ? 'text-white/80' : 'text-black/70'
-              }`}>
-                <div className="w-1.5 h-1.5 bg-sand-yellow rounded-full flex-shrink-0"></div>
-                <span className="text-sm">{area}</span>
+              <li key={index} className="flex items-center justify-center gap-2 text-sm text-white/85 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">
+                <span className="w-4 h-4 flex items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold flex-shrink-0 transition-all duration-300 group-hover:scale-110">
+                  ✓
+                </span>
+                {area}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Learn More Button */}
+        {/* Learn More Button - matching Our Services styling */}
         <div className="mt-6 pt-4 border-t border-white/20">
           <button 
             onClick={handleExploreSolutions}
-            className={`w-full px-4 py-3 text-sm font-semibold rounded-lg transition-all duration-300 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden ${
-              hasBackground 
-                ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50' 
-                : 'bg-gradient-to-r from-sand-yellow/20 to-gold/20 border border-sand-yellow/30 text-black hover:from-sand-yellow/30 hover:to-gold/30 hover:border-sand-yellow/50'
-            }`}
+            className="w-full px-4 py-2 text-sm font-medium bg-transparent border border-gold/50 text-gold rounded-lg transition-all duration-300 hover:bg-gold hover:text-black hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
             aria-label={`Learn more about ${industry.title}`}
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               Learn More
-              <svg className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </span>
-            <div className={`absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 ${
-              hasBackground 
-                ? 'bg-gradient-to-r from-purple-500/10 to-cyan-500/10' 
-                : 'bg-gradient-to-r from-sand-yellow/10 to-gold/10'
-            }`} />
+            {/* Button background effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
           </button>
         </div>
       </div>
+      
+      {/* Premium Feel: Gradient overlays and shadows - matching Our Services */}
+      <div className="absolute inset-0 rounded-xl pointer-events-none bg-gold opacity-0 group-hover:opacity-5 active:opacity-5 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-to-br from-gold/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      {/* Glow effect on hover */}
+      <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_30px_rgba(255,215,0,0.35)]" />
     </div>
   );
 }
@@ -132,17 +126,17 @@ export default function IndustriesSection() {
   return (
     <ErrorBoundary>
       <section id="industries" className="section-services relative py-16 md:py-24" aria-label="Industries">
-        {/* Background decoration - matching homepage */}
+        {/* Background decoration - matching Our Services */}
         <div className="absolute inset-0 -z-20 overflow-hidden">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-500/5 rounded-full blur-2xl" />
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gold/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gold/5 rounded-full blur-2xl" />
         </div>
 
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Header matching homepage */}
           <header className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-purple-500/10 border border-purple-500/30 rounded-full text-purple-400 text-lg font-medium mb-6">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gold/10 border border-gold/30 rounded-full text-gold text-lg font-medium mb-6">
+              <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               Industries We Serve
             </div>
             

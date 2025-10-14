@@ -114,8 +114,8 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
           <div
             className={`relative w-full h-full rounded-xl overflow-hidden shadow-lg border transition-all duration-700 transform-gpu ${
               hasBackgroundImage(industry.id) 
-                ? 'border-purple-500/30 bg-gradient-to-br from-gray-800/60 to-gray-900/70' 
-                : 'border-purple-500/30 bg-gradient-to-br from-gray-800/80 to-gray-900/90'
+                ? 'border-gold/30 bg-gradient-to-br from-gray-800/60 to-gray-900/70' 
+                : 'border-gold/30 bg-gradient-to-br from-gray-800/80 to-gray-900/90'
             }`}
             style={{
               ...(backgroundImage && {
@@ -209,7 +209,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                   <div className="mt-3 pt-3 border-t border-white/20">
                     <button 
                       onClick={() => handleLearnMore(industry.id)}
-                      className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white rounded-lg transition-all duration-300 hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden"
+                      className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-gold/20 to-cyan-500/20 border border-gold/30 text-white rounded-lg transition-all duration-300 hover:from-gold/30 hover:to-cyan-500/30 hover:border-gold/50 focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
                       aria-label={`Learn more about ${industry.title}`}
                     >
                       <span className="relative z-10 flex items-center justify-center gap-1">
@@ -218,7 +218,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                     </button>
                   </div>
                   {/* Debug indicator removed for production */}
@@ -291,7 +291,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                 <div className="mt-3 pt-3 border-t border-white/20">
                   <button 
                     onClick={() => handleLearnMore(industry.id)}
-                    className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white rounded-lg transition-all duration-300 hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden"
+                    className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-gold/20 to-cyan-500/20 border border-gold/30 text-white rounded-lg transition-all duration-300 hover:from-gold/30 hover:to-cyan-500/30 hover:border-gold/50 focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
                     aria-label={`Learn more about ${industry.title}`}
                   >
                     <span className="relative z-10 flex items-center justify-center gap-1">
@@ -300,14 +300,14 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                   </button>
                 </div>
                 {/* Debug indicator removed for production */}
               </div>
             </div>
             
-            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-radial from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 active:opacity-100" />
+            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-radial from-gold/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 active:opacity-100" />
           </div>
         </div>
       );

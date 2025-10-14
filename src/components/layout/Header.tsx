@@ -38,12 +38,22 @@ export default function Header() {
           {/* Desktop Navigation - Positioned in center */}
           <nav className="hidden md:flex items-center space-x-6">
             {navigationConfig.map((item, index) => (
-              <DropdownMenu
-                key={index}
-                label={item.label}
-                href={item.href}
-                items={item.dropdownItems || []}
-              />
+              item.hasDropdown ? (
+                <DropdownMenu
+                  key={index}
+                  label={item.label}
+                  href={item.href}
+                  items={item.dropdownItems || []}
+                />
+              ) : (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="text-white hover:text-gold transition-colors duration-200"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -102,7 +112,7 @@ export default function Header() {
                   >
                     {item.label}
                   </Link>
-                  {item.dropdownItems && (
+                  {item.hasDropdown && item.dropdownItems && (
                     <div className="ml-4 space-y-1">
                       {item.dropdownItems.map((subItem, subIndex) => (
                         <Link

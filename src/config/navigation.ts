@@ -16,24 +16,8 @@ export const navigationConfig: NavigationItem[] = [
   {
     label: 'Home',
     href: '/',
-    hasDropdown: true,
-    dropdownItems: [
-      { 
-        label: 'Services Overview', 
-        href: '/#services', 
-        description: 'Our core services',
-        showOnHover: true,
-        hoverContent: 'Discover our comprehensive suite of business solutions including strategic consulting, data analytics, digital transformation, and process optimization services.'
-      },
-      { 
-        label: 'Industries', 
-        href: '/#industries', 
-        description: 'Industries we serve',
-        showOnHover: true,
-        hoverContent: 'We serve diverse industries including Healthcare, Financial Services, Manufacturing, IT, Education, Pharmaceutical, Retail, and Infrastructure with specialized solutions.'
-      },
-      // Keep only sections that exist on the page; remove hero and unused anchors
-    ]
+    hasDropdown: false,
+    dropdownItems: []
   },
   {
     label: 'What We Do',
@@ -91,21 +75,7 @@ export const navigationConfig: NavigationItem[] = [
       }
     ]
   },
-  {
-    label: 'Blog',
-    href: '/nextgen-blog',
-    hasDropdown: true,
-    dropdownItems: [
-      { 
-        label: 'Latest Posts', 
-        href: '/nextgen-blog', 
-        description: 'Recent articles',
-        showOnHover: true,
-        hoverContent: 'Stay updated with our latest insights, industry trends, and thought leadership articles on business transformation, data analytics, and digital innovation.'
-      },
-      // Keep page link only; remove internal anchors not present
-    ]
-  },
+  
   {
     label: 'Careers',
     href: '/careers',

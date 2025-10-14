@@ -28,7 +28,7 @@ export default function IndustryCardBack({
   const timestampContainsGlobal2024 = timestampText.toLowerCase().includes('global 2024');
   return (
     <div 
-      className={`absolute w-full h-full rounded-xl overflow-hidden shadow-lg border border-cyan-500/30 transition-opacity duration-300 ${
+      className={`absolute w-full h-full rounded-xl overflow-hidden shadow-lg border border-gray-700 transition-opacity duration-300 ${
         isFlipped ? 'opacity-100' : 'opacity-0'
       } ${
         hasBackgroundImage(industry.id) 
@@ -51,27 +51,27 @@ export default function IndustryCardBack({
         className="h-full flex flex-col relative"
         style={{ padding: responsivePadding }}
       >
-        {/* Brightness overlay */}
-        <div className="absolute inset-0 bg-black rounded-xl pointer-events-none opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
+        {/* Readability overlay with hover easing - matching Our Services */}
+        <div className="absolute inset-0 bg-black/60 rounded-xl pointer-events-none transition-colors duration-300 group-hover:bg-black/40" />
         
         <div className="relative z-10 flex flex-col h-full">
           <h3 
-            className="font-bold text-white mb-2 leading-tight drop-shadow-lg flex-shrink-0 text-center"
+            className="font-bold text-white mb-2 leading-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)] flex-shrink-0 text-center transition-colors duration-300 group-hover:text-gold"
             style={{ fontSize: textScaling.title }}
           >
             {industry.title || 'Card Title'}
           </h3>
           {industry.category && !categorySameAsTitle && (
             <div 
-              className="font-mono text-sand-yellow -mt-1 mb-1"
+              className="font-mono text-gold -mt-1 mb-1"
               style={{ fontSize: textScaling.category }}
             >
               {industry.category}
             </div>
           )}
           <div 
-            className={`leading-relaxed mb-2 flex-1 overflow-y-auto font-medium drop-shadow-lg ${
-              hasBackgroundImage(industry.id) ? 'text-white' : 'text-white/80'
+            className={`leading-relaxed mb-2 flex-1 overflow-y-auto font-medium italic drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)] ${
+              hasBackgroundImage(industry.id) ? 'text-white/90' : 'text-white/90'
             }`}
             style={{ fontSize: textScaling.description }}
           >
@@ -82,7 +82,7 @@ export default function IndustryCardBack({
             ))}
           </div>
           <div 
-            className="font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0"
+            className="font-mono text-gold space-y-1 drop-shadow-lg flex-shrink-0"
             style={{ fontSize: textScaling.category }}
           >
             {!isGlobal && (
@@ -94,7 +94,7 @@ export default function IndustryCardBack({
             {!isYear2024 && !timestampContainsGlobal2024 && (
               <div className="flex items-center gap-1 font-semibold">
                 <i className="fas fa-clock w-2" />
-                <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+                <span className="text-gold">{timestampText || 'Date'}</span>
               </div>
             )}
           </div>
@@ -103,20 +103,27 @@ export default function IndustryCardBack({
           <div className="mt-3 pt-3 border-t border-white/20">
             <button 
               onClick={onLearnMore}
-              className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white rounded-lg transition-all duration-300 hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden"
+              className="w-full px-3 py-2 text-xs font-medium bg-transparent border border-gold/50 text-gold rounded-lg transition-all duration-300 hover:bg-gold hover:text-black hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
               aria-label={`Learn more about ${industry.title}`}
             >
               <span className="relative z-10 flex items-center justify-center gap-1">
                 Learn More
-                <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+              {/* Button background effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
             </button>
           </div>
         </div>
       </div>
+      
+      {/* Premium Feel: Gradient overlays and shadows - matching Our Services */}
+      <div className="absolute inset-0 rounded-xl pointer-events-none bg-gold opacity-0 group-hover:opacity-5 active:opacity-5 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-to-br from-gold/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      {/* Glow effect on hover */}
+      <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_30px_rgba(255,215,0,0.35)]" />
     </div>
   );
 }

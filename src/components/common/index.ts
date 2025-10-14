@@ -36,3 +36,7 @@ export { default as SkeletonLoader, ServiceCardSkeleton, IndustryCardSkeleton, G
 export { default as OptimizedValuesImage } from './OptimizedValuesImage';
 export { default as OptimizedVisionImage } from './OptimizedVisionImage';
 export { default as OptimizedCareersImage } from './OptimizedCareersImage';
+export { default as OptimizedMissionImage } from './OptimizedMissionImage';
+
+// Call-to-action components
+export { default as TaglineSection } from './TaglineSection';
