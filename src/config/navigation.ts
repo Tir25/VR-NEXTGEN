@@ -75,7 +75,12 @@ export const navigationConfig: NavigationItem[] = [
       }
     ]
   },
-  
+  {
+    label: 'Insights',
+    href: '/insights',
+    hasDropdown: false,
+    dropdownItems: []
+  },
   {
     label: 'Careers',
     href: '/careers',

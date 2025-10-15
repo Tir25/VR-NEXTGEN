@@ -335,7 +335,7 @@ export function useUnifiedBackgroundAnimation() {
       if (backgroundElement) {
         const sectionClass = getSectionClass(mostVisibleSection);
         // Remove any existing section-* classes safely (supports hyphens)
-        backgroundElement.classList.forEach(cls => {
+        Array.from(backgroundElement.classList).forEach(cls => {
           if (cls.startsWith('section-')) backgroundElement.classList.remove(cls);
         });
         backgroundElement.classList.add(`section-${sectionClass}`);
