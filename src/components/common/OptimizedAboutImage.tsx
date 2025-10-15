@@ -44,7 +44,7 @@ export default function OptimizedAboutImage({
             webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
           });
 
-          if (webPSupported) {
+          if (webpSupported) {
             // WebP is supported, use the optimized version
             setImageSrc('/images-optimized/About.webp');
           } else {
