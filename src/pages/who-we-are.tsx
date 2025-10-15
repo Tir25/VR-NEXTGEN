@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { useParallax } from "@/hooks/useParallax";
-import { OptimizedValuesImage, OptimizedVisionImage, OptimizedMissionImage } from "@/components/common";
+import { OptimizedValuesImage, OptimizedVisionImage, OptimizedMissionImage, OptimizedAboutImage } from "@/components/common";
 
 export default function WhoWeArePage() {
   const parallax = useParallax(0.25);
@@ -17,36 +17,115 @@ export default function WhoWeArePage() {
           style={{ transform: `translateY(${parallax * -1}px)` }}
         />
         
-        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-20 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-20 pb-8 md:pb-12 relative z-10">
           <div className="flex items-center justify-center">
             <div className="space-y-8 text-center max-w-4xl">
               <div className="space-y-6">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
                   About Us
                 </h1>
-              </div>
-              
-              {/* About Us Content */}
-              <div className="space-y-8 text-center max-w-4xl">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
                   Empowering Businesses. Transforming Futures.
                 </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Main Section */}
+      <section
+        id="about-us-main"
+        className="relative pt-8 md:pt-12 pb-16 md:pb-24"
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Content */}
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                  Excellence Through Innovation
+                </h3>
                 
                 <div className="space-y-4">
                   <p className="text-lg md:text-xl text-white leading-relaxed">
-                    At VR NextGen Solutions, we deliver excellence and create lasting value for businesses and communities.
+                    At VR NextGen Solutions, we deliver excellence and create lasting value for businesses and communities. Our team of forward-thinking consultants, analysts, and technologists turn complex challenges into opportunities using data, innovation, and intelligence.
                   </p>
                   
                   <p className="text-lg md:text-xl text-white leading-relaxed">
-                    Our team of forward-thinking consultants, analysts, and technologists turn complex challenges into opportunities using data, innovation, and intelligence.
+                    Founded with a vision to make organizations data-driven and future-ready, we partner with companies to drive measurable growth through automation, analytics, and digital transformation. From small enterprises to large corporations, we empower every client to transform decisions into outcomes — and operations into performance.
                   </p>
                 </div>
+              </div>
+            </div>
 
+            {/* Optimized About Image */}
+            <div className="relative group">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
+                <OptimizedAboutImage
+                  alt="VR NextGen Solutions About Us - Excellence Through Innovation"
+                  width={600}
+                  height={600}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={false}
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <p className="text-white font-medium">Discover our story</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/20 rounded-full blur-xl group-hover:bg-gold/30 transition-colors duration-300"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-colors duration-300"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Extended Section */}
+      <section
+        id="about-us-extended"
+        className="relative py-16 md:py-24 bg-black/50"
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Image on the left */}
+            <div className="relative order-2 lg:order-1">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
+                <div className="bg-gradient-to-br from-gold/10 via-gold/5 to-gold/10 p-8 h-full flex items-center justify-center">
+                  <div className="text-center space-y-6">
+                    <div className="w-24 h-24 bg-gold/20 rounded-full flex items-center justify-center mx-auto">
+                      <svg className="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-bold text-gold">Data-Driven Results</h4>
+                    <p className="text-white/80">Transforming insights into action</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/20 rounded-full blur-xl group-hover:bg-gold/30 transition-colors duration-300"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-colors duration-300"></div>
+            </div>
+
+            {/* Content on the right */}
+            <div className="space-y-8 order-1 lg:order-2">
+              <div className="space-y-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                  Trusted Transformation Partner
+                </h3>
+                
                 <div className="space-y-4">
-                  <p className="text-lg md:text-xl text-white leading-relaxed">
-                    VR NextGen Solutions founded with a vision to make organizations data-driven and future-ready, VR NextGen Solutions partners with companies to drive measurable growth through automation, analytics, and digital transformation. From small enterprises to large corporations, we empower every client to transform decisions into outcomes — and operations into performance.
-                  </p>
-                  
                   <p className="text-lg md:text-xl text-white leading-relaxed">
                     Rooted in a commitment to integrity, innovation, and impact, we help businesses embrace the next generation of digital intelligence. With a team experienced across industries like Pharmaceuticals, Manufacturing, Healthcare, Retail, and Education, we bring deep domain expertise and scalable solutions that deliver real business results.
                   </p>
@@ -55,8 +134,8 @@ export default function WhoWeArePage() {
                     Our approach combines strategy, technology, and transformation — turning vision into value and insight into action. As your trusted transformation partner, we&apos;re not just solving today&apos;s problems — we&apos;re shaping tomorrow&apos;s possibilities.
                   </p>
                 </div>
+
               </div>
-              
             </div>
           </div>
         </div>

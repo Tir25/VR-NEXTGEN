@@ -5,7 +5,6 @@ import ErrorBoundary from "@/components/common/ErrorBoundary";
 import AnimatedBackground from "@/components/common/AnimatedBackground";
 import SectionBoundary from "@/components/common/SectionBoundary";
 import PerformanceMonitor from "@/components/common/PerformanceMonitor";
-import TaglineSection from "@/components/common/TaglineSection";
 import dynamic from "next/dynamic";
 
 // Dynamic import for scroll performance monitor to avoid SSR issues
@@ -144,8 +143,6 @@ export default function Layout({ title, description, children }: LayoutProps) {
             </SectionBoundary>
           </main>
           
-          {/* Tagline Section - Above Footer */}
-          <TaglineSection />
           
           <footer className="relative z-20">
             <Footer />

@@ -35,6 +35,17 @@ const Industries = dynamic(() => import("@/components/sections/industries").then
   )
 });
 
+const CallToAction = dynamic(() => import("@/components/sections/cta").then(mod => ({ default: mod.CallToAction })), {
+  ssr: false,
+  loading: () => (
+    <div className="py-16 md:py-20">
+      <div className="animate-pulse bg-gold/5 rounded-lg h-64 flex items-center justify-center">
+        <div className="text-gray-400 text-lg">Loading Call to Action...</div>
+      </div>
+    </div>
+  )
+});
+
 
 export default function Home() {
   return (
@@ -45,6 +56,9 @@ export default function Home() {
       </LazyWrapper>
       <LazyWrapper rootMargin="400px">
         <Industries />
+      </LazyWrapper>
+      <LazyWrapper rootMargin="200px">
+        <CallToAction />
       </LazyWrapper>
     </Layout>
   );

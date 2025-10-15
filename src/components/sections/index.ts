@@ -10,3 +10,6 @@ export { Hero } from './hero';
 // Services
 export { Services } from './services';
 export { Industries } from './industries';
+
+// Call-to-Action
+export { CallToAction } from './cta';

@@ -67,7 +67,7 @@ export default function InsightsPage() {
       {/* Hero Section */}
       <section
         id="insights-hero"
-        className="section-hero relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
+        className="section-hero relative min-h-[60vh] md:min-h-[70vh] flex items-center overflow-hidden"
         aria-label="Insights Hero"
       >
         {/* Enhanced Background Elements */}
@@ -77,7 +77,7 @@ export default function InsightsPage() {
           style={{ transform: `translateY(${parallax * -1}px)` }}
         />
         
-        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-20 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20 relative z-10">
           <div className="flex items-center justify-center">
             <div className="space-y-8 text-center max-w-4xl">
               <div className="space-y-6">
@@ -99,14 +99,14 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      {/* Coming Soon Sections */}
+      {/* What's Coming Section - Moved Up */}
       <section
-        id="coming-soon-sections"
-        className="relative py-16 md:py-24"
+        id="whats-coming"
+        className="relative py-12 md:py-16 bg-black/30"
       >
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-4">
               What&apos;s Coming
             </h2>
@@ -116,37 +116,37 @@ export default function InsightsPage() {
           </div>
 
           {/* Coming Soon Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {comingSoonSections.map((section) => (
               <div
                 key={section.id}
-                className="group relative border border-gray-700 rounded-xl p-8 overflow-hidden hover:border-gold/50 transition-all duration-300 bg-gradient-to-br from-gray-800/80 to-gray-900/90"
+                className="group relative border border-gray-700 rounded-xl p-6 overflow-hidden hover:border-gold/50 transition-all duration-300 bg-gradient-to-br from-gray-800/80 to-gray-900/90"
               >
                 {/* Background decoration */}
                 <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <div className="relative z-10">
                   {/* Icon */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/30 text-gold transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:from-gold/30 group-hover:to-gold/40 shadow-[0_0_18px_rgba(255,215,0,0.45)] ring-2 ring-gold/30 md:ring-gold/20">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/30 text-gold transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:from-gold/30 group-hover:to-gold/40 shadow-[0_0_18px_rgba(255,215,0,0.45)] ring-2 ring-gold/30 md:ring-gold/20">
                       {section.icon}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="text-center space-y-4">
-                    <h3 className="text-xl font-semibold text-white transition-colors duration-300 group-hover:text-gold">
+                  <div className="text-center space-y-3">
+                    <h3 className="text-lg font-semibold text-white transition-colors duration-300 group-hover:text-gold">
                       {section.title}
                     </h3>
-                    <p className="text-white/90 leading-relaxed">
+                    <p className="text-white/90 leading-relaxed text-sm">
                       {section.description}
                     </p>
                   </div>
 
                   {/* Coming Soon Badge */}
-                  <div className="mt-6 flex justify-center">
-                    <span className="inline-flex items-center px-4 py-2 bg-gold/10 border border-gold/30 rounded-full text-gold text-sm font-medium">
-                      <div className="w-2 h-2 bg-gold rounded-full animate-pulse mr-2" />
+                  <div className="mt-4 flex justify-center">
+                    <span className="inline-flex items-center px-3 py-1 bg-gold/10 border border-gold/30 rounded-full text-gold text-xs font-medium">
+                      <div className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse mr-2" />
                       Coming Soon
                     </span>
                   </div>
@@ -157,11 +157,18 @@ export default function InsightsPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Call to Action */}
-          <div className="text-center mt-16">
+      {/* Call to Action Section */}
+      <section
+        id="stay-updated"
+        className="relative py-16 md:py-24"
+      >
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center">
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-2xl md:text-3xl font-bold text-white">
                 Stay Updated
               </h3>
               <p className="text-lg text-gray-300 max-w-2xl mx-auto">

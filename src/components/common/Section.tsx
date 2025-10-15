@@ -58,7 +58,7 @@ export default function Section({
 
 // Convenience components for common section types
 export const HeroSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="hero" padding="xl" />
+  <Section {...props} background="hero" padding="lg" className={`${props.className || ''} pb-2 md:pb-3`} />
 );
 
 export const ServicesSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
