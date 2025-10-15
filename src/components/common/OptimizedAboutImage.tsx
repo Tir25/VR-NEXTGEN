@@ -113,16 +113,9 @@ export default function OptimizedAboutImage({
         onLoad={handleLoad}
         onError={handleError}
         // Performance optimizations
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
         style={{
           willChange: isLoading ? 'opacity' : 'auto',
         }}
-        // Responsive srcSet for optimal loading
-        srcSet={imageSrc.includes('.webp') ? 
-          '/images-optimized/About-400.webp 400w, /images-optimized/About-600.webp 600w, /images-optimized/About-800.webp 800w, /images-optimized/About-1200.webp 1200w, /images-optimized/About.webp 1600w' :
-          undefined
-        }
       />
     </div>
   );
