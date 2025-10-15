@@ -6,4 +6,6 @@
 export * from './constants';
 export * from './security';
 export * from './errorHandling';
-export * from './UnifiedScrollManager';
+
+// Note: UnifiedScrollManager temporarily disabled due to file system issues
+// All scroll functionality is now handled through individual optimized hooks

@@ -52,49 +52,44 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
     }
   }, [checkSupport]);
 
+  const rafState = useRef<{ id: number | null; rect: DOMRect | null }>({ id: null, rect: null });
+
   const handleMouseMove = useCallback((e: React.MouseEvent<T>) => {
     if (!enabled || !cardRef.current || hasError) return;
 
-    try {
-      const card = cardRef.current;
-      const rect = card.getBoundingClientRect();
-      
-      // Calculate mouse position relative to card center
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      // Calculate rotation angles (inverted Y for natural feel)
-      const rotateX = ((y - centerY) / centerY) * maxTilt;
-      const rotateY = ((centerX - x) / centerX) * maxTilt;
-      
-      // Clamp rotation values to prevent extreme angles
-      const clampedRotateX = Math.max(-maxTilt, Math.min(maxTilt, rotateX));
-      const clampedRotateY = Math.max(-maxTilt, Math.min(maxTilt, rotateY));
-      
-      // Apply 3D transform with perspective - Hardware accelerated
-      card.style.transform = `
-        perspective(1000px) 
-        rotateX(${clampedRotateX}deg) 
-        rotateY(${clampedRotateY}deg) 
-        translateZ(10px)
-      `;
-      
-      // Add dynamic shadow based on tilt - Optimized calculation
-      const shadowIntensity = Math.min(Math.abs(clampedRotateX) + Math.abs(clampedRotateY), maxTilt * 2);
-      const shadowX = Math.round((clampedRotateY / maxTilt) * 15);
-      const shadowY = Math.round((clampedRotateX / maxTilt) * 15);
-      card.style.boxShadow = `
-        ${shadowX}px ${shadowY}px ${20 + shadowIntensity}px rgba(0, 0, 0, 0.3),
-        0 0 ${10 + shadowIntensity}px rgba(255, 215, 0, 0.1)
-      `;
-      
-      // Disable CSS transitions during 3D tilt for optimal performance
-      card.style.transition = 'none';
-    } catch (error) {
-      // Error handled gracefully - 3D tilt disabled
-      setHasError(true);
+    const card = cardRef.current;
+
+    // Cache rect on first move of a frame; recompute on pointerenter elsewhere if needed
+    if (!rafState.current.rect) {
+      rafState.current.rect = card.getBoundingClientRect();
+    }
+
+    const run = () => {
+      try {
+        const rect = rafState.current.rect as DOMRect;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * maxTilt;
+        const rotateY = ((centerX - x) / centerX) * maxTilt;
+        const clampedRotateX = Math.max(-maxTilt, Math.min(maxTilt, rotateX));
+        const clampedRotateY = Math.max(-maxTilt, Math.min(maxTilt, rotateY));
+        card.style.transform = `perspective(1000px) rotateX(${clampedRotateX}deg) rotateY(${clampedRotateY}deg) translateZ(10px)`;
+        const shadowIntensity = Math.min(Math.abs(clampedRotateX) + Math.abs(clampedRotateY), maxTilt * 2);
+        const shadowX = Math.round((clampedRotateY / maxTilt) * 15);
+        const shadowY = Math.round((clampedRotateX / maxTilt) * 15);
+        card.style.boxShadow = `${shadowX}px ${shadowY}px ${20 + shadowIntensity}px rgba(0, 0, 0, 0.3), 0 0 ${10 + shadowIntensity}px rgba(255, 215, 0, 0.1)`;
+        card.style.transition = 'none';
+      } catch {
+        setHasError(true);
+      } finally {
+        rafState.current.id = null;
+      }
+    };
+
+    if (rafState.current.id == null) {
+      rafState.current.id = requestAnimationFrame(run);
     }
   }, [enabled, maxTilt, hasError]);
 
@@ -103,6 +98,12 @@ export function use3DTilt<T extends HTMLElement = HTMLDivElement>({
 
     try {
       const card = cardRef.current;
+      // Invalidate cached rect
+      rafState.current.rect = null;
+      if (rafState.current.id != null) {
+        cancelAnimationFrame(rafState.current.id);
+        rafState.current.id = null;
+      }
       
       // Reset transform and shadow with smooth transition
       card.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)';

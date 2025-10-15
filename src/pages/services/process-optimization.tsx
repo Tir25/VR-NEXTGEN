@@ -11,7 +11,7 @@ export default function ProcessOptimization() {
         badgeText="Process Optimization & Operational Excellence"
         title="Streamline Processes. Strengthen Systems. Scale Performance."
         subtitle="Operational inefficiency is the silent killer of profitability."
-        cardBgUrl="/images/Our Services/Process Optimization & Alignment.png"
+        cardBgUrl="/images-optimized/Our Services/Process Optimization & Alignment.webp"
         cardTitle="Process Optimization & Operational Excellence"
       >
             <section className="relative z-10 max-w-none">
@@ -33,7 +33,7 @@ export default function ProcessOptimization() {
                   "JIT (Just-In-Time): Reduce excess inventory, minimize holding costs, and enhance flexibility."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -52,7 +52,7 @@ export default function ProcessOptimization() {
                   "Process Capability (Cp/Cpk) Studies"
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -76,7 +76,7 @@ export default function ProcessOptimization() {
                   "Customer Feedback Loops for Continuous Improvement"
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}

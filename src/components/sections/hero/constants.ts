@@ -7,7 +7,7 @@ import { HeroImageProps } from './types';
 
 // Banner image removed - using animated text content instead
 export const HERO_IMAGE_CONFIG: HeroImageProps = {
-  src: "/images/Hero.png",
+  src: "/images-optimized/Hero.webp",
   alt: "VR NextGEN Solutions - Modern business consultancy and data analytics platform",
   priority: true,
   quality: 85,

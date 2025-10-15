@@ -65,7 +65,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     };
 
     const unregister = unifiedScrollManager.register(
-      context--,
+      `context-${type}-${Date.now()}`,
       unifiedHandler,
       16 // throttle in ms
     );
@@ -338,7 +338,7 @@ export function useUnifiedBackgroundAnimation() {
         backgroundElement.classList.forEach(cls => {
           if (cls.startsWith('section-')) backgroundElement.classList.remove(cls);
         });
-        backgroundElement.classList.add(section-);
+        backgroundElement.classList.add(`section-${sectionClass}`);
       }
     };
     

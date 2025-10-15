@@ -1,28 +1,128 @@
 /**
  * OptimizedImage Component
- * A wrapper around Next.js Image component with automatic optimization
+ * Automatically serves optimal format based on device capabilities
+ * with responsive sizing, lazy loading, and performance optimization
  */
 
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { useState, ReactNode } from 'react';
+import performanceDetector from '@/utils/performanceDetection';
 
 interface OptimizedImageProps {
   src: string;
   alt: string;
   width?: number;
   height?: number;
-  priority?: boolean;
-  quality?: number;
   className?: string;
-  style?: React.CSSProperties;
-  placeholder?: 'blur' | 'empty';
-  blurDataURL?: string;
-  fill?: boolean;
+  priority?: boolean;
   sizes?: string;
-  loading?: 'lazy' | 'eager';
+  quality?: number;
+  fill?: boolean;
+  style?: React.CSSProperties;
   onLoad?: () => void;
   onError?: () => void;
-  fallback?: ReactNode;
+  placeholder?: 'blur' | 'empty';
+  blurDataURL?: string;
+}
+
+/**
+ * Get optimized image path based on device capabilities and browser support
+ */
+function getOptimizedImagePath(originalPath: string): string {
+  // If it's already an optimized path, return as is
+  if (originalPath.includes('images-optimized') || originalPath.includes('icons-optimized')) {
+    return originalPath;
+  }
+  
+  // Convert original path to optimized path
+  const pathParts = originalPath.split('/');
+  const filename = pathParts[pathParts.length - 1];
+  const dir = pathParts.slice(0, -1).join('/');
+  
+  const basename = filename.replace(/\.[^/.]+$/, '');
+  
+  // Determine optimal format based on device capabilities
+  const settings = performanceDetector.getSettings();
+  const capabilities = performanceDetector.getCapabilities();
+  
+  let format = 'webp'; // Default fallback
+  
+  if (settings?.imageQuality === 'high' && capabilities?.supportsAVIF) {
+    format = 'avif';
+  } else if (settings?.imageQuality === 'medium' || settings?.imageQuality === 'low') {
+    format = 'webp';
+  } else if (capabilities?.supportsWebP) {
+    format = 'webp';
+  } else {
+    format = 'png'; // Ultimate fallback
+  }
+  
+  if (dir === '/images') {
+    return `/images-optimized/${basename}.${format}`;
+  } else if (dir === '/images/Industries') {
+    return `/images-optimized/Industries/${basename}.${format}`;
+  } else if (dir === '/images/Our Services') {
+    return `/images-optimized/Our Services/${basename}.${format}`;
+  } else if (dir === '/images/logo-Final-png.svg') {
+    return '/icons-optimized/vr-logo-md.webp';
+  }
+  
+  return originalPath;
+}
+
+/**
+ * Generate responsive srcSet based on device capabilities
+ */
+function generateResponsiveSrcSet(basePath: string, basename: string): string {
+  const capabilities = performanceDetector.getCapabilities();
+  const settings = performanceDetector.getSettings();
+  
+  if (!capabilities) return '';
+  
+  // Determine optimal format
+  let format = 'webp';
+  if (settings?.imageQuality === 'high' && capabilities.supportsAVIF) {
+    format = 'avif';
+  } else if (capabilities.supportsWebP) {
+    format = 'webp';
+  } else {
+    format = 'png';
+  }
+  
+  // Generate responsive sizes
+  const sizes = [640, 768, 1024, 1280, 1536, 1920];
+  const srcSetEntries = sizes.map(size => {
+    const path = basePath.replace(`${basename}.${format}`, `${basename}-${size}.${format}`);
+    return `${path} ${size}w`;
+  });
+  
+  return srcSetEntries.join(', ');
+}
+
+
+/**
+ * OptimizedImage Component
+ */
+/**
+ * Generate a simple blur placeholder
+ */
+function generateBlurDataURL(width: number = 10, height: number = 10): string {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  
+  if (ctx) {
+    // Create a simple gradient blur placeholder
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#1a1a1a');
+    gradient.addColorStop(0.5, '#2a2a2a');
+    gradient.addColorStop(1, '#1a1a1a');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+  }
+  
+  return canvas.toDataURL('image/jpeg', 0.1);
 }
 
 export default function OptimizedImage({
@@ -30,21 +130,44 @@ export default function OptimizedImage({
   alt,
   width,
   height,
+  className,
   priority = false,
-  quality = 85,
-  className = '',
-  style,
-  placeholder = 'empty',
-  blurDataURL,
-  fill = false,
   sizes,
-  loading = 'lazy',
+  quality = 85,
+  fill = false,
+  style,
   onLoad,
   onError,
-  fallback,
+  placeholder = 'blur',
+  blurDataURL,
 }: OptimizedImageProps) {
+  const [imageSrc, setImageSrc] = useState<string>(src);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [srcSet, setSrcSet] = useState<string>('');
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Get optimized image paths
+  const optimizedSrc = getOptimizedImagePath(src);
+
+  // Generate blur placeholder if not provided
+  const defaultBlurDataURL = blurDataURL || (typeof window !== 'undefined' ? generateBlurDataURL(width || 10, height || 10) : '');
+
+  // Set optimized source and srcSet
+  useEffect(() => {
+    setImageSrc(optimizedSrc);
+    
+    // Generate responsive srcSet for better performance
+    if (typeof window !== 'undefined' && !fill) {
+      const pathParts = optimizedSrc.split('/');
+      const filename = pathParts[pathParts.length - 1];
+      const basename = filename.replace(/\.[^/.]+$/, '');
+      const basePath = pathParts.slice(0, -1).join('/') + '/';
+      
+      const responsiveSrcSet = generateResponsiveSrcSet(basePath, basename);
+      setSrcSet(responsiveSrcSet);
+    }
+  }, [optimizedSrc, fill, width, height]);
 
   const handleLoad = () => {
     setIsLoading(false);
@@ -52,81 +175,95 @@ export default function OptimizedImage({
   };
 
   const handleError = () => {
-    setIsLoading(false);
     setHasError(true);
+    setIsLoading(false);
+    // Fallback to original image
+    setImageSrc(src);
     onError?.();
   };
 
-  // Generate a simple blur placeholder if not provided
-  const defaultBlurDataURL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==';
-
-  if (hasError && fallback) {
-    return <>{fallback}</>;
-  }
-
-  return (
-    <div className={`relative ${className}`} style={style}>
-      {isLoading && (
-        <div 
-          className="absolute inset-0 bg-gray-200 animate-pulse rounded"
-          style={{ width: width || '100%', height: height || '100%' }}
-        />
-      )}
-      
+  // If there's an error, show fallback
+  if (hasError) {
+    return (
       <Image
         src={src}
         alt={alt}
-        width={fill ? undefined : width}
-        height={fill ? undefined : height}
-        fill={fill}
+        width={width}
+        height={height}
+        className={className}
         priority={priority}
-        quality={quality}
-        placeholder={placeholder}
-        blurDataURL={blurDataURL || defaultBlurDataURL}
         sizes={sizes}
-        loading={priority ? 'eager' : loading}
+        quality={quality}
+        fill={fill}
+        style={style}
+        onLoad={handleLoad}
+        onError={handleError}
+      />
+    );
+  }
+
+  return (
+    <div className={`relative ${className || ''}`} style={style}>
+      {isLoading && placeholder === 'blur' && (
+        <div className="absolute inset-0 bg-gray-800 animate-pulse rounded" />
+      )}
+      
+      <Image
+        ref={imgRef}
+        src={imageSrc}
+        alt={alt}
+        width={width}
+        height={height}
+        priority={priority}
+        sizes={sizes || (fill ? '100vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw')}
+        quality={quality}
+        fill={fill}
+        placeholder={placeholder}
+        blurDataURL={placeholder === 'blur' ? defaultBlurDataURL : undefined}
         onLoad={handleLoad}
         onError={handleError}
         className={`transition-opacity duration-300 ${
           isLoading ? 'opacity-0' : 'opacity-100'
         }`}
-        style={{
-          objectFit: 'cover',
-          ...style,
-        }}
+        // Add srcSet for responsive images
+        {...(srcSet && !fill ? { srcSet } : {})}
       />
     </div>
   );
 }
 
-// Preset configurations for common use cases
-export const HeroImage = ({ src, alt, ...props }: Omit<OptimizedImageProps, 'priority' | 'quality'>) => (
-  <OptimizedImage
-    src={src}
-    alt={alt}
-    priority
-    quality={90}
-    sizes="100vw"
-    {...props}
-  />
-);
+/**
+ * Background Image Component with optimization
+ */
+interface OptimizedBackgroundImageProps {
+  src: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}
 
-export const CardImage = ({ src, alt, ...props }: Omit<OptimizedImageProps, 'quality' | 'sizes'>) => (
-  <OptimizedImage
-    src={src}
-    alt={alt}
-    quality={80}
-    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    {...props}
-  />
-);
+export function OptimizedBackgroundImage({
+  src,
+  className = '',
+  style = {},
+  children,
+}: OptimizedBackgroundImageProps) {
+  const [imageSrc, setImageSrc] = useState<string>(src);
 
-export const IconImage = ({ src, alt, ...props }: Omit<OptimizedImageProps, 'quality' | 'sizes'>) => (
-  <OptimizedImage
-    src={src}
-    alt={alt}
-    quality={70}
-    sizes="(max-width: 768px) 64px, 96px"
-    {...props}
-  />
-);
+  useEffect(() => {
+    const optimizedSrc = getOptimizedImagePath(src);
+    setImageSrc(optimizedSrc);
+  }, [src]);
+
+  return (
+    <div
+      className={`bg-cover bg-center bg-no-repeat ${className}`}
+      style={{
+        backgroundImage: `url('${imageSrc}')`,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}

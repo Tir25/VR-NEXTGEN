@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "./components/carousel.css";
+@import "./performance.css";
+@import "./performance-optimized.css";
 
 /* VR NextGEN Design System - Design Tokens */
 :root {
@@ -37,11 +40,6 @@
 }
 
 @theme inline {
-  /* Colors */
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-gold: #ffd700;
-
   /* Fonts (kept generic; can be wired to Google Fonts later) */
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
@@ -72,6 +70,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+/* Low-end device guards: simplify heavy background layers */
+html.low-end .site-bg__grid { animation: none !important; opacity: 0.2; }
+html.low-end .site-bg__aurora { animation-duration: 80s; }
+html.low-end .site-bg__starfield { display: none !important; }
 
 /* Smooth scroll for in-page anchor links - only when explicitly triggered */
 html { scroll-behavior: smooth; }
@@ -306,29 +309,29 @@ section {
   mix-blend-mode: multiply;
 }
 
-/* Industries section - dark cosmic background */
+/* Industries section - black background with gold accents */
 .site-bg.section-industries {
-  background-color: var(--section-bg-hero);
+  background-color: #000000; /* Pure black background */
   transition: background-color 0.8s ease-in-out;
 }
 
 .site-bg.section-industries .site-bg__grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255,215,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,215,0,0.15) 1px, transparent 1px);
 }
 
 .site-bg.section-industries .site-bg__aurora {
   background:
-    radial-gradient(600px 300px at 20% 10%, rgba(157,0,255,0.12), transparent 60%),
-    radial-gradient(500px 250px at 80% 20%, rgba(0,229,255,0.10), transparent 60%),
-    radial-gradient(700px 350px at 50% 80%, rgba(255,0,229,0.08), transparent 65%);
+    radial-gradient(600px 300px at 20% 10%, rgba(255,215,0,0.08), transparent 60%),
+    radial-gradient(500px 250px at 80% 20%, rgba(255,215,0,0.06), transparent 60%),
+    radial-gradient(700px 350px at 50% 80%, rgba(255,215,0,0.04), transparent 65%);
 }
 
 .site-bg.section-industries .site-bg__shine {
   background: radial-gradient(
     600px 600px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
-    rgba(157, 0, 255, 0.15),
+    rgba(255, 215, 0, 0.12),
     transparent 60%
   );
 }
@@ -353,26 +356,7 @@ section {
   z-index: 1;
 }
 
-/* Industries section - Animated Starfield (legacy support) */
-.site-bg.section-industries::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(1px 1px at 25% 25%, white, transparent),
-    radial-gradient(1px 1px at 50% 50%, white, transparent),
-    radial-gradient(2px 2px at 75% 75%, white, transparent),
-    radial-gradient(2px 2px at 100% 100%, white, transparent);
-  background-size: 200px 200px, 300px 300px, 400px 400px, 600px 600px;
-  background-repeat: repeat;
-  opacity: 0.3;
-  animation: twinkle 10s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
+/* Industries section uses the modular starfield above */
 
 /* Why Choose Us section - dark background */
 .site-bg.section-why-choose {
@@ -442,7 +426,7 @@ section {
   .site-bg.section-industries .site-bg__shine { 
     background: radial-gradient(
       400px 400px at calc(var(--cursor-x) * 100%) calc(var(--cursor-y) * 100%),
-      rgba(157, 0, 255, 0.12),
+      rgba(255, 215, 0, 0.10),
       transparent 60%
     ); 
   }
@@ -649,10 +633,6 @@ html {
 /* ===== Enhanced Visual Elements ===== */
 
 /* Floating animation for decorative elements */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
 
 /* Removed unused CSS classes for optimization */
 
@@ -925,3 +905,28 @@ html {
 }
 
 /* Mobile menu animations - consolidated */
+
+/* ===== Footer Styles ===== */
+footer {
+  background-color: #000000 !important;
+  position: relative;
+  z-index: 20;
+  min-height: auto;
+}
+
+/* Ensure footer is always visible and not affected by animated background */
+footer.bg-black {
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* Remove any potential interference from animated background */
+.site-bg {
+  z-index: 0 !important;
+}
+
+/* Ensure footer content is visible */
+footer * {
+  position: relative;
+  z-index: 1;
+}

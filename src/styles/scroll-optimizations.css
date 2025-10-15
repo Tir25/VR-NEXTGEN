@@ -1,0 +1,249 @@
+/**
+ * Scroll Performance Optimizations
+ * Global CSS optimizations for smooth scrolling
+ */
+
+/* Enable smooth scrolling with hardware acceleration */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+/* Optimize scrolling performance */
+* {
+  /* Enable hardware acceleration for all elements */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  /* Optimize rendering */
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  
+  /* Optimize compositing */
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  -ms-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* Optimize scroll containers */
+.scroll-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Optimize animated elements */
+.animate-on-scroll,
+.parallax-element,
+.fade-on-scroll {
+  will-change: transform, opacity;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Remove will-change after animation completes */
+.animate-on-scroll.animation-complete,
+.parallax-element.animation-complete,
+.fade-on-scroll.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize images during scroll */
+img {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Optimize background images */
+.bg-parallax {
+  will-change: transform;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Optimize text rendering during scroll */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+
+/* Optimize mobile touch scrolling */
+@media (max-width: 768px) {
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Reduce motion for low-end devices */
+  .low-end-mobile .animate-on-scroll,
+  .low-end-mobile .parallax-element,
+  .low-end-mobile .fade-on-scroll {
+    will-change: auto;
+    -webkit-transform: none;
+    transform: none;
+  }
+  
+  /* Optimize touch interactions */
+  .touch-optimized {
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Performance optimizations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .animate-on-scroll,
+  .parallax-element,
+  .fade-on-scroll {
+    will-change: auto;
+    -webkit-transform: none;
+    transform: none;
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .bg-parallax {
+    will-change: auto;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+/* Optimize scroll-triggered animations */
+.scroll-triggered {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 30px, 0);
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-triggered.visible {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Optimize Framer Motion elements */
+[data-framer-motion] {
+  will-change: transform, opacity;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Optimize scroll indicators */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #ffd700, #ff6b6b);
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  transition: -webkit-transform 0.1s ease-out;
+  transition: transform 0.1s ease-out;
+  z-index: 1000;
+}
+
+/* Optimize lazy loading */
+.lazy-load {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+/* Optimize scroll snap */
+.scroll-snap {
+  scroll-snap-type: y mandatory;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* Optimize scroll performance for large lists */
+.virtual-scroll {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+.virtual-scroll-item {
+  contain: layout style paint;
+}
+
+/* Optimize scroll performance for images */
+.optimized-image {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Optimize scroll performance for text blocks */
+.optimized-text {
+  contain: layout;
+  text-rendering: optimizeSpeed;
+}
+
+/* Optimize scroll performance for complex layouts */
+.optimized-layout {
+  contain: layout style;
+  will-change: auto;
+}
+
+/* Optimize scroll performance for animations */
+.optimized-animation {
+  contain: layout style paint;
+  will-change: transform, opacity;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Remove will-change after animation completes */
+.optimized-animation.complete {
+  will-change: auto;
+}

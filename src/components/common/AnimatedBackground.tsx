@@ -1,8 +1,8 @@
-import React from "react";
 import { useUnifiedBackgroundAnimation } from "@/contexts/ScrollContext";
 import { useBackgroundInteraction } from "./background/useBackgroundInteraction";
 import { useSectionDetection } from "./background/useSectionDetection";
 import BackgroundEffects from "./background/BackgroundEffects";
+import { useConditionalAnimation } from "@/hooks/usePerformanceAnimation";
 
 /**
  * AnimatedBackground
@@ -12,9 +12,12 @@ import BackgroundEffects from "./background/BackgroundEffects";
 export default function AnimatedBackground() {
   const rootRef = useBackgroundInteraction();
   const currentSection = useSectionDetection();
+  const { shouldBackgroundEffects, isLowEnd } = useConditionalAnimation();
   
-  // Use unified background animation hook
+  // Use unified background animation hook only if effects are enabled
+  // Always call the hook to satisfy React Hook rules, but conditionally use its result
   useUnifiedBackgroundAnimation();
+  // Note: Animation result is used by the BackgroundEffects component internally
 
   function getSectionClass(sectionId: string): string {
     const sectionMapping: Record<string, string> = {
@@ -24,6 +27,8 @@ export default function AnimatedBackground() {
       cta: "hero",
       "what-we-do-hero": "hero",
       "who-we-are-hero": "hero",
+      "our-values": "why-choose", // Use why-choose styling for values section
+      "our-vision": "hero", // Use hero styling for vision section
       "customer-stories": "services",
       "case-studies": "why-choose",
       events: "clients",
@@ -32,6 +37,8 @@ export default function AnimatedBackground() {
       "contact-form": "hero",
       "blog-header": "hero",
       "blog-feed": "hero",
+      "careers-hero": "hero",
+      "careers-content": "services",
     };
 
     return sectionMapping[sectionId] || "hero";
@@ -43,14 +50,18 @@ export default function AnimatedBackground() {
       aria-hidden
       className={`site-bg pointer-events-none section-${getSectionClass(
         currentSection
-      )}`}
+      )} ${isLowEnd ? 'low-end-device' : ''}`}
       style={{
         "--cursor-x": "0.5",
         "--cursor-y": "0.5",
         "--gold": "var(--accent-gold)",
       } as React.CSSProperties}
     >
-      <BackgroundEffects currentSection={currentSection} />
+      {shouldBackgroundEffects ? (
+        <BackgroundEffects currentSection={currentSection} />
+      ) : (
+        <div className="simplified-background" />
+      )}
     </div>
   );
 }

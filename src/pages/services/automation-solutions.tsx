@@ -11,7 +11,7 @@ export default function AutomationSolutions() {
         badgeText="Automation & Technology Solutions"
         title="Intelligence Through Automation"
         subtitle="Automation isn’t replacing your workforce — it’s upgrading your organization. Free your teams to focus on high‑value work while systems handle repetitive tasks."
-        cardBgUrl="/images/Our Services/Automation & Technology Solutions.png"
+        cardBgUrl="/images-optimized/Our Services/Automation & Technology Solutions.webp"
         cardTitle="Automation & Technology Solutions"
       >
             <section className="relative z-10 prose prose-lg max-w-none">

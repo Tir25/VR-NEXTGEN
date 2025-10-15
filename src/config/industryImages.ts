@@ -4,15 +4,15 @@
  */
 
 export const INDUSTRY_BACKGROUND_IMAGE_MAP: Record<string, string> = {
-  'pharmaceutical-life-sciences': '/images/Industries/Pharmaceutical & Life Sciences.png',
-  'manufacturing-engineering': '/images/Industries/Manufacturing_Engineering.png',
-  'retail-fmcg': '/images/Industries/Fmcg.png',
-  'healthcare-hospitals': '/images/Industries/Hospitals and healthcare.png',
-  'education-edtech': '/images/Industries/Education.png',
-  'financial-services-insurance': '/images/Industries/Financial.png',
-  'industrial-infrastructure': '/images/Industries/engineering.png',
-  'it-professional-services': '/images/Industries/IT.png',
-  'other-industries': '/images/Industries/Other.png',
+  'pharmaceutical-life-sciences': '/images-optimized/Industries/Pharmaceutical & Life Sciences.webp',
+  'manufacturing-engineering': '/images-optimized/Industries/Manufacturing_Engineering.webp',
+  'retail-fmcg': '/images-optimized/Industries/Fmcg.webp',
+  'healthcare-hospitals': '/images-optimized/Industries/Hospitals and healthcare.webp',
+  'education-edtech': '/images-optimized/Industries/Education.webp',
+  'financial-services-insurance': '/images-optimized/Industries/Financial.webp',
+  'industrial-infrastructure': '/images-optimized/Industries/engineering.webp',
+  'it-professional-services': '/images-optimized/Industries/IT.webp',
+  'other-industries': '/images-optimized/Industries/Other.webp',
 };
 
 export const hasIndustryBackgroundImage = (id: string): boolean =>

@@ -66,7 +66,7 @@ export const ServicesSection = (props: Omit<SectionProps, 'background' | 'paddin
 );
 
 export const IndustriesSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (
-  <Section {...props} background="industries" padding="lg" />
+  <Section {...props} background="industries" padding="sm" className={`${props.className || ''} overflow-visible`} />
 );
 
 export const WhyChooseSection = (props: Omit<SectionProps, 'background' | 'padding'>) => (

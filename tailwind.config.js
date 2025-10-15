@@ -36,6 +36,9 @@ module.exports = {
         /^xl:/,
         /^sm:/,
         /^xs:/,
+        // Keep specific color classes
+        'bg-amber-900',
+        'text-amber-900',
         // Keep custom classes
         'btn-enhanced',
         'card-3d',
@@ -53,7 +56,8 @@ module.exports = {
         'site-bg__vignette',
         'memory-card',
         'control-btn',
-        'carousel-container'
+        'carousel-container',
+        'animate-fade-in-up'
       ]
     }
   },
@@ -69,7 +73,17 @@ module.exports = {
         'light-grey': "#EAEAEA",
         'glory-white': "#E6E6E6",
         'sand-yellow': "#FFBB01",
-        'gray-night-black': "#1A1A1A"
+        'gray-night-black': "#1A1A1A",
+        amber: {
+          900: "#78350F"
+        },
+        purple: {
+          400: "#A855F7",
+          500: "#9333EA",
+          600: "#7C3AED",
+          700: "#6D28D9",
+          800: "#5B21B6"
+        }
       },
       screens: {
         xs: "320px",

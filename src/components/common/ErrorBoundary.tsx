@@ -19,7 +19,6 @@ interface State extends ErrorBoundaryState {
 }
 
 export default class ErrorBoundary extends Component<Props, State> {
-  private resetTimeoutId: number | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -69,15 +68,10 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentWillUnmount() {
-    if (this.resetTimeoutId) {
-      clearTimeout(this.resetTimeoutId);
-    }
+    // Cleanup handled by resetErrorBoundary
   }
 
   resetErrorBoundary = () => {
-    if (this.resetTimeoutId) {
-      clearTimeout(this.resetTimeoutId);
-    }
 
     this.setState({
       hasError: false,

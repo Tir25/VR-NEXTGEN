@@ -126,20 +126,20 @@ function ExpensiveComponent({ data, onUpdate }) {
 
 ### **Scroll Performance**
 ```typescript
-import { useOptimizedScroll, useScrollParallax } from '@/hooks/performance';
+import { useUnifiedParallax, useUnifiedScrollFade } from '@/contexts/ScrollContext';
 
 function ScrollComponent() {
-  const scrollState = useOptimizedScroll({
-    throttleDelay: 16, // 60fps
-    trackDirection: true,
-    trackVelocity: true,
-  });
-
-  const parallaxOffset = useScrollParallax(0.5);
+  const parallaxOffset = useUnifiedParallax(0.5);
+  const { opacity } = useUnifiedScrollFade(0.3);
 
   return (
-    <div style={{ transform: `translateY(${parallaxOffset.offset}px)` }}>
-      {/* Parallax content */}
+    <div 
+      style={{ 
+        transform: `translateY(${parallaxOffset}px)`,
+        opacity: opacity
+      }}
+    >
+      {/* Optimized scroll content */}
     </div>
   );
 }

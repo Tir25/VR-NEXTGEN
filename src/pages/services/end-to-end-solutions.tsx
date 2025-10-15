@@ -11,7 +11,7 @@ export default function EndToEndSolutions() {
         badgeText="End-to-End Business Solutions"
         title="Integrating Strategy, Process, and Technology for Sustainable Growth"
         subtitle="We connect strategy, process, analytics, automation, and capability building into one seamless transformation framework."
-        cardBgUrl="/images/Our Services/End-to-End Business Solutions.png"
+        cardBgUrl="/images-optimized/Our Services/End-to-End Business Solutions.webp"
         cardTitle="End-to-End Business Solutions"
       >
             <section className="relative z-10 prose prose-lg max-w-none">
@@ -34,7 +34,7 @@ export default function EndToEndSolutions() {
                   "KPI baselines and performance dashboards"
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 group transition-transform duration-200 ease-out hover:translate-x-1">
-                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-gold text-xs font-bold transition-transform group-hover:scale-110">✓</span>
+                    <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold/20 text-black text-xs font-bold transition-transform group-hover:scale-110">✓</span>
                     <span className="text-gray-700 leading-relaxed">{item}</span>
                   </li>
                 ))}

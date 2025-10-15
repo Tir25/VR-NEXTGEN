@@ -18,7 +18,7 @@ export default function IndustriesControls({ onNext, onPrev, isRotating }: Indus
         <button
           onClick={onPrev}
           disabled={isRotating}
-          className="w-12 h-12 md:w-14 md:h-14 bg-sand-yellow/10 border border-sand-yellow/30 text-sand-yellow rounded-full flex items-center justify-center hover:bg-sand-yellow/20 hover:scale-110 transition-all duration-300 focus:ring-2 focus:ring-sand-yellow/50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="w-12 h-12 md:w-14 md:h-14 bg-gold/10 border border-gold/30 text-gold rounded-full flex items-center justify-center hover:bg-gold/20 hover:scale-110 transition-all duration-300 focus:ring-2 focus:ring-gold/50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           aria-label="Previous industry"
         >
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@ export default function IndustriesControls({ onNext, onPrev, isRotating }: Indus
         <button
           onClick={onNext}
           disabled={isRotating}
-          className="w-12 h-12 md:w-14 md:h-14 bg-sand-yellow/10 border border-sand-yellow/30 text-sand-yellow rounded-full flex items-center justify-center hover:bg-sand-yellow/20 hover:scale-110 transition-all duration-300 focus:ring-2 focus:ring-sand-yellow/50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="w-12 h-12 md:w-14 md:h-14 bg-gold/10 border border-gold/30 text-gold rounded-full flex items-center justify-center hover:bg-gold/20 hover:scale-110 transition-all duration-300 focus:ring-2 focus:ring-gold/50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           aria-label="Next industry"
         >
           <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

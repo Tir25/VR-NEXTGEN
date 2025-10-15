@@ -10,8 +10,8 @@ export default function HealthcareHospitals() {
       <IndustryPageShell>
         <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-400/30 rounded-full text-purple-300 text-sm font-medium mb-6">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/20 border border-gold/30 rounded-full text-gold text-sm font-medium mb-6">
+              <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               Healthcare & Hospitals
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -23,9 +23,9 @@ export default function HealthcareHospitals() {
           </div>
 
           <div
-            className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-purple-500/30 overflow-hidden"
+            className="relative rounded-2xl shadow-lg p-8 md:p-12 border border-gold/30 overflow-hidden"
             style={{
-              backgroundImage: "url('/images/Industries/Hospitals and healthcare.png')",
+              backgroundImage: "url('/images-optimized/Industries/Hospitals and healthcare.webp')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
@@ -40,19 +40,19 @@ export default function HealthcareHospitals() {
               <h3 className="text-xl font-semibold text-white mb-4">Our Focus Areas:</h3>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0" />
                   <span className="text-gray-300">Hospital Process Optimization (Admissions, Billing, Discharge)</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0" />
                   <span className="text-gray-300">Bed Utilization and Patient Flow Analytics</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0" />
                   <span className="text-gray-300">Resource Allocation and Staffing Dashboards</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0" />
                   <span className="text-gray-300">Quality, Compliance, and Accreditation Reporting</span>
                 </li>
               </ul>

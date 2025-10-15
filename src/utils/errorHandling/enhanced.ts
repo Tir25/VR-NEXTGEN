@@ -4,6 +4,7 @@
  */
 
 import { AppError } from './types';
+import { logger } from '@/utils/logger';
 
 export interface ErrorContext {
   component?: string;
@@ -317,7 +318,7 @@ export class GlobalErrorHandler {
       try {
         listener(enhancedError);
       } catch (listenerError) {
-        console.error('Error in error listener:', listenerError);
+        logger.error('Error in error listener:', listenerError);
       }
     });
 
@@ -365,7 +366,7 @@ export class GlobalErrorHandler {
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.error('Global Error:', logData);
+      logger.error('Global Error:', logData);
     }
 
     // In production, you might want to send to an error monitoring service

@@ -1,5 +1,5 @@
 import React from "react";
-import { ServicesSection, Container, SectionHeader, StaggeredWrapper, SafeWrapper } from "@/components/common";
+import { ServicesSection, Container, SectionHeader } from "@/components/common";
 import ServiceCard from "./ServiceCard";
 import { SERVICES } from "./constants";
 
@@ -23,23 +23,19 @@ export default function Services() {
         <SectionHeader
           badge={{
             text: "Our Services",
-            color: "gold"
+            color: "black",
+            size: "xl"
           }}
-          title="Comprehensive Business Solutions"
-          description="We provide end-to-end business solutions that drive growth, optimize operations, and deliver measurable results across all industries."
-          titleColor="white"
-          descriptionColor="gray"
+          title="Powering End-to-End Business Transformation through Process, Data, and Strategy"
+          description=""
+          titleColor="black"
+          titleSize="md"
+          descriptionColor="white"
         />
 
-        <SafeWrapper isolate={true}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-            <StaggeredWrapper
-              items={serviceCards}
-              animation="slideUp"
-              staggerDelay={100}
-            />
-          </div>
-        </SafeWrapper>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr gap-6 lg:gap-8">
+          {serviceCards}
+        </div>
       </Container>
     </ServicesSection>
   );

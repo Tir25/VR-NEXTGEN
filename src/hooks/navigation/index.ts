@@ -3,6 +3,5 @@
  * Centralized exports for navigation-related hooks
  */
 
-export { useNavigation } from '../useNavigation';
-export { useEnhancedNavigation } from '../useEnhancedNavigation';
+// useNavigation and useEnhancedNavigation removed as they were unused
 export { useScrollToTop } from '../useScrollToTop';

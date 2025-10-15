@@ -3,25 +3,15 @@
  * Comprehensive error handling utilities and components
  */
 
-import React from 'react';
-import { ErrorBoundary, withErrorBoundary, useErrorHandler } from '@/utils/errorBoundary';
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 
 // Error handling components
-export { ErrorBoundary, withErrorBoundary, useErrorHandler };
+export { ErrorBoundary };
 
 // Error handling utilities
 export const ErrorHandlingUtils = {
-  // Safe component wrapper
-  safeComponent: <P extends object>(Component: React.ComponentType<P>) => 
-    withErrorBoundary(Component, {
-      isolate: true,
-      fallback: React.createElement('div', {
-        className: 'p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400'
-      }, 'Component failed to load'),
-    }),
-
   // Error logging utility
-  logError: (error: Error, context?: any) => {
+  logError: (error: Error, context?: unknown) => {
     const errorData = {
       message: error.message,
       stack: error.stack,
@@ -32,7 +22,7 @@ export const ErrorHandlingUtils = {
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      // Error logged
+      console.error('Error logged:', errorData);
     }
 
     // In production, send to error reporting service

@@ -86,6 +86,12 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
     const cards = useMemo(() => industries.map((industry, index) => {
       const backgroundImage = hasBackgroundImage(industry.id) ? getBackgroundImagePath(industry.id) : null;
       const isFlipped = flippedCards.has(index);
+      const categorySameAsTitle = (industry.category || '').trim().toLowerCase() === (industry.title || '').trim().toLowerCase();
+      const locationText = (industry.location || '').trim();
+      const timestampText = (industry.timestamp || '').trim();
+      const isGlobal = locationText.toLowerCase() === 'global';
+      const isYear2024 = timestampText === '2024';
+      const timestampContainsGlobal2024 = timestampText.toLowerCase().includes('global 2024');
       
       return (
         <div
@@ -97,7 +103,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
           style={{
             width: '100%',
             minHeight: 'clamp(400px, 85vh, 500px)',
-            marginBottom: '1.5rem',
+            marginBottom: '0.5rem',
             maxWidth: '100%',
             perspective: '1000px',
             willChange: 'transform, opacity',
@@ -108,8 +114,8 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
           <div
             className={`relative w-full h-full rounded-xl overflow-hidden shadow-lg border transition-all duration-700 transform-gpu ${
               hasBackgroundImage(industry.id) 
-                ? 'border-purple-500/30 bg-gradient-to-br from-gray-800/60 to-gray-900/70' 
-                : 'border-purple-500/30 bg-gradient-to-br from-gray-800/80 to-gray-900/90'
+                ? 'border-gold/30 bg-gradient-to-br from-gray-800/60 to-gray-900/70' 
+                : 'border-gold/30 bg-gradient-to-br from-gray-800/80 to-gray-900/90'
             }`}
             style={{
               ...(backgroundImage && {
@@ -143,13 +149,15 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
               <div className="absolute inset-0 rounded-xl pointer-events-none bg-black opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
               
               <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
-                <div className={`text-xs font-mono mb-2 tracking-wider font-semibold drop-shadow-lg ${
-                  hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
-                }`}>
-                  {industry.category || 'CATEGORY'}
-                </div>
+                {!categorySameAsTitle && (
+                  <div className={`text-xs font-mono mb-2 tracking-wider font-semibold drop-shadow-lg ${
+                    hasBackgroundImage(industry.id) ? 'text-sand-yellow' : 'text-sand-yellow'
+                  }`}>
+                    {industry.category}
+                  </div>
+                )}
                 
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg text-center">
                   {industry.title || 'Card Title'}
                 </h3>
                 
@@ -180,16 +188,18 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                 </div>
                 
                 <div className="mt-3 sm:mt-4 text-xs font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0">
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-map-marker-alt w-2" />
-                    <span>{industry.location || 'Location'}</span>
-                  </div>
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-clock w-2" />
-                    <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>
-                      {industry.timestamp || 'Date'}
-                    </span>
-                  </div>
+                  {!isGlobal && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-map-marker-alt w-2" />
+                      <span>{locationText || 'Location'}</span>
+                    </div>
+                  )}
+                  {!isYear2024 && !timestampContainsGlobal2024 && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-clock w-2" />
+                      <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-1 font-semibold justify-center mt-2 opacity-70">
                     <i className="fas fa-hand-pointer w-2" />
                     <span className="text-xs">Tap to flip for more</span>
@@ -199,7 +209,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                   <div className="mt-3 pt-3 border-t border-white/20">
                     <button 
                       onClick={() => handleLearnMore(industry.id)}
-                      className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white rounded-lg transition-all duration-300 hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden"
+                      className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-gold/20 to-cyan-500/20 border border-gold/30 text-white rounded-lg transition-all duration-300 hover:from-gold/30 hover:to-cyan-500/30 hover:border-gold/50 focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
                       aria-label={`Learn more about ${industry.title}`}
                     >
                       <span className="relative z-10 flex items-center justify-center gap-1">
@@ -208,13 +218,10 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                     </button>
                   </div>
-                  {/* Debug indicator - remove in production */}
-                  <div className="absolute top-2 right-2 text-xs bg-red-500 text-white px-1 rounded opacity-50">
-                    {isFlipped ? 'FLIPPED' : 'FRONT'}
-                  </div>
+                  {/* Debug indicator removed for production */}
                 </div>
               </div>
             </div>
@@ -244,7 +251,7 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
               {/* Brightness overlay for consistent hover effect */}
               <div className="absolute inset-0 rounded-xl pointer-events-none bg-black opacity-60 group-hover:opacity-30 active:opacity-30 transition-opacity duration-300" />
               
-              <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
+                <div className="relative z-10 p-4 sm:p-6 flex flex-col h-full">
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 leading-tight drop-shadow-lg flex-shrink-0">
                   {industry.title || 'Card Title'}
                 </h3>
@@ -266,23 +273,25 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                 </div>
                 
                 <div className="mt-3 sm:mt-4 text-xs font-mono text-sand-yellow space-y-1 drop-shadow-lg flex-shrink-0">
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-map-marker-alt w-2" />
-                    <span>{industry.location || 'Location'}</span>
-                  </div>
-                  <div className="flex items-center gap-1 font-semibold justify-center">
-                    <i className="fas fa-clock w-2" />
-                    <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>
-                      {industry.timestamp || 'Date'}
-                    </span>
-                  </div>
+                  {!isGlobal && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-map-marker-alt w-2" />
+                      <span>{locationText || 'Location'}</span>
+                    </div>
+                  )}
+                  {!isYear2024 && !timestampContainsGlobal2024 && (
+                    <div className="flex items-center gap-1 font-semibold justify-center">
+                      <i className="fas fa-clock w-2" />
+                      <span className={`${hasBackgroundImage(industry.id) ? 'text-cyan-300' : 'text-cyan-400'}`}>{timestampText || 'Date'}</span>
+                    </div>
+                  )}
                 </div>
                 
                 {/* Learn More Button */}
                 <div className="mt-3 pt-3 border-t border-white/20">
                   <button 
                     onClick={() => handleLearnMore(industry.id)}
-                    className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-400/30 text-white rounded-lg transition-all duration-300 hover:from-purple-500/30 hover:to-cyan-500/30 hover:border-purple-400/50 focus:ring-2 focus:ring-purple-400/50 focus:outline-none group/btn relative overflow-hidden"
+                    className="w-full px-3 py-2 text-xs font-semibold bg-gradient-to-r from-gold/20 to-cyan-500/20 border border-gold/30 text-white rounded-lg transition-all duration-300 hover:from-gold/30 hover:to-cyan-500/30 hover:border-gold/50 focus:ring-2 focus:ring-gold/50 focus:outline-none group/btn relative overflow-hidden"
                     aria-label={`Learn more about ${industry.title}`}
                   >
                     <span className="relative z-10 flex items-center justify-center gap-1">
@@ -291,17 +300,14 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-cyan-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
                   </button>
                 </div>
-                {/* Debug indicator for back card */}
-                <div className="absolute top-2 right-2 text-xs bg-green-500 text-white px-1 rounded opacity-50">
-                  BACK
-                </div>
+                {/* Debug indicator removed for production */}
               </div>
             </div>
             
-            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-radial from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 active:opacity-100" />
+            <div className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-radial from-gold/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 active:opacity-100" />
           </div>
         </div>
       );
@@ -313,12 +319,14 @@ export const ScrollCarousel = memo(forwardRef<HTMLDivElement, ScrollCarouselProp
         ref={ref}
         style={{
           width: '100%',
-          minHeight: '100vh',
-          padding: '2rem 0'
+          minHeight: 'auto',
+          padding: '0',
+          marginTop: '0',
+          marginBottom: '0'
         }}
       >
-        <div className="relative w-full max-w-full mx-auto px-4 sm:px-6">
-          <div className="flex flex-col items-center space-y-6 w-full">
+        <div className="relative w-full max-w-full mx-auto px-4 sm:px-6 pb-8">
+          <div className="flex flex-col items-center space-y-2 w-full">
             {cards}
           </div>
         </div>

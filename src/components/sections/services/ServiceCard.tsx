@@ -45,7 +45,8 @@ export default function ServiceCard({ service, isVisible }: ServiceCardProps) {
       style={{
         transformStyle: 'preserve-3d',
         willChange: 'transform, box-shadow',
-        transition: 'opacity 0.5s ease-out, transform 0.5s ease-out' // Only for visibility, not 3D tilt
+        transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
+        height: '100%'
       }}
       role="article"
       aria-labelledby={`service-title-${service.id}`}
@@ -65,7 +66,14 @@ export default function ServiceCard({ service, isVisible }: ServiceCardProps) {
       
       {/* Visual Hierarchy: Icon with enhanced styling */}
       <div className="flex justify-center mb-6">
-        <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/10 to-gold/20 text-gold transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:from-gold/20 group-hover:to-gold/30">
+        <div
+          className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/30 text-gold transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:from-gold/30 group-hover:to-gold/40 shadow-[0_0_18px_rgba(255,215,0,0.45)] ring-2 ring-gold/30 md:ring-gold/20 animate-pulse md:animate-none"
+          aria-hidden
+        >
+          {/* Subtle shimmer overlay for mobile visibility */}
+          <span
+            className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,215,0,0.35),transparent_60%)] opacity-80 md:opacity-0"
+          />
           {service.icon}
         </div>
       </div>
