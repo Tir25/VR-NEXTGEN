@@ -37,7 +37,7 @@ export default function OptimizedAboutImage({
         try {
           // Check if WebP is supported
           const webpSupported = await new Promise<boolean>((resolve) => {
-            const webP = new Image();
+            const webP = new window.Image();
             webP.onload = webP.onerror = () => {
               resolve(webP.height === 2);
             };
