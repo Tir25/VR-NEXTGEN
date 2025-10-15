@@ -4,7 +4,7 @@
  */
 
 import React, { ReactNode, forwardRef } from 'react';
-import { theme } from './theme';
+// import { theme } from './theme';
 import { cn } from '@/utils/className';
 
 // Base component props interface

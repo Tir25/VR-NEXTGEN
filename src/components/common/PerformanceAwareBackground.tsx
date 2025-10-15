@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import performanceDetector from '@/utils/performanceDetection';
+// import performanceDetector from '@/utils/performanceDetection';
 import { useConditionalAnimation } from '@/hooks/usePerformanceAnimation';
 
 interface PerformanceAwareBackgroundProps {

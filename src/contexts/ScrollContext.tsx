@@ -76,7 +76,7 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
   /**
    * Unregister a scroll handler
    */
-  const unregisterHandler = useCallback((_type: keyof ScrollHandlers, handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
+  const unregisterHandler = useCallback((_type: keyof ScrollHandlers, _handler: (scrollY: number, scrollDirection: 'up' | 'down' | null) => void) => {
     // Note: This is a simplified implementation since the unified manager handles cleanup automatically
     // In practice, components should use the returned unregister function from registerHandler
   }, []);

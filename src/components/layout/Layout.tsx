@@ -34,7 +34,7 @@ export default function Layout({ title, description, children }: LayoutProps) {
   const pageDesc = description || "Professional portfolio website for VR NextGEN Solutions, a data-driven consultancy.";
 
   // Apply comprehensive scroll optimizations
-  const { metrics, isOptimized } = useScrollOptimization({
+  const { metrics: _metrics, isOptimized: _isOptimized } = useScrollOptimization({
     enablePassiveListeners: true,
     enableGPUAcceleration: true,
     enableSmoothScrolling: true,

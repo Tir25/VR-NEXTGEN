@@ -19,7 +19,7 @@ export default function TaglineSection() {
         <div className="text-center space-y-8">
           {/* Tagline */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold leading-tight">
-            Let's Build Your Success Story Together
+            Let&apos;s Build Your Success Story Together
           </h2>
           
           {/* Description */}

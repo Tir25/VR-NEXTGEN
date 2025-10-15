@@ -49,7 +49,7 @@ export default function MobileOptimizations({ children }: MobileOptimizationsPro
       }
     };
 
-    const handleWheel = (e: WheelEvent) => {
+    const handleWheel = (_e: WheelEvent) => {
       // Optimize wheel events for smooth scrolling
       // Don't prevent default to maintain natural scrolling behavior
       // The passive listener ensures this doesn't block scrolling
@@ -95,37 +95,8 @@ export default function MobileOptimizations({ children }: MobileOptimizationsPro
     };
   }, [isLowEnd]);
 
-  // Optimized touch handlers
-  const handleTouchStart = (e: TouchEvent) => {
-    // Prevent default touch behaviors that can cause performance issues
-    if (e.target instanceof HTMLElement) {
-      const element = e.target.closest('[data-touch-optimized]');
-      if (element) {
-        element.classList.add('touch-active');
-      }
-    }
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    // Optimize scroll performance on mobile
-    if (e.target instanceof HTMLElement) {
-      const scrollableElement = e.target.closest('[data-scroll-optimized]');
-      if (scrollableElement && 'style' in scrollableElement) {
-        // Enable hardware acceleration for smooth scrolling
-        (scrollableElement as HTMLElement).style.transform = 'translateZ(0)';
-      }
-    }
-  };
-
-  const handleTouchEnd = (e: TouchEvent) => {
-    // Clean up touch states
-    if (e.target instanceof HTMLElement) {
-      const element = e.target.closest('[data-touch-optimized]');
-      if (element) {
-        element.classList.remove('touch-active');
-      }
-    }
-  };
+  // Touch handlers are commented out as they're not currently used
+  // but kept for future mobile optimization features
 
   return (
     <div 

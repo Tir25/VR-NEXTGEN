@@ -1,6 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import { useParallax } from "@/hooks/useParallax";
 import Head from "next/head";
+import Link from "next/link";
 import StructuredData, { organizationSchema, createBreadcrumbSchema } from "@/components/common/StructuredData";
 
 export default function InsightsPage() {
@@ -90,7 +91,7 @@ export default function InsightsPage() {
                 </div>
                 
                 <p className="text-lg md:text-xl text-white/80 leading-relaxed">
-                  We're preparing valuable insights, case studies, customer stories, and thought leadership content to help you stay ahead in the digital transformation journey.
+                  We&apos;re preparing valuable insights, case studies, customer stories, and thought leadership content to help you stay ahead in the digital transformation journey.
                 </p>
               </div>
             </div>
@@ -107,16 +108,16 @@ export default function InsightsPage() {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-4">
-              What's Coming
+              What&apos;s Coming
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              We're working on bringing you comprehensive insights and resources to support your business growth.
+              We&apos;re working on bringing you comprehensive insights and resources to support your business growth.
             </p>
           </div>
 
           {/* Coming Soon Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {comingSoonSections.map((section, index) => (
+            {comingSoonSections.map((section) => (
               <div
                 key={section.id}
                 className="group relative border border-gray-700 rounded-xl p-8 overflow-hidden hover:border-gold/50 transition-all duration-300 bg-gradient-to-br from-gray-800/80 to-gray-900/90"
@@ -167,7 +168,7 @@ export default function InsightsPage() {
                 Be the first to know when we launch our insights content. Subscribe to our newsletter for updates.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a
+                <Link
                   href="/contact"
                   className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-gold rounded-full shadow-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gold/50"
                 >
@@ -175,7 +176,7 @@ export default function InsightsPage() {
                   <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </Link>
                 <a
                   href="mailto:info@vrnextgensolutions.com"
                   className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gold border border-gold/50 rounded-full hover:bg-gold/10 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gold/50"
