@@ -89,7 +89,7 @@ export const IMAGE_MAPPING = {
 
 // Helper function to get optimized image path
 export function getOptimizedImage(originalPath: string, format: 'webp' | 'avif' = 'webp'): string {
-  const mapping = IMAGE_MAPPING[originalPath];
+  const mapping = IMAGE_MAPPING[originalPath as keyof typeof IMAGE_MAPPING];
   if (mapping) {
     return mapping[format] || mapping.fallback;
   }
