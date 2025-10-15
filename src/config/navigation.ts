@@ -72,6 +72,13 @@ export const navigationConfig: NavigationItem[] = [
         description: 'Transforming data into actionable intelligence',
         showOnHover: true,
         hoverContent: 'To deliver end-to-end business solutions and strategic insights that transform data into actionable intelligence, enabling organizations to streamline processes, enhance efficiency, and maximize profitability.'
+      },
+      { 
+        label: 'Our Mission', 
+        href: '/who-we-are#our-mission', 
+        description: 'Delivering end-to-end business solutions',
+        showOnHover: true,
+        hoverContent: 'To deliver end-to-end business solutions and strategic insights that transform data into actionable intelligence, enabling organizations to streamline processes, enhance efficiency, and maximize profitability. Our mission drives every project and partnership we undertake.'
       }
     ]
   },
