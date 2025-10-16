@@ -13,8 +13,8 @@ const ScrollPerformanceMonitor = dynamic(() => import("@/components/common/Scrol
   loading: () => null
 });
 import MobileOptimizations from "@/components/common/MobileOptimizations";
-import { ScrollProvider } from "@/contexts/ScrollContext";
 import { useScrollOptimization } from "@/hooks/useScrollOptimization";
+import { ScrollProvider } from "@/contexts/ScrollContext";
 import { ReactNode } from "react";
 
 // Import ErrorBoundary directly to reduce dynamic import complexity
@@ -86,7 +86,7 @@ export default function Layout({ title, description, children }: LayoutProps) {
             {/* Preload critical fonts - Using system fonts for better performance */}
             {/* <link rel="preload" href="/fonts/geist-sans.woff2" as="font" type="font/woff2" crossOrigin="anonymous" /> */}
             
-            {/* Prefetch likely next pages */}
+            {/* Manual prefetch for critical pages */}
             <link rel="prefetch" href="/what-we-do" />
             <link rel="prefetch" href="/who-we-are" />
             <link rel="prefetch" href="/contact" />
@@ -95,8 +95,8 @@ export default function Layout({ title, description, children }: LayoutProps) {
             <style dangerouslySetInnerHTML={{
               __html: `
                 /* Critical scroll optimizations */
-                html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
                 * { -webkit-transform: translateZ(0); transform: translateZ(0); }
+                html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
                 .bg-parallax { will-change: transform; }
                 @media (prefers-reduced-motion: reduce) {
                   html { scroll-behavior: auto; }

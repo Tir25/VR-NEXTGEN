@@ -1,9 +1,9 @@
 import Layout from "@/components/layout/Layout";
-import { useParallax } from "@/hooks/useParallax";
 import { OptimizedCareersImage } from "@/components/common";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 import Head from "next/head";
 import StructuredData, { organizationSchema, createBreadcrumbSchema } from "@/components/common/StructuredData";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function CareersPage() {
   const parallax = useParallax(0.25);

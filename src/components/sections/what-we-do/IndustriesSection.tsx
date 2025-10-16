@@ -125,7 +125,7 @@ function IndustryCard({ industry }: { industry: typeof industries[0] }) {
 export default function IndustriesSection() {
   return (
     <ErrorBoundary>
-      <section id="industries" className="section-services relative py-16 md:py-24" aria-label="Industries">
+      <section id="industries" className="section-services relative py-8 md:py-12" aria-label="Industries">
         {/* Background decoration - matching Our Services */}
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gold/10 rounded-full blur-3xl" />
@@ -134,7 +134,7 @@ export default function IndustriesSection() {
 
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Header matching homepage */}
-          <header className="text-center mb-16">
+          <header className="text-center mb-8">
             <div className="inline-flex items-center gap-3 px-8 py-4 bg-gold/10 border border-gold/30 rounded-full text-gold text-lg font-medium mb-6">
               <div className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               Industries We Serve

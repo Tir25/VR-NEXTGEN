@@ -11,7 +11,7 @@ import type { MotionValue } from 'framer-motion';
 interface HeroBackgroundProps {
   backgroundImage: string;
   opacity?: MotionValue<number>;
-  parallaxOffset?: number;
+  parallaxOffset?: MotionValue<number>;
   overlayImage?: string;
   overlayOpacity?: string;
 }
@@ -19,7 +19,7 @@ interface HeroBackgroundProps {
 export default function HeroBackground({
   backgroundImage,
   opacity,
-  parallaxOffset = 0,
+  parallaxOffset,
   overlayImage,
   overlayOpacity = '0.03'
 }: HeroBackgroundProps) {
@@ -49,10 +49,10 @@ export default function HeroBackground({
           style={{ 
             backgroundImage: `url('${overlayImage}')`,
             opacity: overlayOpacity,
-            transform: parallaxOffset ? `translate3d(0, ${parallaxOffset * -1}px, 0)` : 'translate3d(0, 0, 0)',
+            transform: parallaxOffset ? `translate3d(0, ${parallaxOffset.get() * -1}px, 0)` : 'translate3d(0, 0, 0)',
             willChange: parallaxOffset ? 'transform' : 'auto',
             backfaceVisibility: 'hidden',
-            WebkitTransform: parallaxOffset ? `translate3d(0, ${parallaxOffset * -1}px, 0)` : 'translate3d(0, 0, 0)',
+            WebkitTransform: parallaxOffset ? `translate3d(0, ${parallaxOffset.get() * -1}px, 0)` : 'translate3d(0, 0, 0)',
             WebkitBackfaceVisibility: 'hidden'
           }}
         />

@@ -1,8 +1,8 @@
 import Layout from "@/components/layout/Layout";
-import { useParallax } from "@/hooks/useParallax";
 import Head from "next/head";
 import Link from "next/link";
 import StructuredData, { organizationSchema, createBreadcrumbSchema } from "@/components/common/StructuredData";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function InsightsPage() {
   const parallax = useParallax(0.25);
@@ -74,7 +74,7 @@ export default function InsightsPage() {
         <div
           className="absolute inset-0 -z-20 bg-[url('/next.svg')] bg-no-repeat bg-center opacity-[0.03]"
           aria-hidden
-          style={{ transform: `translateY(${parallax * -1}px)` }}
+            style={{ transform: `translateY(${parallax * -1}px)` }}
         />
         
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20 relative z-10">

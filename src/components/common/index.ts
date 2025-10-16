@@ -38,4 +38,5 @@ export { default as OptimizedVisionImage } from './OptimizedVisionImage';
 export { default as OptimizedCareersImage } from './OptimizedCareersImage';
 export { default as OptimizedMissionImage } from './OptimizedMissionImage';
 export { default as OptimizedAboutImage } from './OptimizedAboutImage';
+export { default as OptimizedWhatWeDoImage } from './OptimizedWhatWeDoImage';
 

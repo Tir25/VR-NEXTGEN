@@ -36,18 +36,55 @@ export function register(config?: ServiceWorkerConfig) {
   }
 
   window.addEventListener('load', () => {
-    // In Next.js, service workers should be served from the public root
-    const swUrl = `/sw.js`;
+    const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
 
     if (isLocalhost) {
+      // This is running on localhost. Let's check if a service worker still exists or not.
       checkValidServiceWorker(swUrl, config);
+
+      // Add some additional logging to localhost, pointing developers to the
+      // service worker/PWA documentation.
       navigator.serviceWorker.ready.then(() => {
-        // Service worker is serving cache-first
+        console.log(
+          'This web app is being served cache-first by a service ' +
+            'worker. To learn more, visit https://bit.ly/CRA-PWA'
+        );
       });
     } else {
+      // Is not localhost. Just register service worker
       registerValidSW(swUrl, config);
     }
   });
+}
+
+function checkValidServiceWorker(swUrl: string, config?: ServiceWorkerConfig) {
+  // Check if the service worker can be found. If it can't reload the page.
+  fetch(swUrl, {
+    headers: { 'Service-Worker': 'script' },
+  })
+    .then((response) => {
+      // Ensure service worker exists, and that we really are getting a JS file.
+      const contentType = response.headers.get('content-type');
+      if (
+        response.status === 404 ||
+        (contentType != null && contentType.indexOf('javascript') === -1)
+      ) {
+        // No service worker found. Probably a different app. Reload the page.
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.unregister().then(() => {
+            window.location.reload();
+          });
+        });
+      } else {
+        // Service worker found. Proceed normally.
+        registerValidSW(swUrl, config);
+      }
+    })
+    .catch(() => {
+      console.log(
+        'No internet connection found. App is running in offline mode.'
+      );
+    });
 }
 
 function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
@@ -81,31 +118,12 @@ function registerValidSW(swUrl: string, config?: ServiceWorkerConfig) {
       };
     })
     .catch((error) => {
-      console.error('Error during service worker registration:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error during service worker registration:', error);
+      }
     });
 }
 
-function checkValidServiceWorker(swUrl: string, config?: ServiceWorkerConfig) {
-  fetch(swUrl)
-    .then((response) => {
-      const contentType = response.headers.get('content-type');
-      
-      if (
-        response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
-      ) {
-        navigator.serviceWorker.ready.then((registration) => {
-          // Unregister stale SW without forcing a reload to avoid refresh loops
-          registration.unregister();
-        });
-      } else {
-        registerValidSW(swUrl, config);
-      }
-    })
-    .catch(() => {
-      // No internet connection, running in offline mode
-    });
-}
 
 export function unregister() {
   if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
@@ -114,7 +132,9 @@ export function unregister() {
         registration.unregister();
       })
       .catch((error) => {
-        console.error(error.message);
+        if (process.env.NODE_ENV === 'development') {
+          console.error(error.message);
+        }
       });
   }
 }

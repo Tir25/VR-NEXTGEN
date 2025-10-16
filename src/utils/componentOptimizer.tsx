@@ -166,7 +166,9 @@ export function createLazyComponent<P extends object>(
 
   const LazyComponent = lazy(() => 
     importFn().catch(async (error) => {
-      console.error('Lazy component import failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Lazy component import failed:', error);
+      }
       
       // Retry logic
       for (let i = 0; i < maxRetries; i++) {
@@ -174,7 +176,9 @@ export function createLazyComponent<P extends object>(
         try {
           return await importFn();
         } catch (retryError) {
-          console.error(`Lazy component retry ${i + 1} failed:`, retryError);
+          if (process.env.NODE_ENV === 'development') {
+            console.error(`Lazy component retry ${i + 1} failed:`, retryError);
+          }
         }
       }
       

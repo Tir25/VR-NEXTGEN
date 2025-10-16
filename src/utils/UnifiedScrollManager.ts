@@ -189,7 +189,9 @@ class OptimizedScrollManager {
       try {
         handler(event);
       } catch (error) {
-        console.error(`Scroll handler ${id} error:`, error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error(`Scroll handler ${id} error:`, error);
+        }
       }
     });
   }

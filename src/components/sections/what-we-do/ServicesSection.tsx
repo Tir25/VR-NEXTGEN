@@ -12,7 +12,7 @@ export default function ServicesSection() {
     <section
       id="services"
       aria-label="Our Services"
-      className="relative py-16 md:py-24"
+      className="relative py-8 md:py-12"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 -z-20 overflow-hidden">

@@ -26,6 +26,7 @@ export default function AnimatedBackground() {
       why: "why-choose",
       cta: "hero",
       "what-we-do-hero": "hero",
+      "what-we-do-main": "hero", // Keep hero background for main content section
       "who-we-are-hero": "hero",
       "our-values": "why-choose", // Use why-choose styling for values section
       "our-vision": "hero", // Use hero styling for vision section

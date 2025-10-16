@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
-import { useParallax } from "@/hooks/useParallax";
 import { OptimizedValuesImage, OptimizedVisionImage, OptimizedMissionImage, OptimizedAboutImage } from "@/components/common";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function WhoWeArePage() {
   const parallax = useParallax(0.25);
@@ -10,17 +10,17 @@ export default function WhoWeArePage() {
       {/* Hero Section */}
       <section
         id="who-we-are-hero"
-        className="section-hero relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden"
+        className="section-hero relative min-h-[20vh] md:min-h-[25vh] flex items-center overflow-hidden"
       >
         <div
           className="absolute inset-0 -z-20 bg-[url('/next.svg')] bg-no-repeat bg-center opacity-[0.03]"
           style={{ transform: `translateY(${parallax * -1}px)` }}
         />
         
-        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-20 pb-8 md:pb-12 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-6 pb-3 md:pb-4 relative z-10">
           <div className="flex items-center justify-center">
-            <div className="space-y-8 text-center max-w-4xl">
-              <div className="space-y-6">
+            <div className="space-y-6 text-center max-w-4xl">
+              <div className="space-y-4">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
                   About Us
                 </h1>
@@ -36,13 +36,13 @@ export default function WhoWeArePage() {
       {/* About Us Main Section */}
       <section
         id="about-us-main"
-        className="relative pt-8 md:pt-12 pb-16 md:pb-24"
+        className="relative pt-2 md:pt-3 pb-8 md:pb-12"
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Content */}
-            <div className="space-y-8">
-              <div className="space-y-6">
+            <div className="space-y-6">
+              <div className="space-y-4">
                 <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
                   Excellence Through Innovation
                 </h3>
@@ -93,10 +93,10 @@ export default function WhoWeArePage() {
       {/* About Us Extended Section */}
       <section
         id="about-us-extended"
-        className="relative py-16 md:py-24 bg-black/50"
+        className="relative py-8 md:py-12 bg-black/50"
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Image on the left */}
             <div className="relative order-2 lg:order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
@@ -120,7 +120,7 @@ export default function WhoWeArePage() {
 
             {/* Content on the right */}
             <div className="space-y-8 order-1 lg:order-2">
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
                   Trusted Transformation Partner
                 </h3>
@@ -144,20 +144,20 @@ export default function WhoWeArePage() {
       {/* Our Values Section */}
       <section
         id="our-values"
-        className="relative py-16 md:py-24"
+        className="relative py-8 md:py-12"
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Centered Title Above Image */}
-          <div className="text-center mb-12 lg:mb-16">
+          <div className="text-center mb-6 lg:mb-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
               Our Values
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Content */}
-            <div className="space-y-8">
-              <div className="space-y-6">
+            <div className="space-y-6">
+              <div className="space-y-4">
                 <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
                   The Foundation of Every Transformation
                 </h3>
@@ -204,17 +204,17 @@ export default function WhoWeArePage() {
       {/* Our Vision Section */}
       <section
         id="our-vision"
-        className="relative py-16 md:py-24"
+        className="relative py-8 md:py-12"
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Centered Title */}
-          <div className="text-center mb-12 lg:mb-16">
+          <div className="text-center mb-6 lg:mb-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
               Our Vision
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Image on the left */}
             <div className="relative order-2 lg:order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
@@ -246,7 +246,7 @@ export default function WhoWeArePage() {
 
             {/* Content on the right */}
             <div className="space-y-8 order-1 lg:order-2">
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="space-y-4">
                   <p className="text-lg md:text-xl text-white leading-relaxed">
                     To deliver end-to-end business solutions and strategic insights that transform data into actionable intelligence, enabling organizations to streamline processes, enhance efficiency, and maximize profitability.
@@ -261,20 +261,20 @@ export default function WhoWeArePage() {
       {/* Our Mission Section */}
       <section
         id="our-mission"
-        className="relative py-16 md:py-24"
+        className="relative py-8 md:py-12"
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Centered Title */}
-          <div className="text-center mb-12 lg:mb-16">
+          <div className="text-center mb-6 lg:mb-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gold leading-tight">
               Our Mission
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Content on the left */}
             <div className="space-y-8 order-2 lg:order-1">
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="space-y-4">
                   <p className="text-lg md:text-xl text-white leading-relaxed">
                     To deliver end-to-end business solutions and strategic insights that transform data into actionable intelligence, enabling organizations to streamline processes, enhance efficiency, and maximize profitability.

@@ -6,7 +6,10 @@ const SECTIONS = [
   "why",
   "cta",
   "what-we-do-hero",
+  "what-we-do-main",
   "who-we-are-hero",
+  "our-values",
+  "our-vision",
   "customer-stories",
   "case-studies",
   "events",
@@ -15,6 +18,8 @@ const SECTIONS = [
   "contact-form",
   "blog-header",
   "blog-feed",
+  "careers-hero",
+  "careers-content",
 ];
 
 export function useSectionDetection() {
@@ -55,8 +60,12 @@ export function useSectionDetection() {
     // Initial detection
     updateCurrentSection();
 
-    // Note: Scroll handling is managed by the unified scroll controller
-    // No need to add scroll event listener here
+    // Listen to scroll events
+    window.addEventListener('scroll', updateCurrentSection, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', updateCurrentSection);
+    };
   }, []);
 
   return currentSection;
