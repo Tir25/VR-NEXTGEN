@@ -75,18 +75,6 @@ function getOptimizedImagePath(originalPath: string): string {
 /**
  * OptimizedImage Component
  */
-/**
- * Generate responsive srcSet for different screen sizes
- */
-function generateResponsiveSrcSet(baseSrc: string, width: number, height: number): string {
-  const sizes = [400, 600, 800, 1200, 1600];
-  const srcSetParts = sizes.map(size => {
-    const aspectRatio = height / width;
-    const newHeight = Math.round(size * aspectRatio);
-    return `${baseSrc}?w=${size}&h=${newHeight} ${size}w`;
-  });
-  return srcSetParts.join(', ');
-}
 
 /**
  * Generate a simple blur placeholder
@@ -127,7 +115,6 @@ export default function OptimizedImage({
   blurDataURL,
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState<string>(src);
-  const [srcSet, setSrcSet] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -138,16 +125,10 @@ export default function OptimizedImage({
   // Generate blur placeholder if not provided
   const defaultBlurDataURL = blurDataURL || (typeof window !== 'undefined' ? generateBlurDataURL(width || 10, height || 10) : '');
 
-  // Set optimized source and generate responsive srcSet
+  // Set optimized source
   useEffect(() => {
     setImageSrc(optimizedSrc);
-    
-    // Generate responsive srcSet for better performance
-    if (width && height) {
-      const responsiveSrcSet = generateResponsiveSrcSet(optimizedSrc, width, height);
-      setSrcSet(responsiveSrcSet);
-    }
-  }, [optimizedSrc, width, height]);
+  }, [optimizedSrc]);
 
   const handleLoad = () => {
     setIsLoading(false);
@@ -195,7 +176,6 @@ export default function OptimizedImage({
         width={width}
         height={height}
         priority={priority}
-        srcSet={srcSet}
         sizes={sizes || (fill ? '100vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw')}
         quality={quality}
         fill={fill}
