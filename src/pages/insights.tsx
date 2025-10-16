@@ -93,6 +93,38 @@ export default function InsightsPage() {
                 <p className="text-lg md:text-xl text-white/80 leading-relaxed">
                   We&apos;re preparing valuable insights, case studies, customer stories, and thought leadership content to help you stay ahead in the digital transformation journey.
                 </p>
+                
+                {/* Scroll Down Prompt */}
+                <div className="mt-8 flex flex-col items-center space-y-4">
+                  <p className="text-gold text-lg font-medium">
+                    Scroll down to see What&apos;s Coming
+                  </p>
+                  <a 
+                    href="#whats-coming"
+                    className="scroll-down-arrow group flex flex-col items-center space-y-2 text-gold hover:text-gold/80 transition-colors duration-300"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector('#whats-coming')?.scrollIntoView({
+                        behavior: 'smooth'
+                      });
+                    }}
+                  >
+                    <svg 
+                      className="w-8 h-8 animate-bounce group-hover:animate-none" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                      />
+                    </svg>
+                    <span className="text-sm">Scroll Down</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -107,7 +139,7 @@ export default function InsightsPage() {
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gold leading-tight mb-4">
               What&apos;s Coming
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
