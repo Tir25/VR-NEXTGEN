@@ -1,0 +1,2 @@
+{"location":"lib/firebase.ts:31","message":"Firebase config check","data":{"isConfigured":false,"hasApiKey":false,"hasAuthDomain":false,"hasProjectId":false},"timestamp":1766818049440,"sessionId":"debug-session","runId":"run1","hypothesisId":"H1-config"}
+{"location":"lib/firebase.ts:config","message":"Firebase config status","data":{"isConfigured":false,"projectId":""},"timestamp":1766818423969,"sessionId":"debug-session","runId":"run2","hypothesisId":"H1-configured"}
